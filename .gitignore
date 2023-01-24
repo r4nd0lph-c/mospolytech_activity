@@ -1,0 +1,22 @@
+# IDE settings
+.idea/
+
+# additional files
+additional/
+
+# global static & media files
+activity/static/*
+activity/media/*
+
+# virtual environment
+venv/
+
+# migrations
+activity/main/migrations/*
+!activity/main/migrations/__init__.py
+
+# database
+activity/db.sqlite3
+
+# config
+activity/.env
