@@ -1,0 +1,152 @@
+{% extends "main/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block body %}
+
+    <!-- header START -->
+    <header>
+        <div class="inner">
+            <img src="{% static 'main/graphics/logo.svg' %}" alt="{% trans 'LOGO [Mospolytech Activity]' %}"/>
+        </div>
+    </header>
+    <!-- header END -->
+
+    <!-- main START -->
+    <main>
+        <div class="inner">
+            <!-- catch form errors START -->
+            <div>
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-warning" data-aos="zoom-in" data-aos-duration="300">{{ error }}</div>
+                {% endfor %}
+                {% if user.is_authenticated %}
+                    <div class="alert alert-warning" data-aos="zoom-in" data-aos-duration="300">
+                        {% trans "You are logged in as " %}
+                        {{ user }}
+                        {% trans ", but you do not have sufficient rights to view this page. Perhaps you would like to log in using a different account?" %}
+                    </div>
+                {% endif %}
+            </div>
+
+            {% for f in form %}
+                <div>
+                    {% for error in f.errors %}
+                        <div class="alert alert-warning" data-aos="zoom-in" data-aos-duration="300">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <!-- catch form errors END -->
+
+            <!-- auth form START -->
+            <form method="post" class="form-login">
+                {% csrf_token %}
+
+                <h3 class="fw-normal mb-16p">{% trans "Log in" %}</h3>
+
+                {% for f in form %}
+                    {% if f.id_for_label != "id_password" %}
+                        {% if f.id_for_label != "id_remember_me" %}
+                            <!-- login input box START -->
+                            <div class="form-floating mb-8p" style="text-align: left !important;">
+                                {{ f }}
+                                <label for="{{ f.id_for_label }}">{{ f.label }}</label>
+                            </div>
+                            <!-- login input box END -->
+                        {% else %}
+                            <!-- remember me checkbox START -->
+                            <div class="form-check mb-32p" style="padding-left: 0 !important;">
+                                {{ f }}
+                                <label class="form-check-label" for="{{ f.id_for_label }}">
+                                    {{ f.label }}
+                                </label>
+                            </div>
+                            <!-- remember me checkbox END -->
+                        {% endif %}
+                    {% else %}
+                        <!-- password input box START -->
+                        <div class="input-group mb-16p">
+                            <div class="form-floating form-floating-group flex-grow-1">
+                                {{ f }}
+                                <label style="width: fit-content" for="{{ f.id_for_label }}">{{ f.label }}</label>
+                            </div>
+                            <span class="input-group-text" id="eye_span" onclick="pass_visibility()">
+                                    <i class="bi bi-eye" id="eye_icon" style="color: var(--secondary);"></i>
+                                </span>
+                        </div>
+                        <!-- password input box END -->
+                    {% endif %}
+                {% endfor %}
+
+                <button class="btn btn-primary" style="min-width: 152px"
+                        type="submit">{% trans "Authorization" %}</button>
+            </form>
+            <!-- auth form END -->
+        </div>
+    </main>
+    <!-- main END -->
+
+    <!--footer START -->
+    <footer>
+        <a class="mx-1" data-bs-toggle="modal" data-bs-target="#feedback_modal">
+            {% trans "Having problems?" %}
+        </a>
+    </footer>
+    <!--footer END -->
+
+    <!-- modal START -->
+    <div class="modal fade" id="feedback_modal" tabindex="-1"
+         aria-labelledby="feedback_modal_label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="feedback_modal_label">{% trans "Having problems?" %}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-start">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent condimentum nisi et velit
+                        congue luctus. Nulla a elit congue velit elementum dapibus vitae sed elit. Etiam cursus, mi
+                        id elementum imperdiet, neque ante facilisis felis, vel dapibus mauris tellus eget justo.
+                        Donec viverra fringilla odio, at iaculis nunc fringilla a. Nulla eu elit mauris. In rhoncus
+                        pharetra aliquet. Donec hendrerit, eros et molestie congue, augue est commodo lacus, ut
+                        consectetur justo ligula id neque.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal END -->
+{% endblock %}
+
+{% block extra_js %}
+    <script type="text/javascript">
+        // add 'body-container' class to body
+        document.body.classList.add("body-container")
+
+
+        // init password box variables
+        let pass_in = document.getElementById("id_password");
+        let eye_span = document.getElementById("eye_span");
+        let eye_icon = document.getElementById("eye_icon");
+
+        // add listeners for change border color (focus / no focus)
+        pass_in.addEventListener("focusin", (event) => {
+            eye_span.style.border = "1px solid #86b7fe";
+        });
+        pass_in.addEventListener("focusout", (event) => {
+            eye_span.style.border = "1px solid var(--secondary)";
+        });
+
+        // show / hide eye-button for password
+        function pass_visibility() {
+            if (pass_in.type === "password") {
+                pass_in.type = "text";
+                eye_icon.className = "bi bi-eye-slash";
+            } else {
+                pass_in.type = "password";
+                eye_icon.className = "bi bi-eye";
+            }
+        }
+    </script>
+{% endblock %}

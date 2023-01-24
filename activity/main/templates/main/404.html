@@ -15,15 +15,22 @@
     <!-- main START -->
     <main>
         <div class="inner">
+            <h1 style="font-size: calc(10em + 4vw);">
+                4<span style="color: var(--primary);">0</span>4
+            </h1>
+            <h2 class="mb-3">{% trans "Page not Found" %}</h2>
+            <p class="mb-5">
+                {% trans "The page you are looking for may have been deleted, " %}
+                <br>
+                {% trans "renamed, or just temporarily unavailable." %}
+            </p>
+            <a href="{% url 'index' %}" class="btn btn-primary align-self-center mb-4">{% trans "Main page" %}</a>
         </div>
     </main>
     <!-- main END -->
 
     <!--footer START -->
-    <footer>
-        <p>{{ username }}</p>
-        <p><a href="{% url 'logout' %}">{% trans "Log Out" %}</a></p>
-    </footer>
+    <footer></footer>
     <!--footer END -->
 {% endblock %}
 

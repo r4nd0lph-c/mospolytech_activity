@@ -1,8 +1,9 @@
+{% load i18n %}
 {% load static %}
 
 <!DOCTYPE html>
 
-<html lang="ru">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -27,6 +28,7 @@
     <link href="{% static "main/css/styles.css" %}"
           rel="stylesheet">
 
+    <!-- Extra CSS File -->
     {% block extra_css %}
     {% endblock %}
 
@@ -44,6 +46,7 @@
 <!-- Main JS File -->
 <script src="{% static "main/js/scripts.js" %}"></script>
 
+<!-- Extra JS File -->
 {% block extra_js %}
 {% endblock %}
 

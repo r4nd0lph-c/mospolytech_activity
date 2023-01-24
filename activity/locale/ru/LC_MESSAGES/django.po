@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-24 16:07+0300\n"
-"PO-Revision-Date: 2023-01-24 16:07+0300\n"
+"POT-Creation-Date: 2023-01-24 19:28+0300\n"
+"PO-Revision-Date: 2023-01-24 19:03+0300\n"
 "Last-Translator: r4nd0lph-c\n"
 "Language: Russian\n"
 "MIME-Version: 1.0\n"
@@ -19,14 +19,91 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: .\main\admin.py:4 .\main\admin.py:5
+#: .\main\admin.py:6
+msgid "Activity"
+msgstr "Активность"
+
+#: .\main\admin.py:7
 msgid "Mospolytech Activity"
 msgstr "Мосполитех Активность"
 
-#: .\main\admin.py:6
+#: .\main\admin.py:8
 msgid "Administration"
 msgstr "Администрирование"
 
 #: .\main\apps.py:8
 msgid "Entities"
 msgstr "Сущности"
+
+#: .\main\forms.py:7
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: .\main\forms.py:14
+msgid "Password"
+msgstr "Пароль"
+
+#: .\main\forms.py:22
+msgid "Remember me?"
+msgstr "Запомнить меня"
+
+#: .\main\templates\main\404.html:10 .\main\templates\main\auth.html:10
+#: .\main\templates\main\index.html:10
+msgid "LOGO [Mospolytech Activity]"
+msgstr "LOGO [Мосполитех Активность]"
+
+#: .\main\templates\main\404.html:21
+msgid "Page not Found"
+msgstr "Страница не найдена"
+
+#: .\main\templates\main\404.html:23
+msgid "The page you are looking for may have been deleted, "
+msgstr "Страница, которую вы ищете, возможно, была удалена, "
+
+#: .\main\templates\main\404.html:25
+msgid "renamed, or just temporarily unavailable."
+msgstr "переименованна или просто временно недоступна."
+
+#: .\main\templates\main\404.html:29
+msgid "Main page"
+msgstr "На главную"
+
+#: .\main\templates\main\auth.html:25
+msgid "You are logged in as "
+msgstr "Вы вошли в систему как "
+
+#: .\main\templates\main\auth.html:27
+msgid ""
+", but you do not have sufficient rights to view this page. Perhaps you would "
+"like to log in using a different account?"
+msgstr ""
+"однако у вас недостаточно прав для просмотра данной страницы. Возможно, вы "
+"хотели бы войти в систему, используя другую учётную запись?"
+
+#: .\main\templates\main\auth.html:45
+msgid "Log in"
+msgstr "Вход"
+
+#: .\main\templates\main\auth.html:82
+msgid "Authorization"
+msgstr "Авторизация"
+
+#: .\main\templates\main\auth.html:92 .\main\templates\main\auth.html:103
+msgid "Having problems?"
+msgstr "Возникли проблемы?"
+
+#: .\main\templates\main\index.html:25
+msgid "Log Out"
+msgstr "Выйти"
+
+#: .\main\views.py:19
+msgid "Main | Activity"
+msgstr "Главная | Активность"
+
+#: .\main\views.py:31
+msgid "Authorization | Activity"
+msgstr "Авторизация | Активность"
+
+#: .\main\views.py:51
+msgid "Page not Found | Activity"
+msgstr "Страница не найдена | Активность"

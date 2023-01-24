@@ -1,0 +1,116 @@
+/* GENERAL */
+
+:root {
+    --white: #FFFFFF;
+    --light: #F5F5F5;
+    --secondary: #CED4DA;
+    --primary: #0D6EFD;
+    --dark: #212529;
+}
+
+*:focus {
+    box-shadow: none !important;
+}
+
+html,
+body {
+    background-color: var(--light);
+    height: 100%;
+    margin: 0;
+}
+
+
+/* CONTAINER */
+
+.body-container {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+.body-container header {
+    flex: 0 1 auto;
+    text-align: center;
+    margin-top: 16px;
+    margin-bottom: 32px;
+}
+
+.body-container header .inner {
+    max-width: 544px;
+    padding: 0 16px 0 16px;
+    margin: 0 auto;
+}
+
+.body-container header .inner img {
+    width: 100%;
+    height: auto;
+    margin: auto;
+}
+
+.body-container main {
+    flex: 1 1 auto;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.body-container main .inner {
+    align-self: center;
+    max-width: 544px;
+    padding: 0 16px 0 16px;
+    margin: 0 auto;
+}
+
+.body-container footer {
+    flex: 0 1 40px;
+    text-align: center;
+    margin-top: 32px;
+    margin-bottom: 16px;
+}
+
+
+/* MARGINS */
+
+.mb-8p {
+    margin-bottom: 8px;
+}
+
+.mb-16p {
+    margin-bottom: 16px;
+}
+
+.mb-32p {
+    margin-bottom: 32px;
+}
+
+
+/* AUTH PAGE */
+
+.auth-error-alert {
+    max-width: 544px;
+    padding: 0 16px 0 16px;
+}
+
+.form-login {
+    width: 100%;
+    max-width: 320px;
+    min-width: 256px;
+    padding: 0 16px 0 16px;
+    margin: auto;
+}
+
+.form-floating-group input {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.input-group-text {
+    cursor: pointer;
+    background-color: var(--white);
+}
+
+.form-check .form-check-input {
+    float: none;
+    margin-left: 0;
+    padding-left: 0;
+}
