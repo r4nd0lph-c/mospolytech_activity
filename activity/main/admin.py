@@ -8,13 +8,30 @@ from main.models import *
 from main.views import Auth, logout_user
 
 
+class AbstractLockedAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        if "delete_selected" in actions:
+            del actions["delete_selected"]
+        return actions
+
+
 class StudyGroupFilter(AutocompleteFilter):
     title = "Study Group"
     field_name = "study_group"
 
 
 @admin.register(StudyGroup)
-class StudyGroupAdmin(admin.ModelAdmin):
+class StudyGroupAdmin(AbstractLockedAdmin):
     list_display = ("id", "name", "is_active", "date_created", "date_updated")
     list_display_links = ("id",)
     ordering = ("name",)
@@ -47,25 +64,10 @@ class ScheduleAdmin(admin.ModelAdmin):
 
 
 @admin.register(HistoryLog)
-class HistoryLogAdmin(admin.ModelAdmin):
+class HistoryLogAdmin(AbstractLockedAdmin):
     list_display = ("id", "user", "action", "date_created")
     ordering = ("-date_created",)
     list_filter = (("user", admin.RelatedOnlyFieldListFilter), ("date_created", DateFieldListFilter))
-
-    def has_add_permission(self, request, obj=None):
-        return False
-
-    def has_change_permission(self, request, obj=None):
-        return False
-
-    def has_delete_permission(self, request, obj=None):
-        return False
-
-    def get_actions(self, request):
-        actions = super().get_actions(request)
-        if "delete_selected" in actions:
-            del actions["delete_selected"]
-        return actions
 
 
 admin.site.site_title = _("Activity")
