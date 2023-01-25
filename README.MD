@@ -1,1 +1,0 @@
-# Mospolytech Activity
