@@ -9,6 +9,7 @@ django.setup()
 from main.models import *
 
 
+# TODO: exception handler for update_study_groups()
 def update_study_groups() -> None:
     """ update StudyGroup() model info in db """
 
@@ -35,6 +36,7 @@ def update_study_groups() -> None:
         StudyGroup.objects.create(name=group)
 
 
+# TODO: exception handler for update_students()
 def update_students() -> None:
     """ update Student() model info in db """
 
