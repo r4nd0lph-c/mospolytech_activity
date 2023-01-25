@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-25 14:33+0300\n"
+"POT-Creation-Date: 2023-01-25 18:07+0300\n"
 "PO-Revision-Date: 2023-01-24 19:03+0300\n"
 "Last-Translator: r4nd0lph-c\n"
 "Language: Russian\n"
@@ -19,15 +19,19 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: .\main\admin.py:6
+#: .\main\admin.py:50 .\main\models.py:42
+msgid "Type"
+msgstr "Тип"
+
+#: .\main\admin.py:77
 msgid "Activity"
 msgstr "Активность"
 
-#: .\main\admin.py:7
+#: .\main\admin.py:78
 msgid "Mospolytech Activity"
 msgstr "Мосполитех Активность"
 
-#: .\main\admin.py:8
+#: .\main\admin.py:79
 msgid "Administration"
 msgstr "Администрирование"
 
@@ -46,6 +50,138 @@ msgstr "Пароль"
 #: .\main\forms.py:22
 msgid "Remember me?"
 msgstr "Запомнить меня"
+
+#: .\main\models.py:8
+msgid "Date created"
+msgstr "Дата создания"
+
+#: .\main\models.py:9
+msgid "Date updated"
+msgstr "Дата обновления"
+
+#: .\main\models.py:20 .\main\models.py:41
+msgid "Name of the type of study group."
+msgstr "Название типа учебной группы."
+
+#: .\main\models.py:21 .\main\models.py:36
+msgid "Name"
+msgstr "Название"
+
+#: .\main\models.py:28
+msgid "Study group type"
+msgstr "Тип учебной группы"
+
+#: .\main\models.py:29
+msgid "Study group types"
+msgstr "Типы учебных групп"
+
+#: .\main\models.py:35 .\main\models.py:67 .\main\models.py:88
+msgid "Name of the study group."
+msgstr "Название учебной группы."
+
+#: .\main\models.py:46 .\main\models.py:72
+msgid "Determines whether an entity is active in the system."
+msgstr "Определяет, активен ли объект в системе."
+
+#: .\main\models.py:47 .\main\models.py:73
+msgid "Active"
+msgstr "Активность"
+
+#: .\main\models.py:54 .\main\models.py:68 .\main\models.py:89
+msgid "Study group"
+msgstr "Учебная группа"
+
+#: .\main\models.py:55
+msgid "Study groups"
+msgstr "Учебные группы"
+
+#: .\main\models.py:61
+msgid "Full name of the student."
+msgstr "ФИО студента."
+
+#: .\main\models.py:62
+msgid "Full name"
+msgstr "Полное имя"
+
+#: .\main\models.py:80
+msgid "Student"
+msgstr "Студент"
+
+#: .\main\models.py:81
+msgid "Students"
+msgstr "Студенты"
+
+#: .\main\models.py:93
+msgid "Determines whether the schedule is a session schedule or not."
+msgstr "Определяет, является ли расписание расписанием сессии или нет."
+
+#: .\main\models.py:94
+msgid "Session"
+msgstr "Сессия"
+
+#: .\main\models.py:97
+msgid "The start date of the schedule."
+msgstr "Дата начала расписания."
+
+#: .\main\models.py:98
+msgid "Date start"
+msgstr "Дата начала"
+
+#: .\main\models.py:101
+msgid "The end date of the schedule."
+msgstr "Дата конца расписания."
+
+#: .\main\models.py:102
+msgid "Date end"
+msgstr "Дата конца"
+
+#: .\main\models.py:105
+msgid "Raw schedule grid format."
+msgstr "Сырой формат расписания (grid)"
+
+#: .\main\models.py:106
+msgid "Grid"
+msgstr "Тело (grid)"
+
+#: .\main\models.py:113
+msgid "Schedule"
+msgstr "Расписание"
+
+#: .\main\models.py:114
+msgid "Schedules"
+msgstr "Расписания"
+
+#: .\main\models.py:121
+msgid "The user who performed the action."
+msgstr "Пользователь, выполнивший действие."
+
+#: .\main\models.py:122
+msgid "User"
+msgstr "Пользователь"
+
+#: .\main\models.py:126
+msgid "Action in the system."
+msgstr "Действие в системе"
+
+#: .\main\models.py:127
+msgid "Action"
+msgstr "Действие"
+
+#: .\main\models.py:132
+msgid "action"
+msgstr "действие"
+
+#: .\main\models.py:135
+msgid "History Log"
+msgstr "Действие"
+
+#: .\main\models.py:136
+msgid "History Logs"
+msgstr "Журнал действий"
+
+#: .\main\models.py:139
+msgid "Date"
+msgstr "Дата"
 
 #: .\main\templates\main\404.html:10 .\main\templates\main\auth.html:10
 #: .\main\templates\main\index.html:10
@@ -100,14 +236,14 @@ msgstr "Выйти"
 msgid "Main | Activity"
 msgstr "Главная | Активность"
 
-#: .\main\views.py:31
-msgid "Authorization | Activity"
-msgstr "Авторизация | Активность"
-
-#: .\main\views.py:32
+#: .\main\views.py:20 .\main\views.py:33 .\main\views.py:58
 msgid "logo_en"
 msgstr "logo_ru"
 
-#: .\main\views.py:53
+#: .\main\views.py:32
+msgid "Authorization | Activity"
+msgstr "Авторизация | Активность"
+
+#: .\main\views.py:57
 msgid "Page not Found | Activity"
 msgstr "Страница не найдена | Активность"

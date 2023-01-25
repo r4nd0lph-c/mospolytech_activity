@@ -40,9 +40,7 @@ class StudentAdmin(admin.ModelAdmin):
 @admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
     list_display = (
-        "id", "study_group", "get_study_group_type", "is_session", "date_start", "date_end",
-        "date_created", "date_updated"
-    )
+        "id", "study_group", "get_study_group_type", "is_session", "date_start", "date_end")
     list_display_links = ("id",)
     ordering = ("study_group", "date_start")
     list_filter = (StudyGroupFilter, "is_session")
