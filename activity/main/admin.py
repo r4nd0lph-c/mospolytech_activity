@@ -26,7 +26,7 @@ class AbstractLockedAdmin(admin.ModelAdmin):
 
 
 class StudyGroupFilter(AutocompleteFilter):
-    title = "Study Group"
+    title = _("Study Group")
     field_name = "study_group"
 
 
@@ -37,18 +37,21 @@ class StudyGroupAdmin(AbstractLockedAdmin):
     ordering = ("name",)
     list_filter = ("is_active",)
     search_fields = ["name"]
+    search_help_text = _("The search works by the name of the study group.")
 
 
 @admin.register(Student)
-class StudentAdmin(admin.ModelAdmin):
+class StudentAdmin(AbstractLockedAdmin):
     list_display = ("id", "name", "study_group", "is_active", "date_created", "date_updated")
     list_display_links = ("id",)
-    ordering = ("study_group", "is_active", "name")
-    list_filter = ("is_active",)
+    ordering = ("study_group", "-is_active", "name")
+    list_filter = (StudyGroupFilter, "is_active")
+    search_fields = ["name"]
+    search_help_text = _("The search works by the full name of the student.")
 
 
 @admin.register(ScheduleType)
-class ScheduleTypeAdmin(admin.ModelAdmin):
+class ScheduleTypeAdmin(AbstractLockedAdmin):
     list_display = ("id", "name", "date_created", "date_updated")
     list_display_links = ("id",)
     ordering = ("id",)
@@ -56,8 +59,7 @@ class ScheduleTypeAdmin(admin.ModelAdmin):
 
 @admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
-    list_display = (
-        "id", "study_group", "type", "is_session", "date_start", "date_end")
+    list_display = ("id", "study_group", "type", "is_session", "date_start", "date_end")
     list_display_links = ("id",)
     ordering = ("study_group", "date_start")
     list_filter = (StudyGroupFilter, "is_session")

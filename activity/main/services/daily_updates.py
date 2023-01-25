@@ -31,8 +31,8 @@ def update_study_groups() -> None:
         group.save()
 
     # adding groups to db
-    for name in fresh_groups:
-        StudyGroup.objects.create(name=name)
+    for group in fresh_groups:
+        StudyGroup.objects.create(name=group)
 
 
 def update_students() -> None:
@@ -41,6 +41,36 @@ def update_students() -> None:
     # creating API object
     api = API()
 
+    # getting fresh list of students from https://e.mospolytech.ru/old/lk_api_mapp.php
+    fresh_students = []
+    for group in api.get_groups():
+        fresh_students += [
+            {"name": name, "group": group}
+            for name in api.get_students([group])
+        ]
+
+    # getting queryset of students from db
+    db_students = Student.objects.all()
+
+    # updating existing students "is_active" field
+    fresh_names = [student["name"] for student in fresh_students]
+    for student in db_students:
+        if student.name in fresh_names:
+            student.active = True
+        else:
+            student.active = False
+        student.save()
+        fresh_names.remove(student.name)
+    fresh_students = [student for student in fresh_students if student["name"] in fresh_names]
+
+    # adding students to db
+    for student in fresh_students:
+        Student.objects.create(
+            name=student["name"],
+            study_group_id=StudyGroup.objects.get_or_create(name=student["group"])[0].id
+        )
+
 
 if __name__ == "__main__":
     update_study_groups()
+    update_students()

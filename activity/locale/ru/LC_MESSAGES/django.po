@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-25 19:31+0300\n"
-"PO-Revision-Date: 2023-01-25 19:31+0300\n"
+"POT-Creation-Date: 2023-01-25 21:12+0300\n"
+"PO-Revision-Date: 2023-01-25 21:12+0300\n"
 "Last-Translator: r4nd0lph-c\n"
 "Language: Russian\n"
 "MIME-Version: 1.0\n"
@@ -19,9 +19,17 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: .\main\admin.py:48 .\main\models.py:89
-msgid "Type"
-msgstr "Тип"
+#: .\main\admin.py:29
+msgid "Study Group"
+msgstr "Учебная группа"
+
+#: .\main\admin.py:40
+msgid "The search works by the name of the study group."
+msgstr "Поиск работает по названию учебной группы."
+
+#: .\main\admin.py:50
+msgid "The search works by the full name of the student."
+msgstr "Поиск работает по ФИО студента."
 
 #: .\main\admin.py:75
 msgid "Activity"
@@ -110,6 +118,10 @@ msgstr "Тип расписания"
 #: .\main\models.py:75
 msgid "Schedule types"
 msgstr "Типы расписаний"
+
+#: .\main\models.py:89
+msgid "Type"
+msgstr "Тип"
 
 #: .\main\models.py:93
 msgid "Determines whether the schedule is a session schedule or not."
