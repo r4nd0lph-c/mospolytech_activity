@@ -13,16 +13,9 @@ class StudyGroupFilter(AutocompleteFilter):
     field_name = "study_group"
 
 
-@admin.register(StudyGroupType)
-class StudyGroupTypeAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "date_created", "date_updated")
-    list_display_links = ("id",)
-    ordering = ("id",)
-
-
 @admin.register(StudyGroup)
 class StudyGroupAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "type", "is_active", "date_created", "date_updated")
+    list_display = ("id", "name", "is_active", "date_created", "date_updated")
     list_display_links = ("id",)
     ordering = ("name",)
     list_filter = ("is_active",)
@@ -37,17 +30,20 @@ class StudentAdmin(admin.ModelAdmin):
     list_filter = ("is_active",)
 
 
+@admin.register(ScheduleType)
+class ScheduleTypeAdmin(admin.ModelAdmin):
+    list_display = ("id", "name", "date_created", "date_updated")
+    list_display_links = ("id",)
+    ordering = ("id",)
+
+
 @admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
     list_display = (
-        "id", "study_group", "get_study_group_type", "is_session", "date_start", "date_end")
+        "id", "study_group", "type", "is_session", "date_start", "date_end")
     list_display_links = ("id",)
     ordering = ("study_group", "date_start")
     list_filter = (StudyGroupFilter, "is_session")
-
-    @admin.display(description=_("Type"))
-    def get_study_group_type(self, obj):
-        return obj.study_group.type
 
 
 @admin.register(HistoryLog)

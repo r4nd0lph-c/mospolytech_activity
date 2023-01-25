@@ -12,34 +12,11 @@ class AbstractDatestamp(models.Model):
         abstract = True
 
 
-class StudyGroupType(AbstractDatestamp):
-    name = models.CharField(
-        max_length=8,
-        unique=True,
-        db_index=True,
-        help_text=_("Name of the type of study group."),
-        verbose_name=_("Name")
-    )
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = _("Study group type")
-        verbose_name_plural = _("Study group types")
-
-
 class StudyGroup(AbstractDatestamp):
     name = models.CharField(
         max_length=16,
         help_text=_("Name of the study group."),
         verbose_name=_("Name")
-    )
-    type = models.ForeignKey(
-        StudyGroupType,
-        on_delete=models.CASCADE,
-        help_text=_("Name of the type of study group."),
-        verbose_name=_("Type")
     )
     is_active = models.BooleanField(
         default=True,
@@ -81,12 +58,35 @@ class Student(AbstractDatestamp):
         verbose_name_plural = _("Students")
 
 
+class ScheduleType(AbstractDatestamp):
+    name = models.CharField(
+        max_length=8,
+        unique=True,
+        db_index=True,
+        help_text=_("Name of the type of schedule."),
+        verbose_name=_("Name")
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _("Schedule type")
+        verbose_name_plural = _("Schedule types")
+
+
 class Schedule(AbstractDatestamp):
     study_group = models.ForeignKey(
         StudyGroup,
         on_delete=models.CASCADE,
         help_text=_("Name of the study group."),
         verbose_name=_("Study group")
+    )
+    type = models.ForeignKey(
+        ScheduleType,
+        on_delete=models.CASCADE,
+        help_text=_("Name of the type of schedule."),
+        verbose_name=_("Type")
     )
     is_session = models.BooleanField(
         default=False,
