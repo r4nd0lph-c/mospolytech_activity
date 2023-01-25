@@ -17,6 +17,7 @@ class Index(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = _("Main | Activity")
+        context["logo_link"] = "main/graphics/" + _("logo_en") + ".svg"
         username = (self.request.user.first_name + " " + self.request.user.last_name).strip()
         context["username"] = self.request.user.username if username == "" else username
         return context
@@ -29,6 +30,7 @@ class Auth(LoginView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = _("Authorization | Activity")
+        context["logo_link"] = "main/graphics/" + _("logo_en") + ".svg"
         return context
 
     def form_valid(self, form):
@@ -38,6 +40,7 @@ class Auth(LoginView):
             self.request.session.modified = True
         return super(Auth, self).form_valid(form)
 
+    # TODO: redirect to "?next=..."
     def get_success_url(self):
         return reverse_lazy("index")
 
@@ -48,6 +51,12 @@ def logout_user(request):
 
 
 def page_not_found(request, exception):
-    response = render(request, "main/404.html", {"title": _("Page not Found | Activity")})
+    response = render(
+        request, "main/404.html",
+        {
+            "title": _("Page not Found | Activity"),
+            "logo_link": "main/graphics/" + _("logo_en") + ".svg"
+        }
+    )
     response.status_code = 404
     return response

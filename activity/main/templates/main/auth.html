@@ -7,7 +7,7 @@
     <!-- header START -->
     <header>
         <div class="inner">
-            <img src="{% static 'main/graphics/logo.svg' %}" alt="{% trans 'LOGO [Mospolytech Activity]' %}"/>
+            <img src="{% static logo_link %}" alt="{% trans 'LOGO [Mospolytech Activity]' %}"/>
         </div>
     </header>
     <!-- header END -->
@@ -22,9 +22,7 @@
                 {% endfor %}
                 {% if user.is_authenticated %}
                     <div class="alert alert-warning" data-aos="zoom-in" data-aos-duration="300">
-                        {% trans "You are logged in as " %}
-                        {{ user }}
-                        {% trans ", but you do not have sufficient rights to view this page. Perhaps you would like to log in using a different account?" %}
+                        {% trans "You are logged in as " %}{{ user }}{% trans ", but you do not have sufficient rights to view this page. Perhaps you would like to log in using a different account?" %}
                     </div>
                 {% endif %}
             </div>
