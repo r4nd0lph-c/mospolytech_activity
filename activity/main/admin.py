@@ -58,11 +58,11 @@ class ScheduleTypeAdmin(AbstractLockedAdmin):
 
 
 @admin.register(Schedule)
-class ScheduleAdmin(admin.ModelAdmin):
+class ScheduleAdmin(AbstractLockedAdmin):
     list_display = ("id", "study_group", "type", "is_session", "signature", "date_start", "date_end")
     list_display_links = ("id",)
     ordering = ("study_group", "date_start")
-    list_filter = (StudyGroupFilter, "is_session")
+    list_filter = (StudyGroupFilter, "type", "is_session")
     search_fields = ["signature"]
     search_help_text = _("The search works by the signature of the schedule.")
 
@@ -70,6 +70,7 @@ class ScheduleAdmin(admin.ModelAdmin):
 @admin.register(HistoryLog)
 class HistoryLogAdmin(AbstractLockedAdmin):
     list_display = ("id", "user", "action", "date_created")
+    list_display_links = ("id",)
     ordering = ("-date_created",)
     list_filter = (("user", admin.RelatedOnlyFieldListFilter), ("date_created", DateFieldListFilter))
 

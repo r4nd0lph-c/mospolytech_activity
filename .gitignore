@@ -20,3 +20,6 @@ activity/db.sqlite3
 
 # config
 activity/.env
+
+# logs
+activity/main/services/daily_updates_error.log
