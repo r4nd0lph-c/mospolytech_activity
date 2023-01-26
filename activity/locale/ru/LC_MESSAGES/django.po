@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-26 14:08+0300\n"
-"PO-Revision-Date: 2023-01-26 14:08+0300\n"
+"POT-Creation-Date: 2023-01-26 17:05+0300\n"
+"PO-Revision-Date: 2023-01-26 17:05+0300\n"
 "Last-Translator: r4nd0lph-c\n"
 "Language: Russian\n"
 "MIME-Version: 1.0\n"
@@ -31,19 +31,27 @@ msgstr "Поиск работает по названию учебной гру�
 msgid "The search works by the full name of the student."
 msgstr "Поиск работает по ФИО студента."
 
-#: .\main\admin.py:67
+#: .\main\admin.py:66
+msgid "JSON Grid"
+msgstr "JSON Тело (grid)"
+
+#: .\main\admin.py:79
 msgid "The search works by the signature of the schedule."
 msgstr "Поиск работает по сигнатуре расписания."
 
-#: .\main\admin.py:77
+#: .\main\admin.py:84 .\main\models.py:106
+msgid "Grid"
+msgstr "Тело (grid)"
+
+#: .\main\admin.py:95
 msgid "Activity"
 msgstr "Активность"
 
-#: .\main\admin.py:78
+#: .\main\admin.py:96
 msgid "Mospolytech Activity"
 msgstr "Мосполитех Активность"
 
-#: .\main\admin.py:79
+#: .\main\admin.py:97
 msgid "Administration"
 msgstr "Администрирование"
 
@@ -154,10 +162,6 @@ msgstr "Дата конца"
 #: .\main\models.py:105
 msgid "Raw schedule grid format."
 msgstr "Сырой формат расписания (grid)."
-
-#: .\main\models.py:106
-msgid "Grid"
-msgstr "Тело (grid)"
 
 #: .\main\models.py:112
 msgid "The unique identifier of the schedule based on its data."

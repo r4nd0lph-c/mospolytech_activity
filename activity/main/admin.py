@@ -1,4 +1,10 @@
+import json
+from pygments import highlight
+from pygments.lexers import JsonLexer
+from pygments.formatters import HtmlFormatter
+
 from django.utils.translation import gettext_lazy as _
+from django.utils.safestring import mark_safe
 from django.contrib import admin
 from django.contrib.admin import DateFieldListFilter
 
@@ -59,12 +65,33 @@ class ScheduleTypeAdmin(AbstractLockedAdmin):
 
 @admin.register(Schedule)
 class ScheduleAdmin(AbstractLockedAdmin):
+    fieldsets = (
+        (None, {
+            "fields": ("study_group", "type", "is_session", "date_start", "date_end")
+        }),
+        (_("JSON Grid"), {
+            "classes": ("collapse",),
+            "fields": ("pretty_grid",)
+        }),
+        (None, {
+            "fields": ("signature",)
+        })
+    )
     list_display = ("id", "study_group", "type", "is_session", "signature", "date_start", "date_end")
     list_display_links = ("id",)
     ordering = ("study_group", "date_start")
     list_filter = (StudyGroupFilter, "type", "is_session")
     search_fields = ["signature"]
     search_help_text = _("The search works by the signature of the schedule.")
+
+    def pretty_grid(self, instance):
+        formatter = HtmlFormatter(style="friendly")
+        style = "<style>" + formatter.get_style_defs() + "</style><br>"
+        result = json.dumps(instance.grid, ensure_ascii=False, indent=4)
+        result = highlight(result, JsonLexer(), formatter)
+        return mark_safe(style + result)
+
+    pretty_grid.short_description = _("Grid")
 
 
 @admin.register(HistoryLog)
