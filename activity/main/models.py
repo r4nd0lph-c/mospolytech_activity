@@ -105,6 +105,13 @@ class Schedule(AbstractDatestamp):
         help_text=_("Raw schedule grid format."),
         verbose_name=_("Grid")
     )
+    signature = models.CharField(
+        max_length=32,
+        unique=True,
+        db_index=True,
+        help_text=_("The unique identifier of the schedule based on its data."),
+        verbose_name=_("Signature")
+    )
 
     def __str__(self):
         return f"{self.study_group} ({self.date_start.strftime('%d.%m.%Y')}-{self.date_end.strftime('%d.%m.%Y')})"

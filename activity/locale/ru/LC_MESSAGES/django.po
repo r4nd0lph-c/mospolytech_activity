@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-25 21:12+0300\n"
-"PO-Revision-Date: 2023-01-25 21:12+0300\n"
+"POT-Creation-Date: 2023-01-26 14:08+0300\n"
+"PO-Revision-Date: 2023-01-26 14:08+0300\n"
 "Last-Translator: r4nd0lph-c\n"
 "Language: Russian\n"
 "MIME-Version: 1.0\n"
@@ -31,15 +31,19 @@ msgstr "Поиск работает по названию учебной гру�
 msgid "The search works by the full name of the student."
 msgstr "Поиск работает по ФИО студента."
 
-#: .\main\admin.py:75
+#: .\main\admin.py:67
+msgid "The search works by the signature of the schedule."
+msgstr "Поиск работает по сигнатуре расписания."
+
+#: .\main\admin.py:77
 msgid "Activity"
 msgstr "Активность"
 
-#: .\main\admin.py:76
+#: .\main\admin.py:78
 msgid "Mospolytech Activity"
 msgstr "Мосполитех Активность"
 
-#: .\main\admin.py:77
+#: .\main\admin.py:79
 msgid "Administration"
 msgstr "Администрирование"
 
@@ -155,43 +159,51 @@ msgstr "Сырой формат расписания (grid)."
 msgid "Grid"
 msgstr "Тело (grid)"
 
+#: .\main\models.py:112
+msgid "The unique identifier of the schedule based on its data."
+msgstr "Уникальный идентификатор расписания, основанный на его информации."
+
 #: .\main\models.py:113
+msgid "Signature"
+msgstr "Сигнатура"
+
+#: .\main\models.py:120
 msgid "Schedule"
 msgstr "Расписание"
 
-#: .\main\models.py:114
+#: .\main\models.py:121
 msgid "Schedules"
 msgstr "Расписания"
 
-#: .\main\models.py:121
+#: .\main\models.py:128
 msgid "The user who performed the action."
 msgstr "Пользователь, выполнивший действие."
 
-#: .\main\models.py:122
+#: .\main\models.py:129
 msgid "User"
 msgstr "Пользователь"
 
-#: .\main\models.py:126
+#: .\main\models.py:133
 msgid "Action in the system."
 msgstr "Действие в системе"
 
-#: .\main\models.py:127
+#: .\main\models.py:134
 msgid "Action"
 msgstr "Действие"
 
-#: .\main\models.py:132
+#: .\main\models.py:139
 msgid "action"
 msgstr "действие"
 
-#: .\main\models.py:135
+#: .\main\models.py:142
 msgid "History Log"
 msgstr "Действие"
 
-#: .\main\models.py:136
+#: .\main\models.py:143
 msgid "History Logs"
 msgstr "Журнал действий"
 
-#: .\main\models.py:139
+#: .\main\models.py:146
 msgid "Date"
 msgstr "Дата"
 
