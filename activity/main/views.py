@@ -1,4 +1,5 @@
 from django.utils.translation import gettext_lazy as _
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth import logout
@@ -48,6 +49,32 @@ class Auth(LoginView):
 def logout_user(request):
     logout(request)
     return redirect("auth")
+
+
+def get_groups(request):
+    if request.method == "POST":
+        groups = [g.name for g in StudyGroup.objects.filter(is_active=True)]
+        return JsonResponse({"groups": groups})
+    else:
+        return JsonResponse({"message": "you don't have enough rights!"})
+
+
+def get_students(request):
+    if request.method == "POST":
+        requested_groups = request.POST.getlist("groups[]", None)
+        if requested_groups:
+            students = [
+                {"name": s.name, "group": s.study_group.name}
+                for s in Student.objects.filter(is_active=True, study_group__name__in=requested_groups)
+            ]
+        else:
+            students = [
+                {"name": s.name, "group": s.study_group.name}
+                for s in Student.objects.filter(is_active=True)
+            ]
+        return JsonResponse({"students": students})
+    else:
+        return JsonResponse({"message": "you don't have enough rights!"})
 
 
 def page_not_found(request, exception):

@@ -1,3 +1,5 @@
+# TODO: periodic task with daily updates
+
 import os
 from datetime import datetime
 from hashlib import md5
