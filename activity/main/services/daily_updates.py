@@ -47,7 +47,6 @@ def update_study_groups() -> None:
         logs_error(e.args)
 
 
-# TODO: exception handler for update_students()
 def update_students() -> None:
     """ updates Student() model info in db """
 
