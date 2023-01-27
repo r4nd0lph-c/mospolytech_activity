@@ -7,37 +7,46 @@
     <main>
         <div class="container-fluid">
             <div class="row flex-nowrap">
-                <!-- sidebar START -->
-                <div class="col-auto px-0">
+                <!-- sidebar menu START -->
+                <div class="col-auto">
                     <div id="sidebar" class="collapse collapse-horizontal show border-end">
                         <div id="sidebar-nav" class="min-vh-100">
-                            <p class="d-inline-block text-truncate"
-                               data-bs-parent="#sidebar">Item #01</p>
+                            <p class="d-inline-block text-truncate" data-bs-parent="#sidebar">Item #01</p>
                         </div>
                     </div>
                 </div>
-                <!-- sidebar END -->
+                <!-- sidebar menu END -->
 
-                <!-- content START -->
-                <div class="col ps-md-2 pt-2">
-                    <!-- info bar START -->
-                    <nav id="info-bar" class="navbar">
+                <!-- main screen START -->
+                <div class="col">
+                    <!-- navbar menu START -->
+                    <nav class="navbar py-2">
                         <div class="container-fluid">
-                            <a href="#" class="text-decoration-none" data-bs-target="#sidebar"
+                            <a href="#" class="text-decoration-none me-4" data-bs-target="#sidebar"
                                data-bs-toggle="collapse">
-                                <i class="bi bi-list bi-lg py-2 p-1"></i>
+                                <i id="sidebar-icon" class="bi bi-x-lg bi-lg py-2 p-1"></i>
                                 <span>Menu</span>
                             </a>
-                            <div class="ms-4 me-auto">
+                            <script>
+                                const sidebar = document.getElementById("sidebar");
+                                const btn_sidebar_icon = document.getElementById("sidebar-icon");
+                                sidebar.addEventListener("shown.bs.collapse", event => {
+                                    btn_sidebar_icon.className = "bi bi-x-lg bi-lg py-2 p-1";
+                                });
+                                sidebar.addEventListener("hidden.bs.collapse", event => {
+                                    btn_sidebar_icon.className = "bi bi-list bi-lg py-2 p-1";
+                                });
+                            </script>
+                            <div class="me-auto">
                                 <h5 class="fw-light m-0">Select a student to see the information</h5>
                             </div>
-                            <span>You are logged in as <b>{{ username }}</b></span>
-                            <a href="{% url 'logout' %}" class="text-decoration-none ms-4 me-1">
+                            <span class="me-4">You are logged in as <b>{{ username }}</b></span>
+                            <a href="{% url 'logout' %}" class="text-decoration-none me-2">
                                 {% trans "Log Out" %}
                             </a>
                         </div>
                     </nav>
-                    <!-- info bar END -->
+                    <!-- navbar menu END -->
 
                     <div class="page-header pt-3">
                         <h2>Mospolytech Activity</h2>
@@ -61,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- content END -->
+                <!-- main screen END -->
             </div>
         </div>
     </main>
