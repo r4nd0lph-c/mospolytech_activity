@@ -3,33 +3,67 @@
 {% load static %}
 
 {% block body %}
-
-    <!-- header START -->
-    <header>
-        <div class="inner">
-            <img src="{% static logo_link %}" alt="{% trans 'LOGO [Mospolytech Activity]' %}"/>
-        </div>
-    </header>
-    <!-- header END -->
-
     <!-- main START -->
     <main>
-        <div class="inner">
+        <div class="container-fluid">
+            <div class="row flex-nowrap">
+                <!-- sidebar START -->
+                <div class="col-auto px-0">
+                    <div id="sidebar" class="collapse collapse-horizontal show border-end">
+                        <div id="sidebar-nav" class="min-vh-100">
+                            <p class="d-inline-block text-truncate"
+                               data-bs-parent="#sidebar">Item #01</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- sidebar END -->
+
+                <!-- content START -->
+                <div class="col ps-md-2 pt-2">
+                    <!-- info bar START -->
+                    <nav id="info-bar" class="navbar">
+                        <div class="container-fluid">
+                            <a href="#" class="text-decoration-none" data-bs-target="#sidebar"
+                               data-bs-toggle="collapse">
+                                <i class="bi bi-list bi-lg py-2 p-1"></i>
+                                <span>Menu</span>
+                            </a>
+                            <div class="ms-4 me-auto">
+                                <h5 class="fw-light m-0">Select a student to see the information</h5>
+                            </div>
+                            <span>You are logged in as <b>{{ username }}</b></span>
+                            <a href="{% url 'logout' %}" class="text-decoration-none ms-4 me-1">
+                                {% trans "Log Out" %}
+                            </a>
+                        </div>
+                    </nav>
+                    <!-- info bar END -->
+
+                    <div class="page-header pt-3">
+                        <h2>Mospolytech Activity</h2>
+                    </div>
+                    <p class="lead">Index page</p>
+                    <hr>
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                Nulla ultrices ligula libero, in pretium augue aliquam a. Proin pellentesque aliquam
+                                arcu at congue. Nunc gravida vitae enim et molestie. Orci varius natoque penatibus et
+                                magnis dis parturient montes, nascetur ridiculus mus. Aliquam convallis eros turpis.
+                                Pellentesque pulvinar interdum turpis, ac aliquam libero dignissim ut. Vestibulum nec
+                                orci quis mi tincidunt blandit. Integer vulputate justo sed ullamcorper pellentesque.
+                                Nunc sit amet consequat neque, imperdiet sodales velit. Maecenas ligula libero, volutpat
+                                hendrerit diam vitae, consequat bibendum mauris. Maecenas purus massa, laoreet sit amet
+                                bibendum sed, gravida eu sapien. Fusce semper accumsan dictum. Pellentesque at accumsan
+                                augue, quis varius lectus. Nullam ullamcorper ipsum sapien, sit amet iaculis lectus
+                                viverra sit amet.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- content END -->
+            </div>
         </div>
     </main>
     <!-- main END -->
-
-    <!--footer START -->
-    <footer>
-        <p>{{ username }}</p>
-        <p><a href="{% url 'logout' %}">{% trans "Log Out" %}</a></p>
-    </footer>
-    <!--footer END -->
-{% endblock %}
-
-{% block extra_js %}
-    <script>
-        // add 'body-container' class to body
-        document.body.classList.add("body-container")
-    </script>
 {% endblock %}
