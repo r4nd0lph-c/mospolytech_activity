@@ -145,7 +145,10 @@ class Schedule:
         if len(self.grid) == 6:
             # first case (per-week schedule)
             w = self.__d(date).weekday()
-            raw_day = self.grid[w]
+            if w < 6:
+                raw_day = self.grid[w]
+            else:
+                raw_day = [[] for _ in range(7)]
         else:
             # second case (per-day schedule)
             d = abs((self.__d(date) - self.__d(self.dates[0])).days)

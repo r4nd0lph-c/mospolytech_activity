@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.utils.translation import gettext_lazy as _
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -7,6 +9,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 
+from main.services.mospolytech_api.schedule import Schedule as ScheduleAPI
 from main.forms import AuthForm
 from .models import *
 
@@ -52,29 +55,56 @@ def logout_user(request):
 
 
 def get_groups(request):
+    """ returns all StudyGroup() objects from db """
+
     if request.method == "POST":
         groups = [g.name for g in StudyGroup.objects.filter(is_active=True)]
         return JsonResponse({"groups": groups})
-    else:
-        return JsonResponse({"message": "you don't have enough rights!"})
+    return JsonResponse({"message": "you don't have enough rights!"})
 
 
 def get_students(request):
+    """ returns Student() objects from db (all active or from given groups) """
+
     if request.method == "POST":
         requested_groups = request.POST.getlist("groups[]", None)
         if requested_groups:
-            students = [
-                {"name": s.name, "group": s.study_group.name}
-                for s in Student.objects.filter(is_active=True, study_group__name__in=requested_groups)
-            ]
+            db_students = Student.objects.filter(is_active=True, study_group__name__in=requested_groups)
         else:
-            students = [
-                {"name": s.name, "group": s.study_group.name}
-                for s in Student.objects.filter(is_active=True)
-            ]
-        return JsonResponse({"students": students})
-    else:
-        return JsonResponse({"message": "you don't have enough rights!"})
+            db_students = Student.objects.filter(is_active=True)
+        return JsonResponse({"students": [{"name": s.name, "group": s.study_group.name} for s in db_students]})
+    return JsonResponse({"message": "you don't have enough rights!"})
+
+
+def get_schedule(request):
+    """ returns formatted Schedule() objects from db and additional info """
+
+    if request.method == "POST":
+        student = {"name": request.POST.get("name", None), "group": request.POST.get("group", None)}
+        dates = sorted([datetime.strptime(d, "%d.%m.%Y") for d in request.POST.getlist("dates[]", None)])
+        db_schedules = Schedule.objects.filter(study_group__name=student["group"]).order_by("date_start")
+
+        # TODO: optimize loops
+        schedule = []
+        for date in dates:
+            for db_schedule in db_schedules:
+                if db_schedule.date_start <= date.date() <= db_schedule.date_end:
+                    obj = {
+                        "group": db_schedule.study_group.name,
+                        "type": db_schedule.type.name,
+                        "is_session": db_schedule.is_session,
+                        "dates": [
+                            db_schedule.date_start.strftime("%d.%m.%Y"),
+                            db_schedule.date_end.strftime("%d.%m.%Y")
+                        ],
+                        "grid": db_schedule.grid
+                    }
+                    schedule.append(ScheduleAPI(obj).get_day(date.strftime("%d.%m.%Y")))
+        return JsonResponse({
+            "student": student,
+            "schedule": schedule
+        })
+    return JsonResponse({"message": "you don't have enough rights!"})
 
 
 def page_not_found(request, exception):

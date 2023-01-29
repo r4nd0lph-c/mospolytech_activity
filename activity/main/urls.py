@@ -7,5 +7,6 @@ urlpatterns = [
     path("auth/", Auth.as_view(redirect_authenticated_user=True), name="auth"),
     path("logout/", logout_user, name="logout"),
     path("get_groups/", get_groups, name="get_groups"),
-    path("get_students/", get_students, name="get_students")
+    path("get_students/", get_students, name="get_students"),
+    path("get_schedule/", get_schedule, name="get_schedule")
 ]

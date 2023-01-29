@@ -30,3 +30,23 @@ function get_students(groups) {
         }
     });
 }
+
+function get_schedule(student, dates) {
+    /* student = {"name": "...", "group": "..."} dates = ["dd.mm.yyyy", ...] */
+    $.ajax({
+        type: "POST",
+        url: "get_schedule/",
+        data: {
+            name: student["name"],
+            group: student["group"],
+            dates: dates,
+            csrfmiddlewaretoken: CSRF_TOKEN
+        },
+        success: function (data) {
+            console.log(data); // TODO: clear console logs
+        },
+        error: function () {
+            console.log("get_schedule() error");
+        }
+    });
+}
