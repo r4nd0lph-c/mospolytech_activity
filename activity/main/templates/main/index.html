@@ -4,74 +4,76 @@
 
 {% block body %}
     <!-- main START -->
-    <main>
-        <div class="container-fluid">
-            <div class="row flex-nowrap">
-                <!-- sidebar menu START -->
-                <div class="col-auto">
-                    <div id="sidebar" class="collapse collapse-horizontal show border-end">
-                        <div id="sidebar-nav" class="min-vh-100">
-                            <p class="d-inline-block text-truncate" data-bs-parent="#sidebar">Item #01</p>
-                        </div>
-                    </div>
+    <main class="container-fluid">
+        <div class="row flex-nowrap">
+            <!-- sidebar menu START -->
+            <div class="col-auto g-0">
+                <div id="sidebar" class="collapse collapse-horizontal show min-vh-100 border-end">
+                    <p class="d-inline-block text-truncate" data-bs-parent="#sidebar">
+                        Super secret test item for sidebar
+                    </p>
                 </div>
-                <!-- sidebar menu END -->
+            </div>
+            <!-- sidebar menu END -->
 
-                <!-- main screen START -->
-                <div class="col">
-                    <!-- navbar menu START -->
-                    <nav class="navbar py-2">
-                        <div class="container-fluid">
+            <!-- primary screen START -->
+            <div class="col g-0">
+                <!-- navbar menu START -->
+                <nav class="container-fluid">
+                    <div class="row py-2">
+                        <div class="col-lg-2">
                             <a href="#" class="text-decoration-none me-4" data-bs-target="#sidebar"
                                data-bs-toggle="collapse">
                                 <i id="sidebar-icon" class="bi bi-x-lg bi-lg py-2 p-1"></i>
                                 <span>Menu</span>
                             </a>
-                            <script>
-                                const sidebar = document.getElementById("sidebar");
-                                const btn_sidebar_icon = document.getElementById("sidebar-icon");
-                                sidebar.addEventListener("shown.bs.collapse", event => {
-                                    btn_sidebar_icon.className = "bi bi-x-lg bi-lg py-2 p-1";
-                                });
-                                sidebar.addEventListener("hidden.bs.collapse", event => {
-                                    btn_sidebar_icon.className = "bi bi-list bi-lg py-2 p-1";
-                                });
-                            </script>
-                            <div class="me-auto">
-                                <h5 class="fw-light m-0">Select a student to see the information</h5>
-                            </div>
-                            <span class="me-4">You are logged in as <b>{{ username }}</b></span>
-                            <a href="{% url 'logout' %}" class="text-decoration-none me-2">
+                        </div>
+                        <div class="col-lg-5">
+                            <h5 class="fw-light m-0">Select a student to see the information</h5>
+                        </div>
+                        <div class="col-lg-5 border-start">
+                            <span class="me-2">You are logged in as <b>{{ username }}</b></span>
+                            <a href="{% url 'logout' %}" class="text-decoration-none">
                                 {% trans "Log Out" %}
                             </a>
                         </div>
-                    </nav>
-                    <!-- navbar menu END -->
+                    </div>
+                </nav>
+                <script>
+                    const sidebar = document.getElementById("sidebar");
+                    const btn_sidebar_icon = document.getElementById("sidebar-icon");
+                    sidebar.addEventListener("shown.bs.collapse", event => {
+                        btn_sidebar_icon.className = "bi bi-x-lg bi-lg py-2 p-1";
+                    });
+                    sidebar.addEventListener("hidden.bs.collapse", event => {
+                        btn_sidebar_icon.className = "bi bi-list bi-lg py-2 p-1";
+                    });
+                </script>
+                <!-- navbar menu END -->
 
+                <!-- content START -->
+                <div>
                     <div class="page-header pt-3">
                         <h2>Mospolytech Activity</h2>
                     </div>
                     <p class="lead">Index page</p>
                     <hr>
-                    <div class="row">
-                        <div class="col-12">
-                            <p>
-                                Nulla ultrices ligula libero, in pretium augue aliquam a. Proin pellentesque aliquam
-                                arcu at congue. Nunc gravida vitae enim et molestie. Orci varius natoque penatibus et
-                                magnis dis parturient montes, nascetur ridiculus mus. Aliquam convallis eros turpis.
-                                Pellentesque pulvinar interdum turpis, ac aliquam libero dignissim ut. Vestibulum nec
-                                orci quis mi tincidunt blandit. Integer vulputate justo sed ullamcorper pellentesque.
-                                Nunc sit amet consequat neque, imperdiet sodales velit. Maecenas ligula libero, volutpat
-                                hendrerit diam vitae, consequat bibendum mauris. Maecenas purus massa, laoreet sit amet
-                                bibendum sed, gravida eu sapien. Fusce semper accumsan dictum. Pellentesque at accumsan
-                                augue, quis varius lectus. Nullam ullamcorper ipsum sapien, sit amet iaculis lectus
-                                viverra sit amet.
-                            </p>
-                        </div>
-                    </div>
+                    <p>
+                        Nulla ultrices ligula libero, in pretium augue aliquam a. Proin pellentesque aliquam
+                        arcu at congue. Nunc gravida vitae enim et molestie. Orci varius natoque penatibus et
+                        magnis dis parturient montes, nascetur ridiculus mus. Aliquam convallis eros turpis.
+                        Pellentesque pulvinar interdum turpis, ac aliquam libero dignissim ut. Vestibulum nec
+                        orci quis mi tincidunt blandit. Integer vulputate justo sed ullamcorper pellentesque.
+                        Nunc sit amet consequat neque, imperdiet sodales velit. Maecenas ligula libero, volutpat
+                        hendrerit diam vitae, consequat bibendum mauris. Maecenas purus massa, laoreet sit amet
+                        bibendum sed, gravida eu sapien. Fusce semper accumsan dictum. Pellentesque at accumsan
+                        augue, quis varius lectus. Nullam ullamcorper ipsum sapien, sit amet iaculis lectus
+                        viverra sit amet.
+                    </p>
                 </div>
-                <!-- main screen END -->
+                <!-- content END -->
             </div>
+            <!-- primary screen END -->
         </div>
     </main>
     <!-- main END -->
