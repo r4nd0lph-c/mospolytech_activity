@@ -43,7 +43,7 @@ class StudyGroupAdmin(AbstractLockedAdmin):
     ordering = ("name",)
     list_filter = ("is_active",)
     search_fields = ["name"]
-    search_help_text = _("The search works by the name of the study group.")
+    search_help_text = _("The search works by the name of the study group (case-sensitive).")
 
 
 @admin.register(Student)
@@ -53,7 +53,7 @@ class StudentAdmin(AbstractLockedAdmin):
     ordering = ("study_group", "-is_active", "name")
     list_filter = (StudyGroupFilter, "is_active")
     search_fields = ["name"]
-    search_help_text = _("The search works by the full name of the student.")
+    search_help_text = _("The search works by the full name of the student (case-sensitive).")
 
 
 @admin.register(ScheduleType)
@@ -82,7 +82,7 @@ class ScheduleAdmin(AbstractLockedAdmin):
     ordering = ("study_group", "date_start")
     list_filter = (StudyGroupFilter, "type", "is_session")
     search_fields = ["signature"]
-    search_help_text = _("The search works by the signature of the schedule.")
+    search_help_text = _("The search works by the signature of the schedule (case-sensitive).")
 
     def pretty_grid(self, instance):
         formatter = HtmlFormatter(style="friendly")
