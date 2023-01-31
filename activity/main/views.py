@@ -1,4 +1,5 @@
 from datetime import datetime
+from dal import autocomplete
 
 from django.utils.translation import gettext_lazy as _
 from django.http import JsonResponse
@@ -10,8 +11,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 
 from main.services.mospolytech_api.schedule import Schedule as ScheduleAPI
-from main.forms import AuthForm
 from .models import *
+from main.forms import *
 
 
 class Index(LoginRequiredMixin, TemplateView):
@@ -24,7 +25,16 @@ class Index(LoginRequiredMixin, TemplateView):
         context["logo_link"] = "main/graphics/" + _("logo_en") + ".svg"
         username = (self.request.user.first_name + " " + self.request.user.last_name).strip()
         context["username"] = self.request.user.username if username == "" else username
+        context["group_auto_complete"] = GroupSelect2Form()
         return context
+
+
+class GroupAutoComplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = StudyGroup.objects.filter(is_active=True).order_by("name")
+        if self.q:
+            qs = qs.filter(name__contains=self.q)
+        return qs
 
 
 class Auth(LoginView):
