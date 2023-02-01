@@ -40,8 +40,24 @@ class AuthForm(AuthenticationForm):
     )
 
 
-class GroupSelect2Form(forms.Form):
-    groups = forms.ModelChoiceField(
+class TargetSelect2Form(forms.Form):
+    group = forms.ModelChoiceField(
         queryset=StudyGroup.objects.filter(is_active=True).order_by("name"),
-        widget=autocomplete.ModelSelect2(url="group_auto_complete"),
+        widget=autocomplete.ModelSelect2(
+            url="group_auto_complete",
+            attrs={
+                "data-placeholder": "All groups",
+                "multiple": True
+            }
+        )
+    )
+    student = forms.ModelChoiceField(
+        queryset=Student.objects.filter(is_active=True).order_by("study_group__name", "name"),
+        widget=autocomplete.ModelSelect2(
+            url="student_auto_complete",
+            attrs={
+                "data-placeholder": "Student's full name"
+            },
+            forward=("group",)
+        )
     )

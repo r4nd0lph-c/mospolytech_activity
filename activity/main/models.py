@@ -51,7 +51,7 @@ class Student(AbstractDatestamp):
     )
 
     def __str__(self):
-        return f"{self.name} ({self.study_group})"
+        return f"({self.study_group}) {self.name}"
 
     class Meta:
         verbose_name = _("Student")

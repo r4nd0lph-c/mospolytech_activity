@@ -25,13 +25,24 @@ class Index(LoginRequiredMixin, TemplateView):
         context["logo_link"] = "main/graphics/" + _("logo_en") + ".svg"
         username = (self.request.user.first_name + " " + self.request.user.last_name).strip()
         context["username"] = self.request.user.username if username == "" else username
-        context["group_auto_complete"] = GroupSelect2Form()
+        context["target_auto_complete"] = TargetSelect2Form()
         return context
 
 
 class GroupAutoComplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = StudyGroup.objects.filter(is_active=True).order_by("name")
+        if self.q:
+            qs = qs.filter(name__contains=self.q)
+        return qs
+
+
+class StudentAutoComplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = Student.objects.filter(is_active=True).order_by("study_group__name", "name")
+        groups = self.forwarded.get("group", None)
+        if groups:
+            qs = qs.filter(study_group_id__in=[int(g) for g in groups])
         if self.q:
             qs = qs.filter(name__contains=self.q)
         return qs
