@@ -46,7 +46,7 @@ class TargetSelect2Form(forms.Form):
         widget=autocomplete.ModelSelect2(
             url="group_auto_complete",
             attrs={
-                "data-placeholder": "All groups",
+                "data-placeholder": _("All groups"),
                 "multiple": True
             }
         )
@@ -56,7 +56,7 @@ class TargetSelect2Form(forms.Form):
         widget=autocomplete.ModelSelect2(
             url="student_auto_complete",
             attrs={
-                "data-placeholder": "Student's full name"
+                "data-placeholder": _("Student's full name")
             },
             forward=("group",)
         )

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-31 18:12+0300\n"
-"PO-Revision-Date: 2023-01-31 18:08+0300\n"
+"POT-Creation-Date: 2023-02-01 22:24+0300\n"
+"PO-Revision-Date: 2023-02-01 22:24+0300\n"
 "Last-Translator: r4nd0lph-c\n"
 "Language: Russian\n"
 "MIME-Version: 1.0\n"
@@ -59,17 +59,25 @@ msgstr "Администрирование"
 msgid "Entities"
 msgstr "Сущности"
 
-#: .\main\forms.py:11
+#: .\main\forms.py:12
 msgid "Username"
 msgstr "Имя пользователя"
 
-#: .\main\forms.py:18
+#: .\main\forms.py:21
 msgid "Password"
 msgstr "Пароль"
 
-#: .\main\forms.py:26
+#: .\main\forms.py:31
 msgid "Remember me?"
 msgstr "Запомнить меня"
+
+#: .\main\forms.py:49
+msgid "All groups"
+msgstr "Все группы"
+
+#: .\main\forms.py:59
+msgid "Student's full name"
+msgstr "ФИО студента"
 
 #: .\main\models.py:8
 msgid "Date created"
@@ -263,14 +271,14 @@ msgstr "Выйти"
 msgid "Main | Activity"
 msgstr "Главная | Активность"
 
-#: .\main\views.py:25 .\main\views.py:49 .\main\views.py:127
+#: .\main\views.py:25 .\main\views.py:58 .\main\views.py:136
 msgid "logo_en"
 msgstr "logo_ru"
 
-#: .\main\views.py:48
+#: .\main\views.py:57
 msgid "Authorization | Activity"
 msgstr "Авторизация | Активность"
 
-#: .\main\views.py:126
+#: .\main\views.py:135
 msgid "Page not Found | Activity"
 msgstr "Страница не найдена | Активность"
