@@ -61,3 +61,6 @@ class TargetSelect2Form(forms.Form):
             forward=("group",)
         )
     )
+
+    class Media:
+        js = ("main/js/target_select2_form_clearing.js",)

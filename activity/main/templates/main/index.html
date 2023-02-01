@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block body %}
+    {{ target_auto_complete.media }}
     <!-- main START -->
     <main class="container-fluid">
         <div class="row flex-nowrap">
@@ -71,8 +72,8 @@
                         viverra sit amet.
                     </p>
                     <form>
-                        {{ target_auto_complete.media }}
-                        {{ target_auto_complete.as_p }}
+                        {{ target_auto_complete.student }}
+                        {{ target_auto_complete.group }}
                     </form>
                 </div>
                 <!-- content END -->

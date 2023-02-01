@@ -51,9 +51,9 @@ function get_schedule(student, dates) {
     });
 }
 
-function clear_selected() {
+function clear_select2_selected() {
     document.getElementById("id_group")[0].selected = false;
     document.getElementById("id_student")[0].selected = false;
 }
 
-clear_selected();
+clear_select2_selected();
