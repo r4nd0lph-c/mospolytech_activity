@@ -10,9 +10,12 @@
             <!-- sidebar menu START -->
             <div class="col-auto g-0">
                 <div id="sidebar" class="collapse collapse-horizontal show min-vh-100 border-end">
-                    <p class="d-inline-block text-truncate" data-bs-parent="#sidebar">
-                        Super secret test item for sidebar
-                    </p>
+                    <div class="p-4">
+                        <h5 class="fw-light mb-2"> Student Search </h5>
+                        <form class="mb-3"> {{ target_auto_complete.student }} </form>
+                        {{ target_auto_complete.group }}
+                        <h5 class="fw-light mt-4 mb-2"> Display </h5>
+                    </div>
                 </div>
             </div>
             <!-- sidebar menu END -->
@@ -20,7 +23,7 @@
             <!-- primary screen START -->
             <div class="col g-0">
                 <!-- navbar menu START -->
-                <nav class="container-fluid">
+                <nav class="container-fluid border-bottom">
                     <div class="row py-2">
                         <div class="col-lg-2">
                             <a href="#" class="text-decoration-none me-4" data-bs-target="#sidebar"
@@ -53,7 +56,7 @@
                 <!-- navbar menu END -->
 
                 <!-- content START -->
-                <div>
+                <div class="p-4">
                     <div class="page-header pt-3">
                         <h2>Mospolytech Activity</h2>
                     </div>
@@ -71,10 +74,6 @@
                         augue, quis varius lectus. Nullam ullamcorper ipsum sapien, sit amet iaculis lectus
                         viverra sit amet.
                     </p>
-                    <form>
-                        {{ target_auto_complete.student }}
-                        {{ target_auto_complete.group }}
-                    </form>
                 </div>
                 <!-- content END -->
             </div>
