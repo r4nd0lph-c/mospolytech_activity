@@ -11,10 +11,15 @@
             <div class="col-auto g-0">
                 <div id="sidebar" class="collapse collapse-horizontal show min-vh-100 border-end">
                     <div class="p-4">
-                        <h5 class="fw-light mb-2"> Student Search </h5>
-                        <form class="mb-3"> {{ target_auto_complete.student }} </form>
+                        <h5 class="fw-light mb-2 text-truncate">Student Search</h5>
+                        <form class="mb-3">{{ target_auto_complete.student }}</form>
                         {{ target_auto_complete.group }}
-                        <h5 class="fw-light mt-4 mb-2"> Display </h5>
+                        <h5 class="fw-light mt-4 mb-2 text-truncate">Display</h5>
+                        <select class="form-select">
+                            <option value="day" selected>Day</option>
+                            <option value="week">Week</option>
+                            <option value="month">Month</option>
+                        </select>
                     </div>
                 </div>
             </div>
