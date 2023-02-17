@@ -47,6 +47,7 @@ class TargetSelect2Form(forms.Form):
             url="group_auto_complete",
             attrs={
                 "data-placeholder": _("All groups"),
+                "data-allow-clear": "true",
                 "multiple": True
             }
         )
@@ -56,11 +57,12 @@ class TargetSelect2Form(forms.Form):
         widget=autocomplete.ModelSelect2(
             url="student_auto_complete",
             attrs={
-                "data-placeholder": _("Student's full name")
+                "data-placeholder": _("Student's full name"),
+                "data-allow-clear": "true"
             },
             forward=("group",)
         )
     )
 
     class Media:
-        js = ("main/js/target_select2_form_clearing.js",)
+        js = ("main/js/target_form_custom_logic.js",)
