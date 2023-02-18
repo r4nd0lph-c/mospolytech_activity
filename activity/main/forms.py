@@ -1,9 +1,7 @@
 from dal import autocomplete
-
 from django.utils.translation import gettext_lazy as _
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-
 from .models import *
 
 
@@ -64,14 +62,7 @@ class SearchInfoForm(forms.Form):
         )
     )
     DISPLAY_TYPES = (("day", _("Day")), ("week", _("Week")), ("month", _("Month")))
-    display_type = forms.ChoiceField(
-        choices=DISPLAY_TYPES,
-        widget=forms.Select(
-            attrs={
-                "class": "form-select"
-            }
-        )
-    )
+    display_type = forms.ChoiceField(choices=DISPLAY_TYPES)
 
     class Media:
         js = ("main/js/search_info_custom_logic.js",)

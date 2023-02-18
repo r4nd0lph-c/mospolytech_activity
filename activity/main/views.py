@@ -1,6 +1,4 @@
 from datetime import datetime
-from dal import autocomplete
-
 from django.utils.translation import gettext_lazy as _
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -9,9 +7,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
-
 from main.services.mospolytech_api.schedule import Schedule as ScheduleAPI
-from .models import *
 from main.forms import *
 
 

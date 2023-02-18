@@ -2,14 +2,11 @@ import json
 from pygments import highlight
 from pygments.lexers import JsonLexer
 from pygments.formatters import HtmlFormatter
-
 from django.utils.translation import gettext_lazy as _
 from django.utils.safestring import mark_safe
 from django.contrib import admin
 from django.contrib.admin import DateFieldListFilter
-
 from admin_auto_filters.filters import AutocompleteFilter
-
 from main.models import *
 from main.views import Auth, logout_user
 
