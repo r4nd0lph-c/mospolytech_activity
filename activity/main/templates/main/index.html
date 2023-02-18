@@ -15,11 +15,7 @@
                         <form class="mb-3">{{ target_auto_complete.student }}</form>
                         {{ target_auto_complete.group }}
                         <h5 class="fw-light mt-4 mb-2 text-truncate">Display</h5>
-                        <select class="form-select">
-                            <option value="day" selected>Day</option>
-                            <option value="week">Week</option>
-                            <option value="month">Month</option>
-                        </select>
+                        {{ target_auto_complete.display_type }}
                     </div>
                 </div>
             </div>

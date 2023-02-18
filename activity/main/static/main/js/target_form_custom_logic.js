@@ -35,4 +35,10 @@ $(document).ready(function () {
 
     // removing "group" empty choice "-----"
     remove_empty_option("id_group");
+
+    // making "display_type" choice field default style looks like select2 style
+    // hiding "display_type" search field
+    $("#id_display_type").select2({
+        minimumResultsForSearch: Infinity
+    });
 });

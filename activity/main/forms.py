@@ -63,6 +63,15 @@ class TargetSelect2Form(forms.Form):
             forward=("group",)
         )
     )
+    DISPLAY_TYPES = (("day", _("Day")), ("week", _("Week")), ("month", _("Month")))
+    display_type = forms.ChoiceField(
+        choices=DISPLAY_TYPES,
+        widget=forms.Select(
+            attrs={
+                "class": "form-select"
+            }
+        )
+    )
 
     class Media:
         js = ("main/js/target_form_custom_logic.js",)
