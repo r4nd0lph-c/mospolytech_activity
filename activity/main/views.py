@@ -25,7 +25,7 @@ class Index(LoginRequiredMixin, TemplateView):
         context["logo_link"] = "main/graphics/" + _("logo_en") + ".svg"
         username = (self.request.user.first_name + " " + self.request.user.last_name).strip()
         context["username"] = self.request.user.username if username == "" else username
-        context["target_auto_complete"] = TargetSelect2Form()
+        context["target_auto_complete"] = SearchInfoForm()
         return context
 
 

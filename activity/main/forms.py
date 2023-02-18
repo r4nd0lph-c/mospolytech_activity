@@ -40,7 +40,7 @@ class AuthForm(AuthenticationForm):
     )
 
 
-class TargetSelect2Form(forms.Form):
+class SearchInfoForm(forms.Form):
     group = forms.ModelChoiceField(
         queryset=StudyGroup.objects.filter(is_active=True).order_by("name"),
         widget=autocomplete.ModelSelect2(
@@ -74,4 +74,4 @@ class TargetSelect2Form(forms.Form):
     )
 
     class Media:
-        js = ("main/js/target_form_custom_logic.js",)
+        js = ("main/js/search_info_custom_logic.js",)
