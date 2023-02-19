@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block body %}
-    {{ target_auto_complete.media }}
+    {{ search_info_form.media }}
     <!-- main START -->
     <main class="container-fluid">
         <div class="row flex-nowrap">
@@ -12,10 +12,12 @@
                 <div id="sidebar" class="collapse collapse-horizontal show min-vh-100 border-end">
                     <div class="p-4">
                         <h5 class="fw-light mb-2 text-truncate">Student Search</h5>
-                        <form class="mb-3">{{ target_auto_complete.student }}</form>
-                        {{ target_auto_complete.group }}
+                        <form class="mb-3">{{ search_info_form.student }}</form>
+                        {{ search_info_form.group }}
                         <h5 class="fw-light mt-4 mb-2 text-truncate">Display</h5>
-                        {{ target_auto_complete.display_type }}
+                        {{ search_info_form.display_type }}
+                        <br>
+                        {{ search_info_form.date }}
                     </div>
                 </div>
             </div>

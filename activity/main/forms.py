@@ -62,7 +62,17 @@ class SearchInfoForm(forms.Form):
         )
     )
     DISPLAY_TYPES = (("day", _("Day")), ("week", _("Week")), ("month", _("Month")))
-    display_type = forms.ChoiceField(choices=DISPLAY_TYPES)
+    display_type = forms.ChoiceField(
+        choices=DISPLAY_TYPES
+    )
+    date = forms.CharField(
+        widget=forms.DateInput(
+            attrs={
+                "type": "week",
+                "class": "form-control"
+            }
+        )
+    )
 
     class Media:
         js = ("main/js/search_info_custom_logic.js",)

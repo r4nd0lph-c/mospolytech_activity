@@ -40,20 +40,20 @@
             <form method="post" class="form-login">
                 {% csrf_token %}
 
-                <h3 class="fw-normal mb-16p">{% trans "Log in" %}</h3>
+                <h3 class="fw-normal mb-3">{% trans "Log in" %}</h3>
 
                 {% for f in form %}
                     {% if f.id_for_label != "id_password" %}
                         {% if f.id_for_label != "id_remember_me" %}
                             <!-- login input box START -->
-                            <div class="form-floating mb-8p" style="text-align: left !important;">
+                            <div class="form-floating mb-2" style="text-align: left !important;">
                                 {{ f }}
                                 <label for="{{ f.id_for_label }}">{{ f.label }}</label>
                             </div>
                             <!-- login input box END -->
                         {% else %}
                             <!-- remember me checkbox START -->
-                            <div class="form-check mb-32p" style="padding-left: 0 !important;">
+                            <div class="form-check mb-4" style="padding-left: 0 !important;">
                                 {{ f }}
                                 <label class="form-check-label" for="{{ f.id_for_label }}">
                                     {{ f.label }}
@@ -63,7 +63,7 @@
                         {% endif %}
                     {% else %}
                         <!-- password input box START -->
-                        <div class="input-group mb-16p">
+                        <div class="input-group mb-3">
                             <div class="form-floating form-floating-group flex-grow-1">
                                 {{ f }}
                                 <label style="width: fit-content" for="{{ f.id_for_label }}">{{ f.label }}</label>
