@@ -6,6 +6,8 @@
     --secondary: #CED4DA;
     --primary: #0D6EFD;
     --dark: #212529;
+    --bs-border-color: #dee2e6;
+    --text-secondary: #6c757d;
 }
 
 *:focus {

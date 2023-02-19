@@ -11,13 +11,14 @@
             <div class="col-auto g-0">
                 <div id="sidebar" class="collapse collapse-horizontal show min-vh-100 border-end">
                     <div class="p-4">
-                        <h5 class="fw-light mb-2 text-truncate">Student Search</h5>
-                        <form class="mb-3">{{ search_info_form.student }}</form>
-                        {{ search_info_form.group }}
-                        <h5 class="fw-light mt-4 mb-2 text-truncate">Display</h5>
-                        {{ search_info_form.display_type }}
-                        <br>
-                        {{ search_info_form.date }}
+                        <form>
+                            <h5 class="fw-light mb-2 text-truncate">Student Search</h5>
+                            <p> {{ search_info_form.student }} </p>
+                            <p> {{ search_info_form.group }} </p>
+                            <h5 class="fw-light mt-5 mb-2 text-truncate">Display</h5>
+                            <p> {{ search_info_form.display_type }} </p>
+                            <p> {{ search_info_form.date }} </p>
+                        </form>
                     </div>
                 </div>
             </div>
