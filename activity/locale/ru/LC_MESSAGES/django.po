@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-01 22:24+0300\n"
-"PO-Revision-Date: 2023-02-01 22:24+0300\n"
+"POT-Creation-Date: 2023-02-19 15:26+0300\n"
+"PO-Revision-Date: 2023-02-19 15:26+0300\n"
 "Last-Translator: r4nd0lph-c\n"
 "Language: Russian\n"
 "MIME-Version: 1.0\n"
@@ -19,39 +19,39 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: .\main\admin.py:35
+#: .\main\admin.py:32
 msgid "Study Group"
 msgstr "Учебная группа"
 
-#: .\main\admin.py:46
+#: .\main\admin.py:43
 msgid "The search works by the name of the study group (case-sensitive)."
 msgstr "Поиск работает по названию учебной группы (с учётом регистра)."
 
-#: .\main\admin.py:56
+#: .\main\admin.py:53
 msgid "The search works by the full name of the student (case-sensitive)."
 msgstr "Поиск работает по ФИО студента (с учётом регистра)."
 
-#: .\main\admin.py:72
+#: .\main\admin.py:69
 msgid "JSON Grid"
 msgstr "JSON Тело (grid)"
 
-#: .\main\admin.py:85
+#: .\main\admin.py:82
 msgid "The search works by the signature of the schedule (case-sensitive)."
 msgstr "Поиск работает по сигнатуре расписания (с учётом регистра)."
 
-#: .\main\admin.py:94 .\main\models.py:106
+#: .\main\admin.py:91 .\main\models.py:106
 msgid "Grid"
 msgstr "Тело (grid)"
 
-#: .\main\admin.py:105
+#: .\main\admin.py:102
 msgid "Activity"
 msgstr "Активность"
 
-#: .\main\admin.py:106
+#: .\main\admin.py:103
 msgid "Mospolytech Activity"
 msgstr "Мосполитех Активность"
 
-#: .\main\admin.py:107
+#: .\main\admin.py:104
 msgid "Administration"
 msgstr "Администрирование"
 
@@ -59,25 +59,37 @@ msgstr "Администрирование"
 msgid "Entities"
 msgstr "Сущности"
 
-#: .\main\forms.py:12
+#: .\main\forms.py:10
 msgid "Username"
 msgstr "Имя пользователя"
 
-#: .\main\forms.py:21
+#: .\main\forms.py:19
 msgid "Password"
 msgstr "Пароль"
 
-#: .\main\forms.py:31
+#: .\main\forms.py:29
 msgid "Remember me?"
 msgstr "Запомнить меня"
 
-#: .\main\forms.py:49
+#: .\main\forms.py:47
 msgid "All groups"
 msgstr "Все группы"
 
-#: .\main\forms.py:59
+#: .\main\forms.py:58
 msgid "Student's full name"
 msgstr "ФИО студента"
+
+#: .\main\forms.py:64
+msgid "Day"
+msgstr "День"
+
+#: .\main\forms.py:64
+msgid "Week"
+msgstr "Неделя"
+
+#: .\main\forms.py:64
+msgid "Month"
+msgstr "Месяц"
 
 #: .\main\models.py:8
 msgid "Date created"
@@ -263,22 +275,22 @@ msgstr "Авторизация"
 msgid "Having problems?"
 msgstr "Возникли проблемы?"
 
-#: .\main\templates\main\index.html:37
+#: .\main\templates\main\index.html:45
 msgid "Log Out"
 msgstr "Выйти"
 
-#: .\main\views.py:24
+#: .\main\views.py:20
 msgid "Main | Activity"
 msgstr "Главная | Активность"
 
-#: .\main\views.py:25 .\main\views.py:58 .\main\views.py:136
+#: .\main\views.py:21 .\main\views.py:54 .\main\views.py:132
 msgid "logo_en"
 msgstr "logo_ru"
 
-#: .\main\views.py:57
+#: .\main\views.py:53
 msgid "Authorization | Activity"
 msgstr "Авторизация | Активность"
 
-#: .\main\views.py:135
+#: .\main\views.py:131
 msgid "Page not Found | Activity"
 msgstr "Страница не найдена | Активность"

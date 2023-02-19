@@ -10,12 +10,19 @@
             <!-- sidebar menu START -->
             <div class="col-auto g-0">
                 <div id="sidebar" class="collapse collapse-horizontal show min-vh-100 border-end">
-                    <div class="p-4">
+                    <div class="px-4">
+                        <div id="logo_container" class="mb-5" style="max-width: 310px;">
+                            <header>
+                                <div class="inner" style="padding: 0px;">
+                                    <img src="{% static logo_link %}" alt="{% trans 'LOGO [Mospolytech Activity]' %}"/>
+                                </div>
+                            </header>
+                        </div>
                         <form>
                             <h5 class="fw-light mb-2 text-truncate">Student Search</h5>
                             <p> {{ search_info_form.student }} </p>
                             <p> {{ search_info_form.group }} </p>
-                            <h5 class="fw-light mt-5 mb-2 text-truncate">Display</h5>
+                            <h5 class="fw-light mt-4 mb-2 text-truncate">Display</h5>
                             <p> {{ search_info_form.display_type }} </p>
                             <p> {{ search_info_form.date }} </p>
                         </form>
@@ -85,4 +92,11 @@
         </div>
     </main>
     <!-- main END -->
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        // add 'body-container' class to #logo_container
+        document.getElementById("logo_container").classList.add("body-container");
+    </script>
 {% endblock %}

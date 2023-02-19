@@ -68,7 +68,7 @@ class SearchInfoForm(forms.Form):
     date = forms.CharField(
         widget=forms.DateInput(
             attrs={
-                "type": "week",
+                "type": "date",
                 "class": "form-control"
             }
         )
