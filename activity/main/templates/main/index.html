@@ -11,9 +11,9 @@
             <div class="col-auto g-0">
                 <div id="sidebar" class="collapse collapse-horizontal show min-vh-100 border-end">
                     <div class="px-4">
-                        <div id="logo_container" class="mb-5" style="max-width: 310px;">
+                        <div id="logo-container" class="mb-5" style="max-width: 310px;">
                             <header>
-                                <div class="inner" style="padding: 0px;">
+                                <div class="inner" style="padding: 0;">
                                     <img src="{% static logo_link %}" alt="{% trans 'LOGO [Mospolytech Activity]' %}"/>
                                 </div>
                             </header>
@@ -25,11 +25,57 @@
                             <h5 class="fw-light mt-4 mb-2 text-truncate">Display</h5>
                             <p> {{ search_info_form.display_type }} </p>
                             <p> {{ search_info_form.date }} </p>
+                            <div id="form-buttons" class="row mt-4">
+                                <div class="col-sm-6 mb-3">
+                                    <button type="button" class="btn btn-primary">
+                                        Search
+                                    </button>
+                                </div>
+                                <div class="col-sm-6 mb-3">
+                                    <button type="button" class="btn btn-light disabled" style="border-color: #babbbc;">
+                                        Export
+                                    </button>
+                                </div>
+                            </div>
                         </form>
+                        <div class="text-center text-truncate mb-4">
+                            <a href="#" class="text-decoration-none"
+                               data-bs-toggle="modal" data-bs-target="#about_modal">
+                                About Service
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- sidebar menu END -->
+
+            <!-- modal START -->
+            <div class="modal fade" id="about_modal" tabindex="-1"
+                 aria-labelledby="about_modal_label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="about_modal_label">About Service</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        {# TODO: content for about-modal #}
+                        <div class="modal-body text-start">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent condimentum nisi et
+                                velit congue luctus. Nulla a elit congue velit elementum dapibus vitae sed elit. Etiam
+                                cursus,
+                                mi id elementum imperdiet, neque ante facilisis felis, vel dapibus mauris tellus eget
+                                justo. Donec viverra fringilla odio, at iaculis nunc fringilla a. Nulla eu elit mauris.
+                                In
+                                rhoncus pharetra aliquet. Donec hendrerit, eros et molestie congue, augue est commodo
+                                lacus, ut
+                                consectetur justo ligula id neque.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- modal END -->
 
             <!-- primary screen START -->
             <div class="col g-0">
@@ -57,10 +103,10 @@
                 <script>
                     const sidebar = document.getElementById("sidebar");
                     const btn_sidebar_icon = document.getElementById("sidebar-icon");
-                    sidebar.addEventListener("shown.bs.collapse", event => {
+                    sidebar.addEventListener("shown.bs.collapse", () => {
                         btn_sidebar_icon.className = "bi bi-x-lg bi-lg py-2 p-1";
                     });
-                    sidebar.addEventListener("hidden.bs.collapse", event => {
+                    sidebar.addEventListener("hidden.bs.collapse", () => {
                         btn_sidebar_icon.className = "bi bi-list bi-lg py-2 p-1";
                     });
                 </script>
@@ -96,7 +142,7 @@
 
 {% block extra_js %}
     <script>
-        // add 'body-container' class to #logo_container
-        document.getElementById("logo_container").classList.add("body-container");
+        // add 'body-container' class to #logo-container
+        document.getElementById("logo-container").classList.add("body-container");
     </script>
 {% endblock %}

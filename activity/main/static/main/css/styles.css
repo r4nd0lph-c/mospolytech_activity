@@ -112,3 +112,7 @@ body {
 nav {
     background-color: var(--white);
 }
+
+#form-buttons .btn {
+    width: 100%;
+}
