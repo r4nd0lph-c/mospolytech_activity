@@ -84,18 +84,18 @@
             <div class="col g-0">
                 <!-- navbar menu START -->
                 <nav class="container-fluid border-bottom">
-                    <div class="row py-2">
-                        <div class="col-lg-2">
-                            <a href="#" class="text-decoration-none me-4" data-bs-target="#sidebar"
+                    <div class="row">
+                        <div class="col-auto">
+                            <a href="#" class="text-decoration-none" data-bs-target="#sidebar"
                                data-bs-toggle="collapse">
                                 <i id="sidebar-icon" class="bi bi-x-lg bi-lg py-2 p-1"></i>
                                 <span>Menu</span>
                             </a>
                         </div>
-                        <div class="col-lg-5">
+                        <div class="col-xl">
                             <h5 class="fw-light m-0">Select a student to see the information</h5>
                         </div>
-                        <div class="col-lg-5 border-start">
+                        <div class="col-auto">
                             <span class="me-2">You are logged in as <b>{{ username }}</b></span>
                             <a href="{% url 'logout' %}" class="text-decoration-none">
                                 {% trans "Log Out" %}
