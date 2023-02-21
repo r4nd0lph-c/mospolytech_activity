@@ -9,41 +9,42 @@
         <div class="row flex-nowrap">
             <!-- sidebar menu START -->
             <div class="col-auto g-0">
-                <div id="sidebar" class="collapse collapse-horizontal show min-vh-100 border-end">
-                    <div class="px-4">
-                        <div id="logo-container" class="mb-5" style="max-width: 310px;">
-                            <header>
-                                <div class="inner" style="padding: 0;">
-                                    <img src="{% static logo_link %}" alt="{% trans 'LOGO [Mospolytech Activity]' %}"/>
-                                </div>
-                            </header>
-                        </div>
-                        <form>
-                            <h5 class="fw-light mb-2 text-truncate">Student Search</h5>
-                            <p> {{ search_info_form.student }} </p>
-                            <p> {{ search_info_form.group }} </p>
-                            <h5 class="fw-light mt-4 mb-2 text-truncate">Display</h5>
-                            <p> {{ search_info_form.display_type }} </p>
-                            <p> {{ search_info_form.date }} </p>
-                            <div id="form-buttons" class="row mt-4">
-                                <div class="col-sm-6 mb-3">
-                                    <button type="button" class="btn btn-primary">
-                                        Search
-                                    </button>
-                                </div>
-                                <div class="col-sm-6 mb-3">
-                                    <button type="button" class="btn btn-light disabled" style="border-color: #babbbc;">
-                                        Export
-                                    </button>
-                                </div>
+                <div id="sidebar" class="collapse collapse-horizontal show vh-100 border-end">
+                    <div class="custom-container px-4">
+                        <header class="text-center" style="max-width: 310px;">
+                            <div class="inner" style="padding: 0;">
+                                <img src="{% static logo_link %}" alt="{% trans 'LOGO [Mospolytech Activity]' %}"/>
                             </div>
-                        </form>
-                        <div class="text-center text-truncate mb-4">
-                            <a href="#" class="text-decoration-none"
+                        </header>
+                        <div class="content">
+                            <form style="align-self: center;">
+                                <h5 class="fw-light mb-2 text-truncate">Student Search</h5>
+                                <p> {{ search_info_form.student }} </p>
+                                <p> {{ search_info_form.group }} </p>
+                                <h5 class="fw-light mt-4 mb-2 text-truncate">Display</h5>
+                                <p> {{ search_info_form.display_type }} </p>
+                                <p> {{ search_info_form.date }} </p>
+                                <div id="form-buttons" class="row mt-4">
+                                    <div class="col-sm-6 mb-3">
+                                        <button type="button" class="btn btn-primary">
+                                            Search
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-6 mb-3">
+                                        <button type="button" class="btn btn-light disabled"
+                                                style="border-color: #babbbc;">
+                                            Export
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <footer class="text-center">
+                            <a href="#" class="text-decoration-none text-truncate"
                                data-bs-toggle="modal" data-bs-target="#about_modal">
                                 About Service
                             </a>
-                        </div>
+                        </footer>
                     </div>
                 </div>
             </div>
@@ -138,11 +139,4 @@
         </div>
     </main>
     <!-- main END -->
-{% endblock %}
-
-{% block extra_js %}
-    <script>
-        // add 'body-container' class to #logo-container
-        document.getElementById("logo-container").classList.add("body-container");
-    </script>
 {% endblock %}

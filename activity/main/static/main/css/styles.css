@@ -22,50 +22,47 @@ body {
 }
 
 
-/* CONTAINER */
+/* CUSTOM CONTAINER */
 
-.body-container {
+.custom-container {
     display: flex;
     flex-flow: column;
     height: 100%;
 }
 
-.body-container header {
+.custom-container header {
     flex: 0 1 auto;
-    text-align: center;
     margin-top: 16px;
     margin-bottom: 32px;
 }
 
-.body-container header .inner {
+.custom-container header .inner {
     max-width: 544px;
     padding: 0 16px 0 16px;
     margin: 0 auto;
 }
 
-.body-container header .inner img {
+.custom-container header .inner img {
     width: 100%;
     height: auto;
     margin: auto;
 }
 
-.body-container main {
+.custom-container .content {
     flex: 1 1 auto;
-    text-align: center;
     display: flex;
     justify-content: center;
 }
 
-.body-container main .inner {
+.custom-container .content .inner {
     align-self: center;
     max-width: 544px;
     padding: 0 16px 0 16px;
     margin: 0 auto;
 }
 
-.body-container footer {
+.custom-container footer {
     flex: 0 1 40px;
-    text-align: center;
     margin-top: 32px;
     margin-bottom: 16px;
 }
