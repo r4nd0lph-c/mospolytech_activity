@@ -9,6 +9,7 @@
         <div class="row flex-nowrap">
             <!-- sidebar menu START -->
             <div class="col-auto g-0">
+                {# TODO: fix laggy collapse #}
                 <div id="sidebar" class="collapse collapse-horizontal show vh-100 border-end">
                     <div class="custom-container px-4">
                         <header class="text-center" style="max-width: 310px;">
@@ -19,6 +20,7 @@
                         <div class="content">
                             <form style="align-self: center;">
                                 <h5 class="fw-light mb-2 text-truncate">Student Search</h5>
+                                {# TODO: type directly in control (not input box) for single-select "student" #}
                                 <p> {{ search_info_form.student }} </p>
                                 <p> {{ search_info_form.group }} </p>
                                 <h5 class="fw-light mt-4 mb-2 text-truncate">Display</h5>

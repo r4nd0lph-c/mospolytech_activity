@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-19 15:26+0300\n"
-"PO-Revision-Date: 2023-02-19 15:26+0300\n"
+"POT-Creation-Date: 2023-02-21 14:53+0300\n"
+"PO-Revision-Date: 2023-02-21 14:53+0300\n"
 "Last-Translator: r4nd0lph-c\n"
 "Language: Russian\n"
 "MIME-Version: 1.0\n"
@@ -232,6 +232,7 @@ msgid "Date"
 msgstr "Дата"
 
 #: .\main\templates\main\404.html:10 .\main\templates\main\auth.html:10
+#: .\main\templates\main\index.html:17
 msgid "LOGO [Mospolytech Activity]"
 msgstr "LOGO [Мосполитех Активность]"
 
@@ -275,7 +276,7 @@ msgstr "Авторизация"
 msgid "Having problems?"
 msgstr "Возникли проблемы?"
 
-#: .\main\templates\main\index.html:45
+#: .\main\templates\main\index.html:101
 msgid "Log Out"
 msgstr "Выйти"
 
