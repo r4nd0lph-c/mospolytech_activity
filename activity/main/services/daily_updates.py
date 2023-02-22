@@ -14,7 +14,7 @@ from main.models import *
 
 class DailyUpdates:
     """
-    class for updating information in the database:
+    class for updating information in database:
       * study groups
       * students
       * schedules
