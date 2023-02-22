@@ -71,7 +71,7 @@ class ScheduleAdmin(AbstractLockedAdmin):
             "fields": ("pretty_grid",)
         }),
         (None, {
-            "fields": ("signature",)
+            "fields": ("signature", "date_created", "date_updated")
         })
     )
     list_display = ("id", "study_group", "type", "is_session", "signature", "date_start", "date_end")
