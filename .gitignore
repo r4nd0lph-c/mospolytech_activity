@@ -22,4 +22,4 @@ activity/db.sqlite3
 activity/.env
 
 # logs
-activity/main/services/daily_updates_error.log
+activity/main/services/daily_updates.log
