@@ -8,6 +8,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from main.services.mospolytech_api.schedule import Schedule as ScheduleAPI
+from main.services.logs_writer import LogsWriter
 from main.forms import *
 
 
@@ -63,6 +64,7 @@ class Auth(LoginView):
 
     # TODO: redirect to "?next=..."
     def get_success_url(self):
+        LogsWriter.auth(self.request.user)
         return reverse_lazy("index")
 
 
