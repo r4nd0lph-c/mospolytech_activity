@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-21 14:53+0300\n"
-"PO-Revision-Date: 2023-02-21 14:53+0300\n"
+"POT-Creation-Date: 2023-02-22 21:30+0300\n"
+"PO-Revision-Date: 2023-02-22 21:30+0300\n"
 "Last-Translator: r4nd0lph-c\n"
 "Language: Russian\n"
 "MIME-Version: 1.0\n"
@@ -276,22 +276,38 @@ msgstr "Авторизация"
 msgid "Having problems?"
 msgstr "Возникли проблемы?"
 
-#: .\main\templates\main\index.html:101
+#: .\main\templates\main\index.html:92
+msgid "Menu"
+msgstr "Меню"
+
+#: .\main\templates\main\index.html:96
+msgid "Select a student to see the information"
+msgstr "Выберите студента, чтобы увидеть информацию"
+
+#: .\main\templates\main\index.html:99
+msgid "You are logged in as"
+msgstr "Вы вошли как "
+
+#: .\main\templates\main\index.html:102
+msgid "View admin panel"
+msgstr "Открыть админ-панель"
+
+#: .\main\templates\main\index.html:107
 msgid "Log Out"
 msgstr "Выйти"
 
-#: .\main\views.py:20
+#: .\main\views.py:21
 msgid "Main | Activity"
 msgstr "Главная | Активность"
 
-#: .\main\views.py:21 .\main\views.py:54 .\main\views.py:132
+#: .\main\views.py:22 .\main\views.py:55 .\main\views.py:134
 msgid "logo_en"
 msgstr "logo_ru"
 
-#: .\main\views.py:53
+#: .\main\views.py:54
 msgid "Authorization | Activity"
 msgstr "Авторизация | Активность"
 
-#: .\main\views.py:131
+#: .\main\views.py:133
 msgid "Page not Found | Activity"
 msgstr "Страница не найдена | Активность"

@@ -12,7 +12,7 @@
                 {# TODO: fix laggy collapse #}
                 <div id="sidebar" class="collapse collapse-horizontal show vh-100 border-end">
                     <div class="custom-container px-4">
-                        <header class="text-center" style="max-width: 310px;">
+                        <header class="text-center my-3" style="max-width: 310px;">
                             <div class="inner" style="padding: 0;">
                                 <img src="{% static logo_link %}" alt="{% trans 'LOGO [Mospolytech Activity]' %}"/>
                             </div>
@@ -84,19 +84,25 @@
             <div class="col g-0">
                 <!-- navbar menu START -->
                 <nav class="container-fluid border-bottom">
-                    <div class="row">
+                    <div class="row align-items-center" style="min-height: 96px;">
                         <div class="col-auto">
                             <a href="#" class="text-decoration-none" data-bs-target="#sidebar"
                                data-bs-toggle="collapse">
                                 <i id="sidebar-icon" class="bi bi-x-lg bi-lg py-2 p-1"></i>
-                                <span>Menu</span>
+                                <span>{% trans "Menu" %}</span>
                             </a>
                         </div>
-                        <div class="col-xl">
-                            <h5 class="fw-light m-0">Select a student to see the information</h5>
+                        <div class="col-lg">
+                            <h5 class="fw-light m-0">{% trans "Select a student to see the information" %}</h5>
                         </div>
                         <div class="col-auto">
-                            <span class="me-2">You are logged in as <b>{{ username }}</b></span>
+                            <span class="me-2">{% trans "You are logged in as" %} <b>{{ username }}</b></span>
+                            {% if user.is_superuser %}
+                                <a href="{% url 'admin:index' %}" class="text-decoration-none">
+                                    {% trans "View admin panel" %}
+                                </a>
+                                <span> / </span>
+                            {% endif %}
                             <a href="{% url 'logout' %}" class="text-decoration-none">
                                 {% trans "Log Out" %}
                             </a>
