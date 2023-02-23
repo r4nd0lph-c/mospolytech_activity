@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "dal",
     "dal_select2",
     "admin_auto_filters",
+    "bootstrap_datepicker_plus",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

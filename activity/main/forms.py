@@ -1,5 +1,6 @@
+from bootstrap_datepicker_plus.widgets import DatePickerInput
 from dal import autocomplete
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, get_language
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from .models import *
@@ -65,14 +66,14 @@ class SearchInfoForm(forms.Form):
     display_type = forms.ChoiceField(
         choices=DISPLAY_TYPES
     )
-    date = forms.CharField(
-        widget=forms.DateInput(
-            attrs={
-                "type": "date",
-                "class": "form-control"
-            }
-        )
-    )
+    date = forms.DateField(
+        widget=DatePickerInput(
+            attrs={"class": "form-control"},
+            options={
+                "locale": get_language(),
+                "format": "DD.MM.YYYY"
+            },
+        ))
 
     class Media:
         js = ("main/js/search_info_custom_logic.js",)
