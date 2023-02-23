@@ -76,4 +76,7 @@ class SearchInfoForm(forms.Form):
         ))
 
     class Media:
-        js = ("main/js/search_info_custom_logic.js",)
+        css = {
+            "all": ("main/css/search_info_custom.css",)
+        }
+        js = ("main/js/search_info_custom.js",)

@@ -114,3 +114,10 @@
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
     background-color: #86b7fe !important;
 }
+
+
+/* REWRITE BOOTSTRAP DATEPICKER */
+
+.bootstrap-datetimepicker-widget {
+    width: 310px !important;
+}
