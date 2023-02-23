@@ -109,16 +109,6 @@
                         </div>
                     </div>
                 </nav>
-                <script>
-                    const sidebar = document.getElementById("sidebar");
-                    const btn_sidebar_icon = document.getElementById("sidebar-icon");
-                    sidebar.addEventListener("shown.bs.collapse", () => {
-                        btn_sidebar_icon.className = "bi bi-x-lg bi-lg py-2 p-1";
-                    });
-                    sidebar.addEventListener("hidden.bs.collapse", () => {
-                        btn_sidebar_icon.className = "bi bi-list bi-lg py-2 p-1";
-                    });
-                </script>
                 <!-- navbar menu END -->
 
                 <!-- content START -->
@@ -147,4 +137,17 @@
         </div>
     </main>
     <!-- main END -->
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        const sidebar = document.getElementById("sidebar");
+        const btn_sidebar_icon = document.getElementById("sidebar-icon");
+        sidebar.addEventListener("shown.bs.collapse", () => {
+            btn_sidebar_icon.className = "bi bi-x-lg bi-lg py-2 p-1";
+        });
+        sidebar.addEventListener("hidden.bs.collapse", () => {
+            btn_sidebar_icon.className = "bi bi-list bi-lg py-2 p-1";
+        });
+    </script>
 {% endblock %}

@@ -42,42 +42,41 @@
 
                 <h3 class="fw-normal mb-3">{% trans "Log in" %}</h3>
 
-                {% for f in form %}
-                    {% if f.id_for_label != "id_password" %}
-                        {% if f.id_for_label != "id_remember_me" %}
-                            <!-- login input box START -->
-                            <div class="form-floating mb-2" style="text-align: left !important;">
-                                {{ f }}
-                                <label for="{{ f.id_for_label }}">{{ f.label }}</label>
-                            </div>
-                            <!-- login input box END -->
-                        {% else %}
-                            <!-- remember me checkbox START -->
-                            <div class="form-check mb-4" style="padding-left: 0 !important;">
-                                {{ f }}
-                                <label class="form-check-label" for="{{ f.id_for_label }}">
-                                    {{ f.label }}
-                                </label>
-                            </div>
-                            <!-- remember me checkbox END -->
-                        {% endif %}
-                    {% else %}
-                        <!-- password input box START -->
-                        <div class="input-group mb-3">
-                            <div class="form-floating form-floating-group flex-grow-1">
-                                {{ f }}
-                                <label style="width: fit-content" for="{{ f.id_for_label }}">{{ f.label }}</label>
-                            </div>
-                            <span class="input-group-text" id="eye_span" onclick="pass_visibility()">
-                                    <i class="bi bi-eye" id="eye_icon" style="color: var(--secondary);"></i>
-                                </span>
-                        </div>
-                        <!-- password input box END -->
-                    {% endif %}
-                {% endfor %}
+                <!-- login input box START -->
+                <div class="form-floating mb-2" style="text-align: left !important;">
+                    {{ form.username }}
+                    <label for="{{ form.username.id_for_label }}">
+                        {{ form.username.label }}
+                    </label>
+                </div>
+                <!-- login input box END -->
 
-                <button class="btn btn-primary" style="min-width: 152px"
-                        type="submit">{% trans "Authorization" %}</button>
+                <!-- password input box START -->
+                <div class="input-group mb-3">
+                    <div class="form-floating form-floating-group flex-grow-1">
+                        {{ form.password }}
+                        <label style="width: fit-content" for="{{ form.password.id_for_label }}">
+                            {{ form.password.label }}
+                        </label>
+                    </div>
+                    <span class="input-group-text" id="eye_span" onclick="pass_visibility()">
+                        <i class="bi bi-eye" id="eye_icon" style="color: var(--secondary);"></i>
+                    </span>
+                </div>
+                <!-- password input box END -->
+
+                <!-- remember me checkbox START -->
+                <div class="form-check mb-4" style="padding-left: 0 !important;">
+                    {{ form.remember_me }}
+                    <label class="form-check-label" for="{{ form.remember_me.id_for_label }}">
+                        {{ form.remember_me.label }}
+                    </label>
+                </div>
+                <!-- remember me checkbox END -->
+
+                <button class="btn btn-primary" style="min-width: 152px" type="submit">
+                    {% trans "Authorization" %}
+                </button>
             </form>
             <!-- auth form END -->
         </div>
