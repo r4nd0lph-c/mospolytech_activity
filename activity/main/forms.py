@@ -47,7 +47,8 @@ class SearchInfoForm(forms.Form):
             attrs={
                 "data-placeholder": _("All groups"),
                 "data-allow-clear": "true",
-                "multiple": True
+                "multiple": True,
+                "data-maximum-selection-length": 18
             }
         )
     )
