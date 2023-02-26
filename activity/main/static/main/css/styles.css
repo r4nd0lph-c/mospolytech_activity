@@ -5,9 +5,10 @@
     --light: #F5F5F5;
     --secondary: #CED4DA;
     --primary: #0D6EFD;
+    --pr-accent: #86B7FE;
     --dark: #212529;
-    --bs-border-color: #dee2e6;
-    --text-secondary: #6c757d;
+    --bs-border-color: #DEE2E6;
+    --text-secondary: #6C757D;
 }
 
 *:focus {
