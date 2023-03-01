@@ -1,4 +1,4 @@
-// removing empty choice "-----" for field with given id
+// removing empty choice "-----" for select2 field with given id
 function remove_empty_option(select_id) {
     document.getElementById(select_id)[0].selected = false;
 }
@@ -40,5 +40,11 @@ $(document).ready(function () {
     // hiding "display_type" search field
     $("#id_display_type").select2({
         minimumResultsForSearch: Infinity
+    });
+
+    // detecting "display_type" changes & replace "date" fields
+    $(document.body).on("change", "#id_display_type", function () {
+        console.log(this.value); // TODO: clear console logs
+        // TODO: add date_day, date_week, date_month field and make "state-changer" for its display type
     });
 });
