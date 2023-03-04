@@ -42,9 +42,37 @@ $(document).ready(function () {
         minimumResultsForSearch: Infinity
     });
 
-    // detecting "display_type" changes & replace "date" fields
+    // finding "date" fields parents
+    let date_fields = [
+        {
+            "type": "day",
+            "parent": document.getElementById("id_date_day").parentElement
+        },
+        {
+            "type": "week",
+            "parent": document.getElementById("id_date_week").parentElement
+        },
+        {
+            "type": "month",
+            "parent": document.getElementById("id_date_month").parentElement
+        }
+    ]
+
+    // updating "date" fields visibility
+    function update_df_visibility(val) {
+        date_fields.forEach(obj => {
+            if (obj["type"] === val) {
+                obj["parent"].style.display = "flex";
+            } else {
+                obj["parent"].style.display = "none";
+            }
+        });
+    }
+
+    update_df_visibility("day");
+
+    // detecting "display_type" changes & updating "date" fields visibility
     $(document.body).on("change", "#id_display_type", function () {
-        console.log(this.value); // TODO: clear console logs
-        // TODO: add date_day, date_week, date_month field and make "state-changer" for its display type
+        update_df_visibility(this.value);
     });
 });
