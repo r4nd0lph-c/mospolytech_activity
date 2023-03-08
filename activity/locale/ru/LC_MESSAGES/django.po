@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-22 21:30+0300\n"
-"PO-Revision-Date: 2023-02-22 21:30+0300\n"
+"POT-Creation-Date: 2023-03-08 17:28+0300\n"
+"PO-Revision-Date: 2023-03-08 17:28+0300\n"
 "Last-Translator: r4nd0lph-c\n"
 "Language: Russian\n"
 "MIME-Version: 1.0\n"
@@ -59,35 +59,35 @@ msgstr "Администрирование"
 msgid "Entities"
 msgstr "Сущности"
 
-#: .\main\forms.py:10
+#: .\main\forms.py:12
 msgid "Username"
 msgstr "Имя пользователя"
 
-#: .\main\forms.py:19
+#: .\main\forms.py:21
 msgid "Password"
 msgstr "Пароль"
 
-#: .\main\forms.py:29
+#: .\main\forms.py:31
 msgid "Remember me?"
 msgstr "Запомнить меня"
 
-#: .\main\forms.py:47
+#: .\main\forms.py:49
 msgid "All groups"
 msgstr "Все группы"
 
-#: .\main\forms.py:58
+#: .\main\forms.py:61
 msgid "Student's full name"
 msgstr "ФИО студента"
 
-#: .\main\forms.py:64
+#: .\main\forms.py:67
 msgid "Day"
 msgstr "День"
 
-#: .\main\forms.py:64
+#: .\main\forms.py:67
 msgid "Week"
 msgstr "Неделя"
 
-#: .\main\forms.py:64
+#: .\main\forms.py:67
 msgid "Month"
 msgstr "Месяц"
 
@@ -268,31 +268,51 @@ msgstr ""
 msgid "Log in"
 msgstr "Вход"
 
-#: .\main\templates\main\auth.html:80
+#: .\main\templates\main\auth.html:78
 msgid "Authorization"
 msgstr "Авторизация"
 
-#: .\main\templates\main\auth.html:90 .\main\templates\main\auth.html:101
+#: .\main\templates\main\auth.html:89 .\main\templates\main\auth.html:100
 msgid "Having problems?"
 msgstr "Возникли проблемы?"
 
-#: .\main\templates\main\index.html:92
+#: .\main\templates\main\index.html:22
+msgid "Student Search"
+msgstr "Поиск студента"
+
+#: .\main\templates\main\index.html:26
+msgid "Display"
+msgstr "Отображение"
+
+#: .\main\templates\main\index.html:34
+msgid "Search"
+msgstr "Поиск"
+
+#: .\main\templates\main\index.html:40
+msgid "Export"
+msgstr "Экспорт"
+
+#: .\main\templates\main\index.html:49 .\main\templates\main\index.html:63
+msgid "About Service"
+msgstr "О сервисе"
+
+#: .\main\templates\main\index.html:94
 msgid "Menu"
 msgstr "Меню"
 
-#: .\main\templates\main\index.html:96
+#: .\main\templates\main\index.html:98
 msgid "Select a student to see the information"
 msgstr "Выберите студента, чтобы увидеть информацию"
 
-#: .\main\templates\main\index.html:99
+#: .\main\templates\main\index.html:101
 msgid "You are logged in as"
-msgstr "Вы вошли как "
+msgstr "Вы вошли как"
 
-#: .\main\templates\main\index.html:102
+#: .\main\templates\main\index.html:104
 msgid "View admin panel"
 msgstr "Открыть админ-панель"
 
-#: .\main\templates\main\index.html:107
+#: .\main\templates\main\index.html:109
 msgid "Log Out"
 msgstr "Выйти"
 
