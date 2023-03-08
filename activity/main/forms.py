@@ -1,3 +1,4 @@
+from datetime import datetime
 from bootstrap_datepicker_plus.widgets import DatePickerInput, MonthPickerInput
 from dal import autocomplete
 from django.utils.translation import gettext_lazy as _, get_language
@@ -72,10 +73,10 @@ class SearchInfoForm(forms.Form):
             attrs={"class": "form-control"},
             options={
                 "locale": get_language(),
-                "format": "DD.MM.YYYY"
+                "format": "DD.MM.YYYY",
+                "defaultDate": datetime.today()
             },
         ))
-    # TODO: make visual for week picker
     date_week = forms.DateField(
         widget=DatePickerInput(
             attrs={"class": "form-control"},
@@ -88,7 +89,8 @@ class SearchInfoForm(forms.Form):
             attrs={"class": "form-control"},
             options={
                 "locale": get_language(),
-                "format": "MM.YYYY"
+                "format": "MMMM YYYY",
+                "defaultDate": datetime.today()
             },
         ))
 
