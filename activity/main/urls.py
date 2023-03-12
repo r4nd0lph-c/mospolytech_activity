@@ -1,5 +1,6 @@
 from django.urls import path
 from main.views import *
+from main.services.daily_updates import update
 
 urlpatterns = [
     path("", Index.as_view(), name="index"),
@@ -11,3 +12,10 @@ urlpatterns = [
     path("get_students/", get_students, name="get_students"),
     path("get_schedule/", get_schedule, name="get_schedule")
 ]
+
+
+def start_background_tasks():
+    update(repeat=60 * 60 * 24)
+
+
+start_background_tasks()
