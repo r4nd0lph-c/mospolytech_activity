@@ -19,7 +19,7 @@ class Index(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = _("Main | Activity")
-        context["logo_link"] = "main/graphics/" + _("logo_en") + ".svg"
+        context["logo_link"] = "main/graphics/logo/" + _("logo_en") + ".svg"
         username = (self.request.user.first_name + " " + self.request.user.last_name).strip()
         context["username"] = self.request.user.username if username == "" else username
         context["search_info_form"] = SearchInfoForm()
@@ -52,7 +52,7 @@ class Auth(LoginView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = _("Authorization | Activity")
-        context["logo_link"] = "main/graphics/" + _("logo_en") + ".svg"
+        context["logo_link"] = "main/graphics/logo/" + _("logo_en") + ".svg"
         return context
 
     def form_valid(self, form):
@@ -131,7 +131,7 @@ def page_not_found(request, exception):
         request, "main/404.html",
         {
             "title": _("Page not Found | Activity"),
-            "logo_link": "main/graphics/" + _("logo_en") + ".svg"
+            "logo_link": "main/graphics/logo" + _("logo_en") + ".svg"
         }
     )
     response.status_code = 404
