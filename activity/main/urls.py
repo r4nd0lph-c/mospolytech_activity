@@ -1,6 +1,6 @@
 from django.urls import path
 from main.views import *
-from main.services.daily_updates import update
+from main.tasks import update
 
 urlpatterns = [
     path("", Index.as_view(), name="index"),

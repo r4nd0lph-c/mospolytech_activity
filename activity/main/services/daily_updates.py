@@ -1,10 +1,9 @@
 # TODO: periodic task with daily updates
 
 import os
-from datetime import datetime, timedelta
+from datetime import datetime
 from hashlib import md5
 import django
-from background_task import background
 from main.services.mospolytech_api.api import API
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "activity.settings")
@@ -175,24 +174,6 @@ class DailyUpdates:
                     )
                 except Exception as e:
                     DailyUpdates.logs(False, f"is_session: {'true ' if is_session else 'false'}", *e.args)
-
-
-def get_next_day_schedule():
-    tomorrow = datetime.now() + timedelta(days=1)
-    tomorrow_6am = datetime(year=tomorrow.year, month=tomorrow.month, day=tomorrow.day, hour=6, minute=0, second=0)
-
-    time_difference = tomorrow_6am - datetime.now()
-    seconds_difference = time_difference.total_seconds()
-
-    return int(seconds_difference)
-
-
-@background(schedule=get_next_day_schedule(), remove_existing_tasks=True)
-def update():
-    du = DailyUpdates()
-    du.update_study_groups()
-    du.update_students()
-    du.update_schedules()
 
 
 if __name__ == "__main__":
