@@ -1,9 +1,8 @@
-// removing empty choice "-----" for select2 field with given id
-function remove_empty_option(select_id) {
-    document.getElementById(select_id)[0].selected = false;
-}
-
 $(document).ready(function () {
+    // removing empty choice "-----" for select2 field with given id
+    function remove_empty_option(select_id) {
+        document.getElementById(select_id)[0].selected = false;
+    }
 
     // clearing "student" field if "group" field is changed
     $(":input[name$=group]").on("change", function () {
@@ -68,6 +67,8 @@ $(document).ready(function () {
             }
         });
     }
+
+    // TODO: make visual for week picker
 
     update_df_visibility("day");
 
