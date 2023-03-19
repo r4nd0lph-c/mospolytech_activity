@@ -3,12 +3,12 @@
 :root {
     --white: #FFFFFF;
     --light: #F5F5F5;
+    --bs-border-color: #DEE2E6;
     --secondary: #CED4DA;
+    --text-secondary: #6C757D;
+    --dark: #212529;
     --primary: #0D6EFD;
     --pr-accent: #86B7FE;
-    --dark: #212529;
-    --bs-border-color: #DEE2E6;
-    --text-secondary: #6C757D;
 }
 
 *:focus {
