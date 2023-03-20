@@ -28,6 +28,8 @@ class Index(LoginRequiredMixin, TemplateView):
 
 class GroupAutoComplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return StudyGroup.objects.none()
         qs = StudyGroup.objects.filter(is_active=True).order_by("name")
         if self.q:
             qs = qs.filter(name__contains=self.q)
@@ -36,6 +38,8 @@ class GroupAutoComplete(autocomplete.Select2QuerySetView):
 
 class StudentAutoComplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return Student.objects.none()
         qs = Student.objects.filter(is_active=True).order_by("study_group__name", "name")
         groups = self.forwarded.get("group", None)
         if groups:
