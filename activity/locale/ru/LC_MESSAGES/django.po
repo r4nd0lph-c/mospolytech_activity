@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-08 17:28+0300\n"
-"PO-Revision-Date: 2023-03-08 17:28+0300\n"
+"POT-Creation-Date: 2023-03-27 20:15+0300\n"
+"PO-Revision-Date: 2023-03-27 20:15+0300\n"
 "Last-Translator: r4nd0lph-c\n"
 "Language: Russian\n"
 "MIME-Version: 1.0\n"
@@ -268,13 +268,48 @@ msgstr ""
 msgid "Log in"
 msgstr "Вход"
 
-#: .\main\templates\main\auth.html:78
+#: .\main\templates\main\auth.html:79
 msgid "Authorization"
 msgstr "Авторизация"
 
-#: .\main\templates\main\auth.html:89 .\main\templates\main\auth.html:100
+#: .\main\templates\main\auth.html:90 .\main\templates\main\auth.html:101
 msgid "Having problems?"
 msgstr "Возникли проблемы?"
+
+#: .\main\templates\main\auth.html:124
+msgid "Login / Password"
+msgstr "Логин / Пароль"
+
+#: .\main\templates\main\auth.html:126
+msgid "Login to the system is done using a unified user account (UUA)."
+msgstr "Вход в систему происходит через единую учётную запись (ЕУЗ)."
+
+#: .\main\templates\main\auth.html:128
+msgid ""
+"To make sure that the password is spelled correctly, click on the symbol"
+msgstr "Чтобы убедиться в правильности написания пароля, нажмите на символ"
+
+#: .\main\templates\main\auth.html:132
+msgid "In case the problem has not been solved"
+msgstr "В случае, если проблема не решилась"
+
+#: .\main\templates\main\auth.html:134
+msgid ""
+"If you can't log in, contact technical support: describe the problem, "
+"specify your full name, place of work, login, attach screenshots."
+msgstr ""
+"Если не получается войти в систему — обратитесь в службу технической поддержки:"
+"опишите проблему, укажите ФИО, место работы, логин, приложите скришноты."
+
+#: .\main\templates\main\auth.html:136
+msgid "Email address"
+msgstr "Адрес электронной почты"
+
+#: .\main\templates\main\auth.html:141
+msgid ""
+"The technical support service works according to the schedule from 09:30 to "
+"20:00 on weekdays."
+msgstr "Служба технической поддержки работает по графику с 09:30 до 20:00 в будние дни."
 
 #: .\main\templates\main\index.html:22
 msgid "Student Search"
@@ -296,23 +331,57 @@ msgstr "Экспорт"
 msgid "About Service"
 msgstr "О сервисе"
 
-#: .\main\templates\main\index.html:94
+#: .\main\templates\main\index.html:81
+msgid "In order to use the service"
+msgstr "Для того, чтобы воспользоваться сервисом"
+
+#: .\main\templates\main\index.html:85
+msgid ""
+"Enter the student's case-sensitive full name in the first field. The search "
+"will be performed across all groups. If you want to search for a specific "
+"group/groups, enter the number of the group you are interested in in the "
+"second field. After specifying it, a list of students of this group will be "
+"displayed. Next, select the required student from the updated list."
+msgstr ""
+"Введите в первое поле ФИО студента с учётом регистра. Поиск будет осуществлён по всем группам. "
+"Если Вы хотите осуществить поиск по конкретной группе/группам, "
+"введите во второе поле номер интересующей Вас группы. "
+"После его указания отобразится список студентов данной группы. "
+"Далее, выберите необходимого студента из обновлённого списка."
+
+#: .\main\templates\main\index.html:89
+msgid ""
+"Below, in the third field, select the date display format: 'Day', 'Week', "
+"'Month'. Then select the desired date."
+msgstr ""
+"Ниже, в третьем поле, выберите формат отображения даты: "
+"'День', 'Неделя', 'Месяц'. Затем выберите нужную дату."
+
+#: .\main\templates\main\index.html:93
+msgid ""
+"After clicking the 'Search' button, the entire attendance of the student you "
+"are interested in during the specified period will be displayed."
+msgstr ""
+"После нажатия кнопки 'Поиск' будет отображена вся посещаемость интересующего "
+"Вас студента в указанный период."
+
+#: .\main\templates\main\index.html:110
 msgid "Menu"
 msgstr "Меню"
 
-#: .\main\templates\main\index.html:98
+#: .\main\templates\main\index.html:114
 msgid "Select a student to see the information"
 msgstr "Выберите студента, чтобы увидеть информацию"
 
-#: .\main\templates\main\index.html:101
+#: .\main\templates\main\index.html:117
 msgid "You are logged in as"
 msgstr "Вы вошли как"
 
-#: .\main\templates\main\index.html:104
+#: .\main\templates\main\index.html:120
 msgid "View admin panel"
 msgstr "Открыть админ-панель"
 
-#: .\main\templates\main\index.html:109
+#: .\main\templates\main\index.html:125
 msgid "Log Out"
 msgstr "Выйти"
 
@@ -320,14 +389,22 @@ msgstr "Выйти"
 msgid "Main | Activity"
 msgstr "Главная | Активность"
 
-#: .\main\views.py:22 .\main\views.py:55 .\main\views.py:134
+#: .\main\views.py:22 .\main\views.py:59 .\main\views.py:138
 msgid "logo_en"
 msgstr "logo_ru"
 
-#: .\main\views.py:54
+#: .\main\views.py:58
 msgid "Authorization | Activity"
 msgstr "Авторизация | Активность"
 
-#: .\main\views.py:133
+#: .\main\views.py:137
 msgid "Page not Found | Activity"
 msgstr "Страница не найдена | Активность"
+
+#: .\templates\admin\base_site.html:10
+msgid "Django site admin"
+msgstr "Админ-панель"
+
+#: .\templates\admin\base_site.html:14
+msgid "Django administration"
+msgstr "Администрирование"
