@@ -57,24 +57,32 @@
             <!-- modal START -->
             <div class="modal fade" id="about_modal" tabindex="-1"
                  aria-labelledby="about_modal_label" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="about_modal_label">{% trans "About Service" %}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        {# TODO: content for about-modal #}
                         <div class="modal-body text-start">
+                            <h6>Для того, чтобы воспользоваться сервисом:</h6>
+                            <br>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent condimentum nisi et
-                                velit congue luctus. Nulla a elit congue velit elementum dapibus vitae sed elit. Etiam
-                                cursus,
-                                mi id elementum imperdiet, neque ante facilisis felis, vel dapibus mauris tellus eget
-                                justo. Donec viverra fringilla odio, at iaculis nunc fringilla a. Nulla eu elit mauris.
-                                In
-                                rhoncus pharetra aliquet. Donec hendrerit, eros et molestie congue, augue est commodo
-                                lacus, ut
-                                consectetur justo ligula id neque.
+                                <b>1.</b>
+                                Введите в первое поле ФИО студента с учётом
+                                регистра. Поиск будет осуществлён по всем группам. Если Вы хотите осуществить поиск по
+                                конкретной группе/группам, введите во второе поле номер интересующей Вас группы. После
+                                его указания отобразится список студентов данной группы. Далее, выберите необходимого
+                                студента из обновлённого списка.
+                            </p>
+                            <p>
+                                <b>2.</b>
+                                Ниже, в третьем поле, выберите формат отображения даты: "День","Неделя","Месяц".
+                                Затем выберите нужную дату.
+                            </p>
+                            <p>
+                                <b>3.</b>
+                                После нажатия кнопки "Поиск" будет отображена вся посещаемость интересующего Вас
+                                студента в указанный период.
                             </p>
                         </div>
                     </div>

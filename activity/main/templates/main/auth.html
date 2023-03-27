@@ -95,21 +95,31 @@
     <!-- modal START -->
     <div class="modal fade" id="feedback_modal" tabindex="-1"
          aria-labelledby="feedback_modal_label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="feedback_modal_label">{% trans "Having problems?" %}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                {# TODO: content for help-modal #}
                 <div class="modal-body text-start">
+                    <h6>Логин / Пароль</h6>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent condimentum nisi et velit
-                        congue luctus. Nulla a elit congue velit elementum dapibus vitae sed elit. Etiam cursus, mi
-                        id elementum imperdiet, neque ante facilisis felis, vel dapibus mauris tellus eget justo.
-                        Donec viverra fringilla odio, at iaculis nunc fringilla a. Nulla eu elit mauris. In rhoncus
-                        pharetra aliquet. Donec hendrerit, eros et molestie congue, augue est commodo lacus, ut
-                        consectetur justo ligula id neque.
+                        Вход в систему происходит через единую учётную запись (ЕУЗ).
+                        <br>
+                        Чтобы убедиться в правильности написания пароля, нажмите на символ
+                        "<i class="bi bi-eye" id="eye_icon" style="color: var(--secondary);"></i>".
+                    </p>
+                    <br>
+                    <h6>В случае, если проблема не решилась</h6>
+                    <p>
+                        Если не получается войти в систему — обратитесь в службу технической поддержки: опишите
+                        проблему, укажите ФИО, место работы, логин, приложите скришноты.
+                        <br>
+                        Адрес электронной почты: <a href="mailto:help@mospolytech.ru">help@mospolytech.ru</a>
+                    </p>
+                    <br>
+                    <p>
+                        Служба технической поддержки работает по графику с <b>09:30</b> до <b>20:00</b> в будние дни.
                     </p>
                 </div>
             </div>
