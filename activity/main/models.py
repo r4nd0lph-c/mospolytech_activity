@@ -88,7 +88,7 @@ class StudyGroupOld(AbstractDatestamp):
     )
 
     def __str__(self):
-        return self.study_group
+        return self.study_group.name
 
     class Meta:
         verbose_name = _("Old Study group")
