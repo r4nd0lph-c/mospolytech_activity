@@ -58,6 +58,36 @@ class Student(AbstractDatestamp):
         verbose_name_plural = _("Students")
 
 
+class StudyGroupOld(AbstractDatestamp):
+    student = models.ForeignKey(
+        Student,
+        on_delete=models.CASCADE,
+        help_text=_("Full name of the student."),
+        verbose_name=_("Full name")
+    )
+    study_group = models.ForeignKey(
+        StudyGroup,
+        on_delete=models.CASCADE,
+        help_text=_("Name of the study group."),
+        verbose_name=_("Study group")
+    )
+    date_start = models.DateField(
+        help_text=_("The beginning of studies in this group."),
+        verbose_name=_("Date start")
+    )
+    date_end = models.DateField(
+        help_text=_("The end of studies in this group."),
+        verbose_name=_("Date end")
+    )
+
+    def __str__(self):
+        return self.study_group
+
+    class Meta:
+        verbose_name = _("Old Study group")
+        verbose_name_plural = _("Old Study groups")
+
+
 class ScheduleType(AbstractDatestamp):
     name = models.CharField(
         max_length=8,

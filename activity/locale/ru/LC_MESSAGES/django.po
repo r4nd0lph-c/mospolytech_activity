@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-27 20:15+0300\n"
-"PO-Revision-Date: 2023-03-27 20:15+0300\n"
+"POT-Creation-Date: 2023-04-10 13:04+0300\n"
+"PO-Revision-Date: 2023-04-10 13:04+0300\n"
 "Last-Translator: r4nd0lph-c\n"
 "Language: Russian\n"
 "MIME-Version: 1.0\n"
@@ -27,31 +27,31 @@ msgstr "Учебная группа"
 msgid "The search works by the name of the study group (case-sensitive)."
 msgstr "Поиск работает по названию учебной группы (с учётом регистра)."
 
-#: .\main\admin.py:53
+#: .\main\admin.py:53 .\main\admin.py:63
 msgid "The search works by the full name of the student (case-sensitive)."
 msgstr "Поиск работает по ФИО студента (с учётом регистра)."
 
-#: .\main\admin.py:69
+#: .\main\admin.py:79
 msgid "JSON Grid"
 msgstr "JSON Тело (grid)"
 
-#: .\main\admin.py:82
+#: .\main\admin.py:92
 msgid "The search works by the signature of the schedule (case-sensitive)."
 msgstr "Поиск работает по сигнатуре расписания (с учётом регистра)."
 
-#: .\main\admin.py:91 .\main\models.py:106
+#: .\main\admin.py:101 .\main\models.py:136
 msgid "Grid"
 msgstr "Тело (grid)"
 
-#: .\main\admin.py:102
+#: .\main\admin.py:112
 msgid "Activity"
 msgstr "Активность"
 
-#: .\main\admin.py:103
+#: .\main\admin.py:113
 msgid "Mospolytech Activity"
 msgstr "Мосполитех Активность"
 
-#: .\main\admin.py:104
+#: .\main\admin.py:114
 msgid "Administration"
 msgstr "Администрирование"
 
@@ -99,11 +99,12 @@ msgstr "Дата создания"
 msgid "Date updated"
 msgstr "Дата обновления"
 
-#: .\main\models.py:18 .\main\models.py:44 .\main\models.py:82
+#: .\main\models.py:18 .\main\models.py:44 .\main\models.py:71
+#: .\main\models.py:112
 msgid "Name of the study group."
 msgstr "Название учебной группы."
 
-#: .\main\models.py:19 .\main\models.py:67
+#: .\main\models.py:19 .\main\models.py:97
 msgid "Name"
 msgstr "Название"
 
@@ -115,7 +116,8 @@ msgstr "Определяет, активен ли объект в системе
 msgid "Active"
 msgstr "Активность"
 
-#: .\main\models.py:31 .\main\models.py:45 .\main\models.py:83
+#: .\main\models.py:31 .\main\models.py:45 .\main\models.py:72
+#: .\main\models.py:113
 msgid "Study group"
 msgstr "Учебная группа"
 
@@ -123,11 +125,11 @@ msgstr "Учебная группа"
 msgid "Study groups"
 msgstr "Учебные группы"
 
-#: .\main\models.py:38
+#: .\main\models.py:38 .\main\models.py:65
 msgid "Full name of the student."
 msgstr "ФИО студента."
 
-#: .\main\models.py:39
+#: .\main\models.py:39 .\main\models.py:66
 msgid "Full name"
 msgstr "Полное имя"
 
@@ -139,95 +141,111 @@ msgstr "Студент"
 msgid "Students"
 msgstr "Студенты"
 
-#: .\main\models.py:66 .\main\models.py:88
-msgid "Name of the type of schedule."
-msgstr "Название типа расписания."
-
-#: .\main\models.py:74
-msgid "Schedule type"
-msgstr "Тип расписания"
-
 #: .\main\models.py:75
-msgid "Schedule types"
-msgstr "Типы расписаний"
+msgid "The beginning of studies in this group."
+msgstr ""
 
-#: .\main\models.py:89
-msgid "Type"
-msgstr "Тип"
-
-#: .\main\models.py:93
-msgid "Determines whether the schedule is a session schedule or not."
-msgstr "Определяет, является ли расписание расписанием сессии или нет."
-
-#: .\main\models.py:94
-msgid "Session"
-msgstr "Сессия"
-
-#: .\main\models.py:97
-msgid "The start date of the schedule."
-msgstr "Дата начала расписания."
-
-#: .\main\models.py:98
+#: .\main\models.py:76 .\main\models.py:128
 msgid "Date start"
 msgstr "Дата начала"
 
-#: .\main\models.py:101
-msgid "The end date of the schedule."
-msgstr "Дата конца расписания."
+#: .\main\models.py:79
+msgid "The end of studies in this group."
+msgstr ""
 
-#: .\main\models.py:102
+#: .\main\models.py:80 .\main\models.py:132
 msgid "Date end"
 msgstr "Дата конца"
 
+#: .\main\models.py:87
+msgid "Old Study group"
+msgstr "Старая Учебная группа"
+
+#: .\main\models.py:88
+msgid "Old Study groups"
+msgstr "Старые Учебные группы"
+
+#: .\main\models.py:96 .\main\models.py:118
+msgid "Name of the type of schedule."
+msgstr "Название типа расписания."
+
+#: .\main\models.py:104
+msgid "Schedule type"
+msgstr "Тип расписания"
+
 #: .\main\models.py:105
+msgid "Schedule types"
+msgstr "Типы расписаний"
+
+#: .\main\models.py:119
+msgid "Type"
+msgstr "Тип"
+
+#: .\main\models.py:123
+msgid "Determines whether the schedule is a session schedule or not."
+msgstr "Определяет, является ли расписание расписанием сессии или нет."
+
+#: .\main\models.py:124
+msgid "Session"
+msgstr "Сессия"
+
+#: .\main\models.py:127
+msgid "The start date of the schedule."
+msgstr "Дата начала расписания."
+
+#: .\main\models.py:131
+msgid "The end date of the schedule."
+msgstr "Дата конца расписания."
+
+#: .\main\models.py:135
 msgid "Raw schedule grid format."
 msgstr "Сырой формат расписания (grid)."
 
-#: .\main\models.py:112
+#: .\main\models.py:142
 msgid "The unique identifier of the schedule based on its data."
 msgstr "Уникальный идентификатор расписания, основанный на его информации."
 
-#: .\main\models.py:113
+#: .\main\models.py:143
 msgid "Signature"
 msgstr "Сигнатура"
 
-#: .\main\models.py:120
+#: .\main\models.py:150
 msgid "Schedule"
 msgstr "Расписание"
 
-#: .\main\models.py:121
+#: .\main\models.py:151
 msgid "Schedules"
 msgstr "Расписания"
 
-#: .\main\models.py:128
+#: .\main\models.py:158
 msgid "The user who performed the action."
 msgstr "Пользователь, выполнивший действие."
 
-#: .\main\models.py:129
+#: .\main\models.py:159
 msgid "User"
 msgstr "Пользователь"
 
-#: .\main\models.py:133
+#: .\main\models.py:163
 msgid "Action in the system."
 msgstr "Действие в системе"
 
-#: .\main\models.py:134
+#: .\main\models.py:164
 msgid "Action"
 msgstr "Действие"
 
-#: .\main\models.py:139
+#: .\main\models.py:169
 msgid "action"
 msgstr "действие"
 
-#: .\main\models.py:142
+#: .\main\models.py:172
 msgid "History Log"
 msgstr "Действие"
 
-#: .\main\models.py:143
+#: .\main\models.py:173
 msgid "History Logs"
 msgstr "Журнал действий"
 
-#: .\main\models.py:146
+#: .\main\models.py:176
 msgid "Date"
 msgstr "Дата"
 
@@ -276,40 +294,43 @@ msgstr "Авторизация"
 msgid "Having problems?"
 msgstr "Возникли проблемы?"
 
-#: .\main\templates\main\auth.html:124
+#: .\main\templates\main\auth.html:105
 msgid "Login / Password"
 msgstr "Логин / Пароль"
 
-#: .\main\templates\main\auth.html:126
+#: .\main\templates\main\auth.html:107
 msgid "Login to the system is done using a unified user account (UUA)."
 msgstr "Вход в систему происходит через единую учётную запись (ЕУЗ)."
 
-#: .\main\templates\main\auth.html:128
+#: .\main\templates\main\auth.html:109
 msgid ""
 "To make sure that the password is spelled correctly, click on the symbol"
 msgstr "Чтобы убедиться в правильности написания пароля, нажмите на символ"
 
-#: .\main\templates\main\auth.html:132
+#: .\main\templates\main\auth.html:113
 msgid "In case the problem has not been solved"
 msgstr "В случае, если проблема не решилась"
 
-#: .\main\templates\main\auth.html:134
+#: .\main\templates\main\auth.html:115
 msgid ""
 "If you can't log in, contact technical support: describe the problem, "
 "specify your full name, place of work, login, attach screenshots."
 msgstr ""
-"Если не получается войти в систему — обратитесь в службу технической поддержки:"
-"опишите проблему, укажите ФИО, место работы, логин, приложите скришноты."
+"Если не получается войти в систему — обратитесь в службу технической "
+"поддержки:опишите проблему, укажите ФИО, место работы, логин, приложите "
+"скриншоты."
 
-#: .\main\templates\main\auth.html:136
+#: .\main\templates\main\auth.html:117
 msgid "Email address"
 msgstr "Адрес электронной почты"
 
-#: .\main\templates\main\auth.html:141
+#: .\main\templates\main\auth.html:122
 msgid ""
 "The technical support service works according to the schedule from 09:30 to "
 "20:00 on weekdays."
-msgstr "Служба технической поддержки работает по графику с 09:30 до 20:00 в будние дни."
+msgstr ""
+"Служба технической поддержки работает по графику с 09:30 до 20:00 в будние "
+"дни."
 
 #: .\main\templates\main\index.html:22
 msgid "Student Search"
@@ -331,11 +352,11 @@ msgstr "Экспорт"
 msgid "About Service"
 msgstr "О сервисе"
 
-#: .\main\templates\main\index.html:81
+#: .\main\templates\main\index.html:67
 msgid "In order to use the service"
 msgstr "Для того, чтобы воспользоваться сервисом"
 
-#: .\main\templates\main\index.html:85
+#: .\main\templates\main\index.html:71
 msgid ""
 "Enter the student's case-sensitive full name in the first field. The search "
 "will be performed across all groups. If you want to search for a specific "
@@ -343,21 +364,21 @@ msgid ""
 "second field. After specifying it, a list of students of this group will be "
 "displayed. Next, select the required student from the updated list."
 msgstr ""
-"Введите в первое поле ФИО студента с учётом регистра. Поиск будет осуществлён по всем группам. "
-"Если Вы хотите осуществить поиск по конкретной группе/группам, "
-"введите во второе поле номер интересующей Вас группы. "
-"После его указания отобразится список студентов данной группы. "
-"Далее, выберите необходимого студента из обновлённого списка."
+"Введите в первое поле ФИО студента с учётом регистра. Поиск будет "
+"осуществлён по всем группам. Если Вы хотите осуществить поиск по конкретной "
+"группе/группам, введите во второе поле номер интересующей Вас группы. После "
+"его указания отобразится список студентов данной группы. Далее, выберите "
+"необходимого студента из обновлённого списка."
 
-#: .\main\templates\main\index.html:89
+#: .\main\templates\main\index.html:75
 msgid ""
 "Below, in the third field, select the date display format: 'Day', 'Week', "
 "'Month'. Then select the desired date."
 msgstr ""
-"Ниже, в третьем поле, выберите формат отображения даты: "
-"'День', 'Неделя', 'Месяц'. Затем выберите нужную дату."
+"Ниже, в третьем поле, выберите формат отображения даты: 'День', 'Неделя', "
+"'Месяц'. Затем выберите нужную дату."
 
-#: .\main\templates\main\index.html:93
+#: .\main\templates\main\index.html:79
 msgid ""
 "After clicking the 'Search' button, the entire attendance of the student you "
 "are interested in during the specified period will be displayed."
@@ -365,23 +386,23 @@ msgstr ""
 "После нажатия кнопки 'Поиск' будет отображена вся посещаемость интересующего "
 "Вас студента в указанный период."
 
-#: .\main\templates\main\index.html:110
+#: .\main\templates\main\index.html:96
 msgid "Menu"
 msgstr "Меню"
 
-#: .\main\templates\main\index.html:114
+#: .\main\templates\main\index.html:100
 msgid "Select a student to see the information"
 msgstr "Выберите студента, чтобы увидеть информацию"
 
-#: .\main\templates\main\index.html:117
+#: .\main\templates\main\index.html:103
 msgid "You are logged in as"
 msgstr "Вы вошли как"
 
-#: .\main\templates\main\index.html:120
+#: .\main\templates\main\index.html:106
 msgid "View admin panel"
 msgstr "Открыть админ-панель"
 
-#: .\main\templates\main\index.html:125
+#: .\main\templates\main\index.html:111
 msgid "Log Out"
 msgstr "Выйти"
 
