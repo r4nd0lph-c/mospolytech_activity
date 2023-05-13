@@ -24,8 +24,6 @@ class DailyUpdates:
     LOGS_FILE = "daily_updates.log"
 
     def __init__(self) -> None:
-        """ initializes API object for work & splits logs file """
-
         # creating API object
         self.api = API()
 
@@ -85,36 +83,63 @@ class DailyUpdates:
         """ updates Student() model info in db """
 
         try:
-            # getting fresh list of students from https://e.mospolytech.ru/old/lk_api_mapp.php
-            fresh_students = []
-            for group in self.api.get_groups():
-                fresh_students += [
-                    {"name": name, "group": group}
-                    for name in self.api.get_students([group])
-                ]
+            # getting fresh dict of students from https://e.mospolytech.ru/old/lk_api_mapp.php
+            tmp = self.api.get_students()
+            fresh_students = {}
+            for study_group in tmp:
+                for student in tmp[study_group]:
+                    guid = student["guid"]
+                    name = student["student"]
+                    fresh_students[guid] = {"study_group": study_group, "name": name}
             log_arg_1 = len(fresh_students)
 
             # getting queryset of students from db
             db_students = Student.objects.all()
 
-            # updating existing students "is_active" field
-            fresh_names = [student["name"] for student in fresh_students]
+            # updating existing students
             for student in db_students:
-                if student.name in fresh_names:
-                    fresh_names.remove(student.name)
+                db_guid = student.guid
+                db_study_group = student.study_group.name
+                # if student is active
+                if db_guid in fresh_students:
                     student.is_active = True
+                    tmp_student = fresh_students.pop(db_guid)
+                    fresh_study_group = tmp_student["study_group"]
+                    # if group changed
+                    if db_study_group != fresh_study_group:
+                        # update actual group
+                        student.study_group_id = StudyGroup.objects.get_or_create(name=fresh_study_group)[0].id
+                        # analyse student group history
+                        db_history = StudyGroupOld.objects.filter(student_id=student.id).order_by("-date_created")
+                        if db_history:
+                            date_start = db_history[0].date_end
+                        else:
+                            date_start = datetime.strptime(f"01.09.20{db_study_group[0:2]}", "%d.%m.%Y").date()
+                        # create element in group history
+                        DailyUpdates.logs(
+                            True,
+                            f"{student.name} changed group from {db_study_group} to {fresh_study_group}"
+                        )
+                        db_history_obj = StudyGroupOld.objects.create(
+                            student_id=student.id,
+                            study_group_id=StudyGroup.objects.get_or_create(name=db_study_group)[0].id,
+                            date_start=date_start,
+                            date_end=datetime.today()
+                        )
+                        db_history_obj.save()
                 else:
                     student.is_active = False
                 student.save()
-            fresh_students = [student for student in fresh_students if student["name"] in fresh_names]
             log_arg_2 = len(fresh_students)
 
             # adding students to db
-            for student in fresh_students:
-                Student.objects.create(
-                    name=student["name"],
-                    study_group_id=StudyGroup.objects.get_or_create(name=student["group"])[0].id
-                )
+            for guid in fresh_students:
+                if isinstance(guid, str):
+                    Student.objects.create(
+                        guid=guid,
+                        name=fresh_students[guid]["name"],
+                        study_group_id=StudyGroup.objects.get_or_create(name=fresh_students[guid]["study_group"])[0].id
+                    )
 
             # writing logs
             all_students = Student.objects.all().count()
