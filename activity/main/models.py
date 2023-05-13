@@ -33,6 +33,13 @@ class StudyGroup(AbstractDatestamp):
 
 
 class Student(AbstractDatestamp):
+    guid = models.CharField(
+        max_length=36,
+        unique=True,
+        db_index=True,
+        help_text=_("GUID of the student."),
+        verbose_name=_("GUID")
+    )
     name = models.CharField(
         max_length=128,
         help_text=_("Full name of the student."),

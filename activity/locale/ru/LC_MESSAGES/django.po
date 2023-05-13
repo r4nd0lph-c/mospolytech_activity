@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-10 13:04+0300\n"
-"PO-Revision-Date: 2023-04-10 13:04+0300\n"
+"POT-Creation-Date: 2023-05-13 17:18+0300\n"
+"PO-Revision-Date: 2023-05-13 17:18+0300\n"
 "Last-Translator: r4nd0lph-c\n"
 "Language: Russian\n"
 "MIME-Version: 1.0\n"
@@ -39,7 +39,7 @@ msgstr "JSON Тело (grid)"
 msgid "The search works by the signature of the schedule (case-sensitive)."
 msgstr "Поиск работает по сигнатуре расписания (с учётом регистра)."
 
-#: .\main\admin.py:101 .\main\models.py:136
+#: .\main\admin.py:101 .\main\models.py:143
 msgid "Grid"
 msgstr "Тело (grid)"
 
@@ -99,25 +99,25 @@ msgstr "Дата создания"
 msgid "Date updated"
 msgstr "Дата обновления"
 
-#: .\main\models.py:18 .\main\models.py:44 .\main\models.py:71
-#: .\main\models.py:112
+#: .\main\models.py:18 .\main\models.py:51 .\main\models.py:78
+#: .\main\models.py:119
 msgid "Name of the study group."
 msgstr "Название учебной группы."
 
-#: .\main\models.py:19 .\main\models.py:97
+#: .\main\models.py:19 .\main\models.py:104
 msgid "Name"
 msgstr "Название"
 
-#: .\main\models.py:23 .\main\models.py:49
+#: .\main\models.py:23 .\main\models.py:56
 msgid "Determines whether an entity is active in the system."
 msgstr "Определяет, активен ли объект в системе."
 
-#: .\main\models.py:24 .\main\models.py:50
+#: .\main\models.py:24 .\main\models.py:57
 msgid "Active"
 msgstr "Активность"
 
-#: .\main\models.py:31 .\main\models.py:45 .\main\models.py:72
-#: .\main\models.py:113
+#: .\main\models.py:31 .\main\models.py:52 .\main\models.py:79
+#: .\main\models.py:120
 msgid "Study group"
 msgstr "Учебная группа"
 
@@ -125,127 +125,135 @@ msgstr "Учебная группа"
 msgid "Study groups"
 msgstr "Учебные группы"
 
-#: .\main\models.py:38 .\main\models.py:65
+#: .\main\models.py:40
+msgid "GUID of the student."
+msgstr "GUID студента."
+
+#: .\main\models.py:41
+msgid "GUID"
+msgstr "GUID"
+
+#: .\main\models.py:45 .\main\models.py:72
 msgid "Full name of the student."
 msgstr "ФИО студента."
 
-#: .\main\models.py:39 .\main\models.py:66
+#: .\main\models.py:46 .\main\models.py:73
 msgid "Full name"
 msgstr "Полное имя"
 
-#: .\main\models.py:57
+#: .\main\models.py:64
 msgid "Student"
 msgstr "Студент"
 
-#: .\main\models.py:58
+#: .\main\models.py:65
 msgid "Students"
 msgstr "Студенты"
 
-#: .\main\models.py:75
+#: .\main\models.py:82
 msgid "The beginning of studies in this group."
-msgstr ""
+msgstr "Начало бучения в этой группе"
 
-#: .\main\models.py:76 .\main\models.py:128
+#: .\main\models.py:83 .\main\models.py:135
 msgid "Date start"
 msgstr "Дата начала"
 
-#: .\main\models.py:79
+#: .\main\models.py:86
 msgid "The end of studies in this group."
-msgstr ""
+msgstr "Конец обучения в этой группе"
 
-#: .\main\models.py:80 .\main\models.py:132
+#: .\main\models.py:87 .\main\models.py:139
 msgid "Date end"
 msgstr "Дата конца"
 
-#: .\main\models.py:87
+#: .\main\models.py:94
 msgid "Old Study group"
 msgstr "Старая Учебная группа"
 
-#: .\main\models.py:88
+#: .\main\models.py:95
 msgid "Old Study groups"
 msgstr "Старые Учебные группы"
 
-#: .\main\models.py:96 .\main\models.py:118
+#: .\main\models.py:103 .\main\models.py:125
 msgid "Name of the type of schedule."
 msgstr "Название типа расписания."
 
-#: .\main\models.py:104
+#: .\main\models.py:111
 msgid "Schedule type"
 msgstr "Тип расписания"
 
-#: .\main\models.py:105
+#: .\main\models.py:112
 msgid "Schedule types"
 msgstr "Типы расписаний"
 
-#: .\main\models.py:119
+#: .\main\models.py:126
 msgid "Type"
 msgstr "Тип"
 
-#: .\main\models.py:123
+#: .\main\models.py:130
 msgid "Determines whether the schedule is a session schedule or not."
 msgstr "Определяет, является ли расписание расписанием сессии или нет."
 
-#: .\main\models.py:124
+#: .\main\models.py:131
 msgid "Session"
 msgstr "Сессия"
 
-#: .\main\models.py:127
+#: .\main\models.py:134
 msgid "The start date of the schedule."
 msgstr "Дата начала расписания."
 
-#: .\main\models.py:131
+#: .\main\models.py:138
 msgid "The end date of the schedule."
 msgstr "Дата конца расписания."
 
-#: .\main\models.py:135
+#: .\main\models.py:142
 msgid "Raw schedule grid format."
 msgstr "Сырой формат расписания (grid)."
 
-#: .\main\models.py:142
+#: .\main\models.py:149
 msgid "The unique identifier of the schedule based on its data."
 msgstr "Уникальный идентификатор расписания, основанный на его информации."
 
-#: .\main\models.py:143
+#: .\main\models.py:150
 msgid "Signature"
 msgstr "Сигнатура"
 
-#: .\main\models.py:150
+#: .\main\models.py:157
 msgid "Schedule"
 msgstr "Расписание"
 
-#: .\main\models.py:151
+#: .\main\models.py:158
 msgid "Schedules"
 msgstr "Расписания"
 
-#: .\main\models.py:158
+#: .\main\models.py:165
 msgid "The user who performed the action."
 msgstr "Пользователь, выполнивший действие."
 
-#: .\main\models.py:159
+#: .\main\models.py:166
 msgid "User"
 msgstr "Пользователь"
 
-#: .\main\models.py:163
+#: .\main\models.py:170
 msgid "Action in the system."
 msgstr "Действие в системе"
 
-#: .\main\models.py:164
+#: .\main\models.py:171
 msgid "Action"
 msgstr "Действие"
 
-#: .\main\models.py:169
+#: .\main\models.py:176
 msgid "action"
 msgstr "действие"
 
-#: .\main\models.py:172
+#: .\main\models.py:179
 msgid "History Log"
 msgstr "Действие"
 
-#: .\main\models.py:173
+#: .\main\models.py:180
 msgid "History Logs"
 msgstr "Журнал действий"
 
-#: .\main\models.py:176
+#: .\main\models.py:183
 msgid "Date"
 msgstr "Дата"
 
@@ -279,7 +287,7 @@ msgid ""
 ", but you do not have sufficient rights to view this page. Perhaps you would "
 "like to log in using a different account?"
 msgstr ""
-"однако у вас недостаточно прав для просмотра данной страницы. Возможно, вы "
+", однако у вас недостаточно прав для просмотра данной страницы. Возможно, вы "
 "хотели бы войти в систему, используя другую учётную запись?"
 
 #: .\main\templates\main\auth.html:43
