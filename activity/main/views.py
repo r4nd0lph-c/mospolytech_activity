@@ -102,6 +102,8 @@ def get_students(request):
 def get_schedule(request):
     """ returns formatted Schedule() objects from db and additional info """
 
+    # TODO: correlate with logic in daily_updates.py
+
     if request.method == "POST":
         student = {"name": request.POST.get("name", None), "group": request.POST.get("group", None)}
         dates = sorted([datetime.strptime(d, "%d.%m.%Y") for d in request.POST.getlist("dates[]", None)])
