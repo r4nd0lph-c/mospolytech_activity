@@ -57,9 +57,9 @@ class StudentAdmin(AbstractLockedAdmin):
 class StudyGroupOldAdmin(AbstractLockedAdmin):
     list_display = ("id", "student", "study_group", "date_start", "date_end")
     list_display_links = ("id",)
-    ordering = ("student", "study_group")
+    ordering = ("student", "date_end")
     list_filter = (StudyGroupFilter,)
-    search_fields = ["student"]
+    search_fields = ["student__name"]
     search_help_text = _("The search works by the full name of the student (case-sensitive).")
 
 
