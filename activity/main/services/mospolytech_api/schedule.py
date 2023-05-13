@@ -43,7 +43,7 @@ class Schedule:
             ["14:30", "16:00"],
             ["16:10", "17:40"],
             ["17:50", "19:20"],
-            ["19:30", "21:00"]
+            ["19:30", "21:00"],
         ],
         "evening": [
             ["09:00", "10:30"],
@@ -52,8 +52,8 @@ class Schedule:
             ["14:30", "16:00"],
             ["16:10", "17:40"],
             ["18:20", "19:40"],
-            ["19:50", "21:10"]
-        ]
+            ["19:50", "21:10"],
+        ],
     }
 
     def __init__(self, schedule: dict) -> None:
@@ -160,17 +160,18 @@ class Schedule:
             "type": self.type,
             "is_session": self.is_session,
             "date": date,
-            "day": []
+            "day": [],
         }
 
         # filling day["day"]
         for index, section in enumerate(raw_day):
-            event = {
-                "time": self.TIME_SECTIONS[self.type][index],
-                "subject": None
-            }
+            event = {"time": self.TIME_SECTIONS[self.type][index], "subject": None}
             for raw_sbj in section:
-                if self.__d(raw_sbj["dates"][0]) <= self.__d(date) <= self.__d(raw_sbj["dates"][1]):
+                if (
+                    self.__d(raw_sbj["dates"][0])
+                    <= self.__d(date)
+                    <= self.__d(raw_sbj["dates"][1])
+                ):
                     event["subject"] = dict(raw_sbj)
                     del event["subject"]["dates"]
                     break
@@ -211,11 +212,11 @@ class Schedule:
             "type": self.type,
             "is_session": self.is_session,
             "dates": [weekframe[0], weekframe[-1]],
-            "week": []
+            "week": [],
         }
 
         # filling week["week"]
-        for date in weekframe[:-1]:
+        for date in weekframe:
             try:
                 subjects = self.get_day(date)["day"]
             except ValueError as e:
@@ -224,18 +225,6 @@ class Schedule:
                 else:
                     raise e
             week["week"].append({"date": date, "day": subjects})
-        week["week"].append(
-            {
-                "date": weekframe[-1],
-                "day": [
-                    {
-                        "time": self.TIME_SECTIONS[self.type][index],
-                        "subject": None
-                    }
-                    for index in range(7)
-                ]
-            }
-        )
 
         # returning dictionary with information about study week
         return week
