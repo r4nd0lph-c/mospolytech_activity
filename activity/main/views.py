@@ -130,7 +130,6 @@ def get_schedule(request):
 
             schedule = []
             group_history = StudyGroupOld.objects.filter(student=student)
-            print(group_history)
             for date in dates:
                 # if group history is empty
                 if not group_history:
@@ -139,7 +138,6 @@ def get_schedule(request):
                 # if group history is not empty
                 else:
                     for gh in group_history:
-                        print("GH:", gh.date_start, gh.date_end, date.date())
                         if gh.date_start <= date.date() < gh.date_end:
                             actual_group = gh.study_group.name
                             break
