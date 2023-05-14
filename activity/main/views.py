@@ -102,33 +102,55 @@ def get_students(request):
 def get_schedule(request):
     """ returns formatted Schedule() objects from db and additional info """
 
-    # TODO: correlate with logic in daily_updates.py
+    def fill_schedule(group: str, d: datetime) -> list:
+        sch = []
+        db_schedules = Schedule.objects.filter(study_group__name=actual_group).order_by("date_start")
+        for db_schedule in db_schedules:
+            if db_schedule.date_start <= d.date() <= db_schedule.date_end:
+                obj = {
+                    "group": actual_group,
+                    "type": db_schedule.type.name,
+                    "is_session": db_schedule.is_session,
+                    "dates": [
+                        db_schedule.date_start.strftime("%d.%m.%Y"),
+                        db_schedule.date_end.strftime("%d.%m.%Y")
+                    ],
+                    "grid": db_schedule.grid
+                }
+                sch.append(ScheduleAPI(obj).get_day(d.strftime("%d.%m.%Y")))
+        return sch
 
     if request.method == "POST":
-        student = {"name": request.POST.get("name", None), "group": request.POST.get("group", None)}
-        dates = sorted([datetime.strptime(d, "%d.%m.%Y") for d in request.POST.getlist("dates[]", None)])
-        db_schedules = Schedule.objects.filter(study_group__name=student["group"]).order_by("date_start")
+        study_group = request.POST.get("group", None)
+        name = request.POST.get("name", None)
 
-        # TODO: optimize loops
-        schedule = []
-        for date in dates:
-            for db_schedule in db_schedules:
-                if db_schedule.date_start <= date.date() <= db_schedule.date_end:
-                    obj = {
-                        "group": db_schedule.study_group.name,
-                        "type": db_schedule.type.name,
-                        "is_session": db_schedule.is_session,
-                        "dates": [
-                            db_schedule.date_start.strftime("%d.%m.%Y"),
-                            db_schedule.date_end.strftime("%d.%m.%Y")
-                        ],
-                        "grid": db_schedule.grid
-                    }
-                    schedule.append(ScheduleAPI(obj).get_day(date.strftime("%d.%m.%Y")))
-        return JsonResponse({
-            "student": student,
-            "schedule": schedule
-        })
+        if (study_group is not None) and (name is not None):
+            student = Student.objects.filter(study_group__name=study_group).filter(name=name)[0]
+            dates = sorted([datetime.strptime(d, "%d.%m.%Y") for d in request.POST.getlist("dates[]", None)])
+
+            schedule = []
+            group_history = StudyGroupOld.objects.filter(student=student)
+            print(group_history)
+            for date in dates:
+                # if group history is empty
+                if not group_history:
+                    actual_group = student.study_group.name
+                    schedule += fill_schedule(actual_group, date)
+                # if group history is not empty
+                else:
+                    for gh in group_history:
+                        print("GH:", gh.date_start, gh.date_end, date.date())
+                        if gh.date_start <= date.date() < gh.date_end:
+                            actual_group = gh.study_group.name
+                            break
+                    else:
+                        actual_group = student.study_group.name
+                    schedule += fill_schedule(actual_group, date)
+
+            return JsonResponse({
+                "student": {"name": name, "group": study_group},
+                "schedule": schedule
+            })
     return JsonResponse({"message": "you don't have enough rights!"})
 
 
