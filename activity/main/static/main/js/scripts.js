@@ -31,7 +31,7 @@ function get_students(groups) {
     });
 }
 
-function get_schedule(student, dates) {
+function get_schedule(student, dates, display_type_id) {
     /* student = {"name": "...", "group": "..."} dates = ["dd.mm.yyyy", ...] */
     $.ajax({
         type: "POST",
@@ -44,11 +44,51 @@ function get_schedule(student, dates) {
         },
         success: function (data) {
             console.log(data); // TODO: clear console logs
+            display_schedule(data, display_type_id);
         },
         error: function () {
             console.log("get_schedule() error");
         }
     });
+}
+
+// changing screens for schedules
+function display_schedule(data, display_type_id) {
+    // DOM objects init
+    let screens = [
+        document.getElementById("empty_filler"),
+        document.getElementById("zero_schedule"),
+        document.getElementById("schedule_day"),
+        document.getElementById("schedule_week"),
+        document.getElementById("schedule_month")
+    ];
+
+    // disabling screens
+    function disable_screens(exception) {
+        screens.forEach(function (scrn) {
+            if (scrn.id === exception)
+                scrn.style.display = "block";
+            else
+                scrn.style.display = "none";
+        });
+    }
+
+    // changing process
+    if (display_type_id === "day") {
+        // render for day
+        if (data["schedule"].length === 0) {
+            disable_screens("zero_schedule");
+        } else {
+            disable_screens("schedule_day");
+
+        }
+    } else if (display_type_id === "week") {
+        // render for week
+        // TODO: render for week
+    } else if (display_type_id === "month") {
+        // render for month
+        // TODO: render for month
+    }
 }
 
 function reformat_date(dateStr) {
@@ -58,7 +98,6 @@ function reformat_date(dateStr) {
 
 function get_days_in_month(inputDate) {
     const [year, month, day] = inputDate.split("-");
-    const firstDayUTC = new Date(Date.UTC(year, month - 1, 1));
     const lastDayUTC = new Date(Date.UTC(year, month, 0));
     const daysInMonth = [];
 
@@ -85,6 +124,7 @@ function get_raw_date(display_type_id) {
 }
 
 $(document).ready(function () {
+    // button_search init
     let button_search = document.getElementById("btn-search");
     button_search.disabled = true;
 
@@ -117,7 +157,6 @@ $(document).ready(function () {
             // array of dates from month
             dates = get_days_in_month(raw_date);
         }
-        console.log(student);
-        console.log(dates);
+        get_schedule(student, dates, display_type_id);
     };
 });

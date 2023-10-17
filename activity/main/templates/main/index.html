@@ -85,7 +85,7 @@
             <!-- modal END -->
 
             <!-- primary screen START -->
-            <div class="col g-0" style="height: 100vh;">
+            <div class="col g-0 custom-container" style="height: 100vh;">
                 <!-- navbar menu START -->
                 <nav class="container-fluid border-bottom">
                     <div class="row align-items-center" style="min-height: 96px;">
@@ -116,9 +116,9 @@
                 <!-- navbar menu END -->
 
                 <!-- content START -->
-                <div class="p-4"
-                     style="height: 100%; height: -webkit-calc(100% - 100px); height: -moz-calc(100% - 100px); height: calc(100% - 100px);">
-                    <div class="custom-container">
+                <div id="main-content" class="p-4 content">
+                    <!-- empty filler START -->
+                    <div id="empty_filler" class="inner">
                         <header>
                             <div class="inner">
                                 <img src="{% static 'main/graphics/empty_filler.svg' %}"
@@ -126,8 +126,79 @@
                                      style="opacity: 0.5; display: block; margin: auto;"/>
                             </div>
                         </header>
-                        <p style="text-align: center;">{% trans "You haven't selected any students yet" %}</p>
+                        <div>
+                            <p style="text-align: center;">{% trans "You haven't selected any students yet" %}</p>
+                            <br>
+                        </div>
                     </div>
+                    <!-- empty filler END -->
+
+                    <!-- zero schedule START -->
+                    <div id="zero_schedule" class="inner" style="display: none;">
+                        <header>
+                            <div class="inner">
+                                <img src="{% static 'main/graphics/zero_schedule_filler.svg' %}"
+                                     alt="{% trans 'Zero Schedule Filler (svg)' %}"
+                                     style="opacity: 0.5; display: block; margin: auto;"/>
+                            </div>
+                        </header>
+                        <div style="text-align: center;">
+                            <p>{% trans "No schedule was found for specified dates" %}</p>
+                            <a href="{% url 'index' %}" class="text-decoration-none">
+                                {% trans "Reset search parameters" %}
+                            </a>
+                        </div>
+                    </div>
+                    <!-- zero schedule END -->
+
+                    <!-- schedule day START -->
+                    <div id="schedule_day" class="inner-wide" style="display: none;">
+                        <div class="row">
+                            <div class="col">
+                                Column 1
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">Some quick example text to build on the card make.</p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">Some quick example text to build on the card make.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                Column 2
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">Some quick example text to build on the card make.</p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">Some quick example text to build on the card make.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- schedule day END -->
+
+                    <!-- schedule week START -->
+                    <div id="schedule_week" class="inner container" style="display: none;">
+
+                    </div>
+                    <!-- schedule week END -->
+
+                    <!-- schedule month START -->
+                    <div id="schedule_month" class="inner container" style="display: none;">
+
+                    </div>
+                    <!-- schedule month END -->
                 </div>
                 <!-- content END -->
             </div>
