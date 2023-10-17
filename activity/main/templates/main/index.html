@@ -96,7 +96,7 @@
                                 <span>{% trans "Menu" %}</span>
                             </a>
                         </div>
-                        <div class="col-lg">
+                        <div id="nav-selected-student" class="col-lg">
                             <h5 class="fw-light m-0">{% trans "Select a student to see the information" %}</h5>
                         </div>
                         <div class="col-auto">
@@ -153,37 +153,15 @@
 
                     <!-- schedule day START -->
                     <div id="schedule_day" class="inner-wide" style="display: none;">
-                        <div class="row">
-                            <div class="col">
-                                Column 1
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card make.</p>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card make.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                Column 2
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card make.</p>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card make.</p>
-                                    </div>
-                                </div>
-                            </div>
+                        <div id="schedule_day_row" class="row">
+                            <div class="col"></div>
+                            <div class="col"></div>
+                        </div>
+                        <div style="text-align: center;">
+                            <br>
+                            <a href="{% url 'index' %}" class="text-decoration-none">
+                                {% trans "Reset search parameters" %}
+                            </a>
                         </div>
                     </div>
                     <!-- schedule day END -->

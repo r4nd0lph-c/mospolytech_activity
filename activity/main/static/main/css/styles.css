@@ -121,6 +121,20 @@ nav {
     width: 100%;
 }
 
+
+/* CARD-SCHEDULE */
+
+.card-schedule {
+    margin-top: 12px;
+    min-height: 128px;
+    min-width: 256px;
+}
+
+/*#schedule_day_row {*/
+/*    overflow-y: scroll;*/
+/*    height: 500px;*/
+/*}*/
+
 .col {
     border: 1px solid #0D6EFD;
 }

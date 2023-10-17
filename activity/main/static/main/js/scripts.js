@@ -52,6 +52,73 @@ function get_schedule(student, dates, display_type_id) {
     });
 }
 
+
+// ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+
+
+let create_card_day = (parent, info) => {
+
+    let card = document.createElement("div");
+    card.className = "card card-schedule";
+
+    let cardBody = document.createElement("div");
+    cardBody.className = "card-body";
+
+    let header = document.createElement("h6");
+    header.className = "card-title";
+
+    let text = document.createElement("p");
+    text.className = "card-text";
+
+    let subtext = document.createElement("p");
+    subtext.className = "card-text";
+    subtext.style.color = "var(--text-secondary)";
+    subtext.style.margin = "0";
+
+    if (!!info["subject"]) {
+        header.innerText = `${info["time"][0]} – ${info["time"][1]}`;
+        if (info["subject"]["location"] !== "")
+            header.innerText += ` (${info["subject"]["location"]})`;
+        text.innerText = `${info["subject"]["title"]}`;
+        if (info["subject"]["type"] !== "")
+            text.innerText += ` (${info["subject"]["type"]})`;
+        console.log(info["subject"]);
+        if (info["subject"]["teachers"].length > 0)
+            subtext.innerText = info["subject"]["teachers"].join(", ");
+    } else {
+        header.innerText = `${info["time"][0]} – ${info["time"][1]}`;
+        text.innerText = "-----";
+        subtext.innerText = "";
+    }
+
+    cardBody.appendChild(header);
+    cardBody.appendChild(text);
+    cardBody.appendChild(subtext);
+    card.appendChild(cardBody);
+    parent.appendChild(card);
+}
+
+let create_nav_student_info = (name, date) => {
+    let nav_selected_student = document.getElementById("nav-selected-student");
+    nav_selected_student.innerHTML = "";
+
+    let h5 = document.createElement("h5");
+    h5.className = "fw-light m-0";
+    h5.innerText = "Студент ";
+
+    let b = document.createElement("b");
+    b.innerText = `${name}`;
+
+    let p = document.createElement("p");
+    p.innerText = `${date}`;
+    p.style.color = "var(--text-secondary)";
+    p.style.margin = "0";
+
+    h5.appendChild(b);
+    nav_selected_student.appendChild(h5);
+    nav_selected_student.appendChild(p);
+}
+
 // changing screens for schedules
 function display_schedule(data, display_type_id) {
     // DOM objects init
@@ -79,8 +146,32 @@ function display_schedule(data, display_type_id) {
         if (data["schedule"].length === 0) {
             disable_screens("zero_schedule");
         } else {
-            disable_screens("schedule_day");
+            let date = data["schedule"][0]["date"];
+            create_nav_student_info(data["student"]["name"], format_date_for_nav(date));
 
+            disable_screens("schedule_day");
+            let row = document.getElementById("schedule_day_row");
+            let cols = row.children;
+            cols[0].innerHTML = "";
+            cols[1].innerHTML = "";
+            let col_num = 0;
+            for (let i = 0; i < data["schedule"][0]["day"].length; i++) {
+                let info = data["schedule"][0]["day"][i];
+                if (i === 3) {
+                    let info_additional = {
+                        subject: {
+                            title: "Обеденный перерыв",
+                            type: "",
+                            location: "",
+                            teachers: []
+                        },
+                        time: ["13:50", "14:30"]
+                    };
+                    create_card_day(cols[col_num], info_additional);
+                    col_num += 1;
+                }
+                create_card_day(cols[col_num], info);
+            }
         }
     } else if (display_type_id === "week") {
         // render for week
@@ -91,16 +182,34 @@ function display_schedule(data, display_type_id) {
     }
 }
 
+
+// ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+
+
+// input: "2023-10-17", output: "17.10.2023"
 function reformat_date(dateStr) {
-    let dArr = dateStr.split("-");  // ex input: "2023-10-17"
-    return dArr[2] + "." + dArr[1] + "." + dArr[0]; //ex output: "17.10.2023"
+    let dArr = dateStr.split("-");
+    return dArr[2] + "." + dArr[1] + "." + dArr[0];
+}
+
+//input: "17.10.2023", output: "17 Октября 2023, Вторник"
+function format_date_for_nav(inputDate) {
+    const months = [
+        "Января", "Февраля", "Марта", "Апреля", "Мая", "Июня",
+        "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"
+    ];
+    const weekDays = [
+        "Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"
+    ];
+    const [day, month, year] = inputDate.split('.');
+    const date = new Date(`${year}-${month}-${day}`);
+    return `${day} ${months[date.getMonth()]} ${year}, ${weekDays[date.getDay()]}`;
 }
 
 function get_days_in_month(inputDate) {
     const [year, month, day] = inputDate.split("-");
     const lastDayUTC = new Date(Date.UTC(year, month, 0));
     const daysInMonth = [];
-
     for (let i = 1; i <= lastDayUTC.getUTCDate(); i++) {
         // raw dayString
         // const dayString = `${year}-${month}-${String(i).padStart(2, "0")}`;
@@ -108,7 +217,6 @@ function get_days_in_month(inputDate) {
         const dayString = `${String(i).padStart(2, "0")}.${month}.${year}`;
         daysInMonth.push(dayString);
     }
-
     return daysInMonth;
 }
 
@@ -122,6 +230,10 @@ function get_raw_date(display_type_id) {
     }
     return raw_date;
 }
+
+
+// ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+
 
 $(document).ready(function () {
     // button_search init
