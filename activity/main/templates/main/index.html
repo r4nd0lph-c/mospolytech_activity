@@ -85,7 +85,7 @@
             <!-- modal END -->
 
             <!-- primary screen START -->
-            <div class="col g-0">
+            <div class="col g-0" style="height: 100vh;">
                 <!-- navbar menu START -->
                 <nav class="container-fluid border-bottom">
                     <div class="row align-items-center" style="min-height: 96px;">
@@ -116,24 +116,18 @@
                 <!-- navbar menu END -->
 
                 <!-- content START -->
-                <div class="p-4">
-                    <div class="page-header pt-3">
-                        <h2>Mospolytech Activity</h2>
+                <div class="p-4"
+                     style="height: 100%; height: -webkit-calc(100% - 100px); height: -moz-calc(100% - 100px); height: calc(100% - 100px);">
+                    <div class="custom-container">
+                        <header>
+                            <div class="inner">
+                                <img src="{% static 'main/graphics/empty_filler.svg' %}"
+                                     alt="{% trans 'Empty Filler (svg)' %}"
+                                     style="opacity: 0.5; display: block; margin: auto;"/>
+                            </div>
+                        </header>
+                        <p style="text-align: center;">{% trans "You haven't selected any students yet" %}</p>
                     </div>
-                    <p class="lead">Index page</p>
-                    <hr>
-                    <p>
-                        Nulla ultrices ligula libero, in pretium augue aliquam a. Proin pellentesque aliquam
-                        arcu at congue. Nunc gravida vitae enim et molestie. Orci varius natoque penatibus et
-                        magnis dis parturient montes, nascetur ridiculus mus. Aliquam convallis eros turpis.
-                        Pellentesque pulvinar interdum turpis, ac aliquam libero dignissim ut. Vestibulum nec
-                        orci quis mi tincidunt blandit. Integer vulputate justo sed ullamcorper pellentesque.
-                        Nunc sit amet consequat neque, imperdiet sodales velit. Maecenas ligula libero, volutpat
-                        hendrerit diam vitae, consequat bibendum mauris. Maecenas purus massa, laoreet sit amet
-                        bibendum sed, gravida eu sapien. Fusce semper accumsan dictum. Pellentesque at accumsan
-                        augue, quis varius lectus. Nullam ullamcorper ipsum sapien, sit amet iaculis lectus
-                        viverra sit amet.
-                    </p>
                 </div>
                 <!-- content END -->
             </div>

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-13 17:18+0300\n"
-"PO-Revision-Date: 2023-05-13 17:18+0300\n"
+"POT-Creation-Date: 2023-10-17 14:03+0300\n"
+"PO-Revision-Date: 2023-10-17 17:18+0300\n"
 "Last-Translator: r4nd0lph-c\n"
 "Language: Russian\n"
 "MIME-Version: 1.0\n"
@@ -414,11 +414,19 @@ msgstr "Открыть админ-панель"
 msgid "Log Out"
 msgstr "Выйти"
 
+#: .\main\templates\main\index.html:125
+msgid "Empty Filler (svg)"
+msgstr "Изображение-заполнитель (svg)"
+
+#: .\main\templates\main\index.html:129
+msgid "You haven't selected any students yet"
+msgstr "Вы не выбрали ни одного студента"
+
 #: .\main\views.py:21
 msgid "Main | Activity"
 msgstr "Главная | Активность"
 
-#: .\main\views.py:22 .\main\views.py:59 .\main\views.py:138
+#: .\main\views.py:22 .\main\views.py:59 .\main\views.py:160
 msgid "logo_en"
 msgstr "logo_ru"
 
@@ -426,7 +434,7 @@ msgstr "logo_ru"
 msgid "Authorization | Activity"
 msgstr "Авторизация | Активность"
 
-#: .\main\views.py:137
+#: .\main\views.py:159
 msgid "Page not Found | Activity"
 msgstr "Страница не найдена | Активность"
 
