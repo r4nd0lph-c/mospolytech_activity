@@ -158,17 +158,16 @@ function display_schedule(data, display_type_id) {
     if (display_type_id === "day") {
         // render for day
         if (data["schedule"].length === 0) {
-            disable_screens("zero_schedule");
             let nav_selected_student = document.getElementById("nav-selected-student");
             nav_selected_student.innerHTML = "";
             let h5 = document.createElement("h5");
             h5.className = "fw-light m-0";
             h5.innerText = "Выберите студента, чтобы увидеть информацию";
             nav_selected_student.appendChild(h5);
+            disable_screens("zero_schedule");
         } else {
             let date = data["schedule"][0]["date"];
             create_nav_student_info(data["student"]["name"], format_date_for_nav(date));
-
             disable_screens("schedule_day");
             let row = document.getElementById("schedule_day_row");
             let cols = row.children;
@@ -201,24 +200,19 @@ function display_schedule(data, display_type_id) {
                     let text1 = body_children[1];
                     let text2 = body_children[2];
                     if (card.offsetWidth >= 560) {
-                        title.style.marginBottom = "8px";
                         text1.style.fontSize = "16px";
-                        text1.style.marginBottom = "12px";
                         text2.style.fontSize = "16px";
-                    } else if (card.offsetWidth < 560 && card.offsetWidth >= 350) {
-                        title.style.marginBottom = "8px";
+                    } else if (card.offsetWidth < 560 && card.offsetWidth >= 390) {
                         text1.style.fontSize = "14px";
-                        text1.style.marginBottom = "12px";
                         text2.style.fontSize = "14px";
-                    } else if (card.offsetWidth < 350) {
-                        title.style.marginBottom = "4px";
+                    } else if (card.offsetWidth < 390) {
                         text1.style.fontSize = "12px";
-                        text1.style.marginBottom = "4px";
                         text2.style.fontSize = "10px";
                     }
                 });
             });
             resizeObserver.observe($(`#${created_cards_id[0]}`)[0]);
+
         }
     } else if (display_type_id === "week") {
         // render for week

@@ -153,15 +153,25 @@
 
                     <!-- schedule day START -->
                     <div id="schedule_day" class="inner-wide" style="display: none;">
-                        <div id="schedule_day_row" class="row" style="overflow-y: scroll; height:70vh;">
-                            <div class="col"></div>
-                            <div class="col"></div>
-                        </div>
-                        <div style="text-align: center;">
-                            <br>
-                            <a href="{% url 'index' %}" class="text-decoration-none">
-                                {% trans "Reset search parameters" %}
-                            </a>
+                        <div style="display: flex;">
+                            <div class="inner-wide" style="padding-left: 0 !important; margin-bottom: 40px;">
+                                <i class="bi bi-chevron-left" style="font-size: 32px;"></i>
+                            </div>
+                            <div>
+                                <div id="schedule_day_row" class="row" style="overflow-y: scroll; height:70vh;">
+                                    <div class="col"></div>
+                                    <div class="col"></div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <br>
+                                    <a href="{% url 'index' %}" class="text-decoration-none">
+                                        {% trans "Reset search parameters" %}
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="inner-wide" style="padding-right: 0 !important; margin-bottom: 40px;">
+                                <i class="bi bi-chevron-right" style="font-size: 32px;"></i>
+                            </div>
                         </div>
                     </div>
                     <!-- schedule day END -->

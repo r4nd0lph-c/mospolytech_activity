@@ -125,7 +125,7 @@ nav {
 /* CARD-SCHEDULE */
 
 .card-schedule {
-    margin: 14px 0px 6px 0px;
+    margin: 14px 0 6px 0;
     height: 150px;
     min-width: 335px;
     max-width: 696px;
