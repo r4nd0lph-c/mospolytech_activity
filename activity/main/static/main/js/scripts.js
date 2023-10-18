@@ -44,7 +44,7 @@ function get_schedule(student, dates, display_type_id) {
         },
         success: function (data) {
             console.log(data); // TODO: clear console logs
-            display_schedule(data, display_type_id);
+            display_schedule(data, dates, display_type_id);
         },
         error: function () {
             console.log("get_schedule() error");
@@ -134,7 +134,7 @@ let create_nav_student_info = (name, date) => {
 }
 
 // changing screens for schedules
-function display_schedule(data, display_type_id) {
+function display_schedule(data, required_dates, display_type_id) {
     // DOM objects init
     let screens = [
         document.getElementById("empty_filler"),
@@ -158,13 +158,17 @@ function display_schedule(data, display_type_id) {
     if (display_type_id === "day") {
         // render for day
         if (data["schedule"].length === 0) {
-            let nav_selected_student = document.getElementById("nav-selected-student");
-            nav_selected_student.innerHTML = "";
-            let h5 = document.createElement("h5");
-            h5.className = "fw-light m-0";
-            h5.innerText = "Выберите студента, чтобы увидеть информацию";
-            nav_selected_student.appendChild(h5);
+            create_nav_student_info(data["student"]["name"], format_date_for_nav(required_dates[0]));
             disable_screens("zero_schedule");
+            ["prev", "next"].forEach(function (tag) {
+                let btn_day = document.getElementById(`z-btn-day-${tag}`);
+                let clone_btn = btn_day.cloneNode(true);
+                btn_day.parentNode.replaceChild(clone_btn, btn_day);
+                clone_btn.addEventListener("click", function (e) {
+                    let new_date = change_date_per_one(required_dates[0], tag);
+                    get_schedule(data["student"], [new_date], "day");
+                });
+            });
         } else {
             let date = data["schedule"][0]["date"];
             create_nav_student_info(data["student"]["name"], format_date_for_nav(date));
@@ -195,24 +199,33 @@ function display_schedule(data, display_type_id) {
             let resizeObserver = new ResizeObserver(() => {
                 created_cards_id.forEach(function (id) {
                     let card = document.getElementById(id);
-                    let body_children = card.childNodes[1].firstChild.childNodes;
-                    let title = body_children[0];
-                    let text1 = body_children[1];
-                    let text2 = body_children[2];
-                    if (card.offsetWidth >= 560) {
-                        text1.style.fontSize = "16px";
-                        text2.style.fontSize = "16px";
-                    } else if (card.offsetWidth < 560 && card.offsetWidth >= 390) {
-                        text1.style.fontSize = "14px";
-                        text2.style.fontSize = "14px";
-                    } else if (card.offsetWidth < 390) {
-                        text1.style.fontSize = "12px";
-                        text2.style.fontSize = "10px";
+                    if (!!card) {
+                        let body_children = card.childNodes[1].firstChild.childNodes;
+                        let text1 = body_children[1];
+                        let text2 = body_children[2];
+                        if (card.offsetWidth >= 560) {
+                            text1.style.fontSize = "16px";
+                            text2.style.fontSize = "16px";
+                        } else if (card.offsetWidth < 560 && card.offsetWidth >= 390) {
+                            text1.style.fontSize = "14px";
+                            text2.style.fontSize = "14px";
+                        } else if (card.offsetWidth < 390) {
+                            text1.style.fontSize = "12px";
+                            text2.style.fontSize = "10px";
+                        }
                     }
                 });
             });
             resizeObserver.observe($(`#${created_cards_id[0]}`)[0]);
-
+            ["prev", "next"].forEach(function (tag) {
+                let btn_day = document.getElementById(`btn-day-${tag}`);
+                let clone_btn = btn_day.cloneNode(true);
+                btn_day.parentNode.replaceChild(clone_btn, btn_day);
+                clone_btn.addEventListener("click", function (e) {
+                    let new_date = change_date_per_one(data["schedule"][0]["date"], tag);
+                    get_schedule(data["student"], [new_date], "day");
+                });
+            });
         }
     } else if (display_type_id === "week") {
         // render for week
@@ -245,6 +258,22 @@ function format_date_for_nav(inputDate) {
     const [day, month, year] = inputDate.split('.');
     const date = new Date(`${year}-${month}-${day}`);
     return `${day} ${months[date.getMonth()]} ${year}, ${weekDays[date.getDay()]}`;
+}
+
+function change_date_per_one(inputDate, param) {
+    const parts = inputDate.split(".");
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10);
+    const year = parseInt(parts[2], 10);
+    const date = new Date(year, month - 1, day);
+    if (param === "prev")
+        date.setDate(date.getDate() - 1);
+    else if (param === "next")
+        date.setDate(date.getDate() + 1);
+    const nextDay = date.getDate();
+    const nextMonth = date.getMonth() + 1;
+    const nextYear = date.getFullYear();
+    return `${String(nextDay).padStart(2, '0')}.${String(nextMonth).padStart(2, '0')}.${nextYear}`;
 }
 
 function get_days_in_month(inputDate) {
