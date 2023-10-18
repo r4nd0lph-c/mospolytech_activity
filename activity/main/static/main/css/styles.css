@@ -131,20 +131,10 @@ nav {
     max-width: 696px;
 }
 
-.col {
-    border: 1px solid #0D6EFD;
-}
-
 .activity_bar {
     background-color: var(--secondary);
     height: 100%;
     width: 10% !important;
     border-top-left-radius: inherit;
     border-bottom-left-radius: inherit;
-}
-
-.body_bar {
-    height: 100%;
-    width: 90% !important;
-    border: 3px solid red;
 }

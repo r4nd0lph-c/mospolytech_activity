@@ -56,10 +56,15 @@ function get_schedule(student, dates, display_type_id) {
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
 
+const uid = function () {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
 let create_card_day = (parent, info) => {
 
     let card = document.createElement("div");
     card.className = "card card-schedule row";
+    card.id = `card-${uid()}`;
 
     let col_activity = document.createElement("div");
     col_activity.className = "col-1 activity_bar";
@@ -103,6 +108,8 @@ let create_card_day = (parent, info) => {
     card.appendChild(col_activity);
     card.appendChild(col_body);
     parent.appendChild(card);
+
+    return card.id;
 }
 
 let create_nav_student_info = (name, date) => {
@@ -162,6 +169,7 @@ function display_schedule(data, display_type_id) {
             cols[0].innerHTML = "";
             cols[1].innerHTML = "";
             let col_num = 0;
+            let created_cards_id = [];
             for (let i = 0; i < data["schedule"][0]["day"].length; i++) {
                 let info = data["schedule"][0]["day"][i];
                 if (i === 3) {
@@ -174,11 +182,37 @@ function display_schedule(data, display_type_id) {
                         },
                         time: ["13:50", "14:30"]
                     };
-                    create_card_day(cols[col_num], info_additional);
+                    created_cards_id.push(create_card_day(cols[col_num], info_additional));
                     col_num += 1;
                 }
-                create_card_day(cols[col_num], info);
+                created_cards_id.push(create_card_day(cols[col_num], info));
             }
+            let resizeObserver = new ResizeObserver(() => {
+                created_cards_id.forEach(function (id) {
+                    let card = document.getElementById(id);
+                    let body_children = card.childNodes[1].firstChild.childNodes;
+                    let title = body_children[0];
+                    let text1 = body_children[1];
+                    let text2 = body_children[2];
+                    if (card.offsetWidth >= 560) {
+                        title.style.marginBottom = "8px";
+                        text1.style.fontSize = "16px";
+                        text1.style.marginBottom = "12px";
+                        text2.style.fontSize = "16px";
+                    } else if (card.offsetWidth < 560 && card.offsetWidth >= 350) {
+                        title.style.marginBottom = "8px";
+                        text1.style.fontSize = "14px";
+                        text1.style.marginBottom = "12px";
+                        text2.style.fontSize = "14px";
+                    } else if (card.offsetWidth < 350) {
+                        title.style.marginBottom = "4px";
+                        text1.style.fontSize = "12px";
+                        text1.style.marginBottom = "4px";
+                        text2.style.fontSize = "10px";
+                    }
+                });
+            });
+            resizeObserver.observe($(`#${created_cards_id[0]}`)[0]);
         }
     } else if (display_type_id === "week") {
         // render for week
