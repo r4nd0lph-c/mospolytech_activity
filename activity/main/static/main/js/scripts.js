@@ -159,6 +159,12 @@ function display_schedule(data, display_type_id) {
         // render for day
         if (data["schedule"].length === 0) {
             disable_screens("zero_schedule");
+            let nav_selected_student = document.getElementById("nav-selected-student");
+            nav_selected_student.innerHTML = "";
+            let h5 = document.createElement("h5");
+            h5.className = "fw-light m-0";
+            h5.innerText = "Выберите студента, чтобы увидеть информацию";
+            nav_selected_student.appendChild(h5);
         } else {
             let date = data["schedule"][0]["date"];
             create_nav_student_info(data["student"]["name"], format_date_for_nav(date));

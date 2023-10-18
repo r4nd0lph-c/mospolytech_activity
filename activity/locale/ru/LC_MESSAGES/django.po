@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-17 14:03+0300\n"
-"PO-Revision-Date: 2023-10-17 17:18+0300\n"
+"POT-Creation-Date: 2023-10-18 17:40+0300\n"
+"PO-Revision-Date: 2023-10-18 17:18+0300\n"
 "Last-Translator: r4nd0lph-c\n"
 "Language: Russian\n"
 "MIME-Version: 1.0\n"
@@ -416,11 +416,23 @@ msgstr "Выйти"
 
 #: .\main\templates\main\index.html:125
 msgid "Empty Filler (svg)"
-msgstr "Изображение-заполнитель (svg)"
+msgstr "Изображение [Заполнитель] (svg)"
 
-#: .\main\templates\main\index.html:129
+#: .\main\templates\main\index.html:130
 msgid "You haven't selected any students yet"
 msgstr "Вы не выбрали ни одного студента"
+
+#: .\main\templates\main\index.html:141
+msgid "Zero Schedule Filler (svg)"
+msgstr "Изображение [Отсутствует расписание] (svg)"
+
+#: .\main\templates\main\index.html:146
+msgid "No schedule was found for specified dates"
+msgstr "Для указанных дат расписание не найдено"
+
+#: .\main\templates\main\index.html:148 .\main\templates\main\index.html:163
+msgid "Reset search parameters"
+msgstr "Сбросить параметры поиска"
 
 #: .\main\views.py:21
 msgid "Main | Activity"
