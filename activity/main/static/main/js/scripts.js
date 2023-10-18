@@ -59,7 +59,13 @@ function get_schedule(student, dates, display_type_id) {
 let create_card_day = (parent, info) => {
 
     let card = document.createElement("div");
-    card.className = "card card-schedule";
+    card.className = "card card-schedule row";
+
+    let col_activity = document.createElement("div");
+    col_activity.className = "col-1 activity_bar";
+
+    let col_body = document.createElement("div");
+    col_body.className = "col-11 body_bar";
 
     let cardBody = document.createElement("div");
     cardBody.className = "card-body";
@@ -82,7 +88,6 @@ let create_card_day = (parent, info) => {
         text.innerText = `${info["subject"]["title"]}`;
         if (info["subject"]["type"] !== "")
             text.innerText += ` (${info["subject"]["type"]})`;
-        console.log(info["subject"]);
         if (info["subject"]["teachers"].length > 0)
             subtext.innerText = info["subject"]["teachers"].join(", ");
     } else {
@@ -94,7 +99,9 @@ let create_card_day = (parent, info) => {
     cardBody.appendChild(header);
     cardBody.appendChild(text);
     cardBody.appendChild(subtext);
-    card.appendChild(cardBody);
+    col_body.appendChild(cardBody);
+    card.appendChild(col_activity);
+    card.appendChild(col_body);
     parent.appendChild(card);
 }
 
