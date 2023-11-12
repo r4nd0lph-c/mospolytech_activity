@@ -112,6 +112,37 @@ let create_card_day = (parent, info) => {
     return card.id;
 }
 
+//Create week day
+let create_card_week = (parent, info) => {
+
+    let card = document.createElement("div");
+    card.className = "card card-schedule row";
+    card.id = `card-${uid()}`;
+
+    let col_activity = document.createElement("div");
+    col_activity.className = "col-1 activity_bar";
+
+    let col_body = document.createElement("div");
+    col_body.className = "col-11 body_bar";
+
+    let cardBody = document.createElement("div");
+    cardBody.className = "card-body";
+
+    let header = document.createElement("h6");
+    header.className = "card-title";
+    header.style.margin = "auto";
+
+    cardBody.appendChild(header);
+    col_body.appendChild(cardBody);
+    card.appendChild(col_activity);
+    card.appendChild(col_body);
+    parent.appendChild(card);
+
+    return card.id;
+}
+
+//--------------------------------------------------------------------------
+
 let create_nav_student_info = (name, date) => {
     let nav_selected_student = document.getElementById("nav-selected-student");
     nav_selected_student.innerHTML = "";
@@ -230,6 +261,63 @@ function display_schedule(data, required_dates, display_type_id) {
     } else if (display_type_id === "week") {
         // render for week
         // TODO: render for week
+        if (data["schedule"].length === 0) {
+            create_nav_student_info(data["student"]["name"], format_date_for_nav(required_dates[0]));
+            disable_screens("zero_schedule");
+            ["prev", "next"].forEach(function (tag) {
+                let btn_day = document.getElementById(`z-btn-week-${tag}`);
+                let clone_btn = btn_day.cloneNode(true);
+                btn_day.parentNode.replaceChild(clone_btn, btn_week);
+                clone_btn.addEventListener("click", function (e) {
+                    let new_date = change_date_per_one(required_dates[0], tag);
+                    get_schedule(data["student"], [new_date], "day");
+                });
+            });
+        } else {
+            let date = data["schedule"][0]["date"];
+            create_nav_student_info(data["student"]["name"], format_date_for_nav(date));
+            disable_screens("schedule_week");
+            let row = document.getElementById("schedule_week_row");
+            let cols = row.children;
+            cols[0].innerHTML = "";
+            cols[1].innerHTML = "";
+            let col_num = 0;
+            let created_cards_id = [];
+            for (let i = 0; i < data["schedule"][0]["week"].length; i++) {
+                let info = data["schedule"][0]["week"][i];
+                created_cards_id.push(create_card_week(cols[col_num], info));
+            }
+            let resizeObserver = new ResizeObserver(() => {
+                created_cards_id.forEach(function (id) {
+                    let card = document.getElementById(id);
+                    if (!!card) {
+                        let body_children = card.childNodes[1].firstChild.childNodes;
+                        let text1 = body_children[1];
+                        let text2 = body_children[2];
+                        if (card.offsetWidth >= 560) {
+                            text1.style.fontSize = "16px";
+                            text2.style.fontSize = "16px";
+                        } else if (card.offsetWidth < 560 && card.offsetWidth >= 390) {
+                            text1.style.fontSize = "14px";
+                            text2.style.fontSize = "14px";
+                        } else if (card.offsetWidth < 390) {
+                            text1.style.fontSize = "12px";
+                            text2.style.fontSize = "10px";
+                        }
+                    }
+                });
+            });
+            resizeObserver.observe($(`#${created_cards_id[0]}`)[0]);
+            ["prev", "next"].forEach(function (tag) {
+                let btn_day = document.getElementById(`btn-day-${tag}`);
+                let clone_btn = btn_day.cloneNode(true);
+                btn_day.parentNode.replaceChild(clone_btn, btn_day);
+                clone_btn.addEventListener("click", function (e) {
+                    let new_date = change_date_per_one(data["schedule"][0]["date"], tag);
+                    get_schedule(data["student"], [new_date], "day");
+                });
+            });
+        }
     } else if (display_type_id === "month") {
         // render for month
         // TODO: render for month
@@ -334,7 +422,7 @@ $(document).ready(function () {
         } else if (display_type_id === "week") {
             // array of dates from week
             // TODO: week widget
-            dates = [];
+            dates = ["06.11.2023", "07.11.2023", "08.11.2023", "09.11.2023", "10.11.2023", "11.11.2023", "12.11.2023"];
         } else if (display_type_id === "month") {
             // array of dates from month
             dates = get_days_in_month(raw_date);
