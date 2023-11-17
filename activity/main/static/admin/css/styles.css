@@ -17,6 +17,8 @@
     --bs-border-width: 1px;
     --bs-border-coor:var(--dark);
     --bs-a-hrefs: #0D6EFD;
+    --button-hover-bg: #0A58CA;
+    --default-button-hover-bg: #2b9637;
 }
 
 #branding h1 a:link, #branding h1 a:visited {
@@ -139,4 +141,21 @@ div.breadcrumbs {
     background-repeat: no-repeat;
     background-position: right 7px center;
     padding-right: 26px;
+}
+
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: var(--bs-a-hrefs);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    color: var(--button-fg);
+    cursor: pointer;
+}
+
+.button.default, input[type=submit].default, .submit-row input.default {
+    float: right;
+    border: none;
+    font-weight: 400;
+    background:#42ae4f;
 }
