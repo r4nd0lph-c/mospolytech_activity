@@ -54,6 +54,10 @@ $(document).ready(function () {
         {
             "type": "month",
             "parent": document.getElementById("id_date_month").parentElement
+        },
+        {
+            "type": "year",
+            "parent": document.getElementById("id_date_year").parentElement
         }
     ]
 

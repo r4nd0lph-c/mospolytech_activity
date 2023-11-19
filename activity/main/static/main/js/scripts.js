@@ -52,9 +52,50 @@ function get_schedule(student, dates, display_type_id) {
     });
 }
 
+function get_year_activity(student, start_year) {
+    /* student = {"name": "...", "group": "..."} year = "YYYY" */
+    $.ajax({
+        type: "POST",
+        url: "get_year_activity/",
+        data: {
+            name: student["name"],
+            group: student["group"],
+            start_year: start_year,
+            csrfmiddlewaretoken: CSRF_TOKEN
+        },
+        success: function (data) {
+            console.log(data); // TODO: clear console logs
+            display_year_activity(data);
+        },
+        error: function () {
+            console.log("get_year_activity() error");
+        }
+    });
+}
+
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
+
+// DOM objects init
+let screens = [
+    document.getElementById("empty_filler"),
+    document.getElementById("zero_schedule"),
+    document.getElementById("schedule_day"),
+    document.getElementById("schedule_week"),
+    document.getElementById("schedule_month"),
+    document.getElementById("schedule_year")
+];
+
+// disabling screens
+function disable_screens(exception) {
+    screens.forEach(function (scrn) {
+        if (scrn.id === exception)
+            scrn.style.display = "block";
+        else
+            scrn.style.display = "none";
+    });
+}
 
 const uid = function () {
     return Date.now().toString(36) + Math.random().toString(36).substr(2);
@@ -135,25 +176,6 @@ let create_nav_student_info = (name, date) => {
 
 // changing screens for schedules
 function display_schedule(data, required_dates, display_type_id) {
-    // DOM objects init
-    let screens = [
-        document.getElementById("empty_filler"),
-        document.getElementById("zero_schedule"),
-        document.getElementById("schedule_day"),
-        document.getElementById("schedule_week"),
-        document.getElementById("schedule_month")
-    ];
-
-    // disabling screens
-    function disable_screens(exception) {
-        screens.forEach(function (scrn) {
-            if (scrn.id === exception)
-                scrn.style.display = "block";
-            else
-                scrn.style.display = "none";
-        });
-    }
-
     // changing process
     if (display_type_id === "day") {
         // render for day
@@ -234,6 +256,12 @@ function display_schedule(data, required_dates, display_type_id) {
         // render for month
         // TODO: render for month
     }
+}
+
+function display_year_activity(data) {
+    // TODO: render logic
+    disable_screens("schedule_year");
+    console.log("display_year_activity() is called");
 }
 
 
@@ -331,14 +359,26 @@ $(document).ready(function () {
         if (display_type_id === "day") {
             // array of dates from day
             dates = [reformat_date(raw_date)];
+            get_schedule(student, dates, display_type_id);
         } else if (display_type_id === "week") {
             // array of dates from week
             // TODO: week widget
             dates = [];
+            get_schedule(student, dates, display_type_id);
         } else if (display_type_id === "month") {
             // array of dates from month
             dates = get_days_in_month(raw_date);
+            get_schedule(student, dates, display_type_id);
+        } else if (display_type_id === "year") {
+            // academic year activity
+            let start_year = document.getElementsByName("date_year")[0].value.split("-")[0];
+            if (start_year === "") {
+                let today_date = new Date();
+                const offset = today_date.getTimezoneOffset()
+                today_date = new Date(today_date.getTime() - (offset * 60 * 1000))
+                start_year = today_date.toISOString().split("T")[0].split("-")[0]
+            }
+            get_year_activity(student, start_year);
         }
-        get_schedule(student, dates, display_type_id);
     };
 });

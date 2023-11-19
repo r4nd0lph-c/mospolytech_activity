@@ -152,6 +152,31 @@ def get_schedule(request):
     return JsonResponse({"message": "you don't have enough rights!"})
 
 
+def get_year_activity(request):
+    """ returns info about student academic year activity"""
+
+    if request.method == "POST":
+        study_group = request.POST.get("group", None)
+        name = request.POST.get("name", None)
+
+        if (study_group is not None) and (name is not None):
+            student = Student.objects.filter(study_group__name=study_group).filter(name=name)[0]
+            start_year = request.POST.get("start_year", None)
+            if start_year:
+                start_year = int(start_year)
+            else:
+                return JsonResponse({"message": "something went wrong!"})
+
+            activity = {
+                "years": [start_year, start_year + 1]
+            }
+            return JsonResponse({
+                "student": {"name": name, "group": study_group},
+                "activity": activity
+            })
+    return JsonResponse({"message": "you don't have enough rights!"})
+
+
 def page_not_found(request, exception):
     response = render(
         request, "main/404.html",

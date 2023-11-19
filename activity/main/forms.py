@@ -1,5 +1,5 @@
 from datetime import datetime
-from bootstrap_datepicker_plus.widgets import DatePickerInput, MonthPickerInput
+from bootstrap_datepicker_plus.widgets import DatePickerInput, MonthPickerInput, YearPickerInput
 from dal import autocomplete
 from django.utils.translation import gettext_lazy as _, get_language
 from django import forms
@@ -64,7 +64,7 @@ class SearchInfoForm(forms.Form):
             forward=("group",)
         )
     )
-    DISPLAY_TYPES = (("day", _("Day")), ("week", _("Week")), ("month", _("Month")))
+    DISPLAY_TYPES = (("day", _("Day")), ("week", _("Week")), ("month", _("Month")), ("year", _("Academic year")))
     display_type = forms.ChoiceField(
         choices=DISPLAY_TYPES
     )
@@ -90,6 +90,15 @@ class SearchInfoForm(forms.Form):
             options={
                 "locale": get_language(),
                 "format": "MMMM YYYY",
+                "defaultDate": datetime.today()
+            },
+        ))
+    date_year = forms.DateField(
+        widget=YearPickerInput(
+            attrs={"class": "form-control"},
+            options={
+                "locale": get_language(),
+                "format": "YYYY",
                 "defaultDate": datetime.today()
             },
         ))

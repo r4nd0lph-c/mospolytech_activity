@@ -28,6 +28,7 @@
                                 <p> {{ search_info_form.date_day }} </p>
                                 <p> {{ search_info_form.date_week }} </p>
                                 <p> {{ search_info_form.date_month }} </p>
+                                <p> {{ search_info_form.date_year }} </p>
                                 <div id="form-buttons" class="row mt-4">
                                     <div class="col-sm-6 mb-3">
                                         <button type="button" id="btn-search" class="btn btn-primary">
@@ -201,6 +202,17 @@
 
                     </div>
                     <!-- schedule month END -->
+
+                    <!-- schedule year START -->
+                    <div id="schedule_year" class="inner container" style="display: none;">
+                        <div style="text-align: center;">
+                            <br>
+                            <a href="{% url 'index' %}" class="text-decoration-none">
+                                {% trans "Reset search parameters" %}
+                            </a>
+                        </div>
+                    </div>
+                    <!-- schedule year END -->
                 </div>
                 <!-- content END -->
             </div>
