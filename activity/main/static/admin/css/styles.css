@@ -11,14 +11,14 @@
     --pr-accent: #86B7FE;
     --bs-font-sans-serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans","Liberation Sans",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     --bs-body-font-family: var(--bs-font-sans-serif);
-    --selected-row: #CED4DA;
+    --selected-row: #d5e6ff;
     --bs-border-radius: 0.5rem;
     --bs-border-color-translucent: rgba(0, 0, 0, 0.175);
     --bs-border-width: 1px;
     --bs-border-coor:var(--dark);
     --bs-a-hrefs: #0D6EFD;
-    --button-hover-bg: #0A58CA;
-    --default-button-hover-bg: #2b9637;
+    --button-hover-bg: #FFFFFF;
+    --default-button-hover-bg: #0A58CA;
 }
 
 #branding h1 a:link, #branding h1 a:visited {
@@ -68,7 +68,7 @@ a:link, a:visited {
     border-radius: var(--bs-border-radius);
     border-style: solid !important;
     border-width: 1px !important;
-    border-color: var(--text-secondary) !important;
+    border-color: var(--primary) !important;
     font-family: var(--bs-body-font-family);
 }
 
@@ -145,17 +145,26 @@ div.breadcrumbs {
 
 
 .button, input[type=submit], input[type=button], .submit-row input, a.button {
-    background: var(--bs-a-hrefs);
+    background: var(--white);
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
-    color: var(--button-fg);
+    color: var(--text-secondary);
     cursor: pointer;
+    border-style: solid !important;
+    border-width: 1px !important;
+    border-color: var(--secondary) !important;
 }
 
 .button.default, input[type=submit].default, .submit-row input.default {
     float: right;
     border: none;
     font-weight: 400;
-    background:#42ae4f;
+    background: var(--bs-a-hrefs);
+    color: var(--white);
+}
+
+.select2-container--admin-autocomplete .select2-results__option--highlighted[aria-selected] {
+    background-color: var(--selected-row) !important;
+    color: var(--dark) !important;
 }
