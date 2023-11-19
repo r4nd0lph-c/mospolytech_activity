@@ -1,7 +1,6 @@
 {% extends "main/base.html" %}
 {% load i18n %}
 {% load static %}
-
 {% block body %}
     {{ search_info_form.media }}
     <!-- main START -->
@@ -118,7 +117,7 @@
                 <!-- content START -->
                 <div id="main-content" class="p-4 content">
                     <!-- empty filler START -->
-                    <div id="empty_filler" class="inner">
+                    <div id="empty_filler" class="inner" style="display: none;">
                         <header>
                             <div class="inner">
                                 <img src="{% static 'main/graphics/empty_filler.svg' %}"
@@ -191,13 +190,53 @@
                     <!-- schedule day END -->
 
                     <!-- schedule week START -->
-                    <div id="schedule_week" class="inner container" style="display: none;">
+                    <div id="schedule_week" class="inner container" style="display: none">
 
                     </div>
                     <!-- schedule week END -->
 
                     <!-- schedule month START -->
-                    <div id="schedule_month" class="inner container" style="display: none;">
+                    <div id="schedule_month" style = "align-self: center">
+                        <div style="display: flex;">
+                            <div class="inner-wide" style="padding-left: 0 !important; margin-bottom: 40px;">
+                                <i id="btn-day-prev" class="bi bi-chevron-left"
+                                   style="font-size: 32px; cursor: pointer;"></i>
+                            </div>
+                            <div>
+                                <div id="schedule_day_row" class="row" style=" height:70vh;">
+                                    <table>
+                                        <tr class="week" style="display: flex; grid-gap: 16px">
+                                            <th class ="weekdays" 
+                                            style= "width: 102px; padding-top:11.5px; padding-bottom:11.5px;text-align: center; 
+                                            background-color: #FFFFFF; border-radius: 8px;">ПН</th>
+                                            <th class ="weekdays" 
+                                            style= "width: 102px; padding-top:11.5px; padding-bottom:11.5px;text-align: center; 
+                                            background-color: #FFFFFF; border-radius: 8px;">ВТ</th>
+                                            <th class ="weekdays" 
+                                            style= "width: 102px; padding-top:11.5px; padding-bottom:11.5px;text-align: center; 
+                                            background-color: #FFFFFF; border-radius: 8px;">СР</th>
+                                            <th class ="weekdays" 
+                                            style= "width: 102px; padding-top:11.5px; padding-bottom:11.5px;text-align: center; 
+                                            background-color: #FFFFFF; border-radius: 8px;">ЧТ</th>
+                                            <th class ="weekdays" 
+                                            style= "width: 102px; padding-top:11.5px; padding-bottom:11.5px;text-align: center; 
+                                            background-color: #FFFFFF; border-radius: 8px;">ПТ</th>
+                                            <th class ="weekdays" 
+                                            style= "width: 102px; padding-top:11.5px; padding-bottom:11.5px;text-align: center; 
+                                            background-color: #FFFFFF; border-radius: 8px;">СБ</th>
+                                            <th class ="weekdays" 
+                                            style= "width: 102px; padding-top:11.5px; padding-bottom:11.5px;text-align: center; 
+                                            background-color: #FFFFFF; border-radius: 8px;">ВС</th>
+                                        </tr>
+                                       
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="inner-wide" style="padding-right: 0 !important; margin-bottom: 40px;">
+                                <i id="btn-day-next" class="bi bi-chevron-right"
+                                   style="font-size: 32px; cursor: pointer;"></i>
+                            </div>
+                        </div>
 
                     </div>
                     <!-- schedule month END -->
