@@ -68,7 +68,7 @@ a:link, a:visited {
     border-radius: var(--bs-border-radius);
     border-style: solid !important;
     border-width: 1px !important;
-    border-color: var(--primary) !important;
+    border-color: var(--secondary) !important;
     font-family: var(--bs-body-font-family);
 }
 
