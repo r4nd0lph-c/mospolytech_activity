@@ -138,3 +138,21 @@ nav {
     border-top-left-radius: inherit;
     border-bottom-left-radius: inherit;
 }
+
+.activity_bar_week {
+    background-color: var(--secondary);
+    height: 100%;
+    width: 100% !important;
+    border-bottom-left-radius: inherit;
+    margin-top: 30px; 
+    border-bottom-right-radius: inherit;
+}
+
+.card_card-schedule_row {
+    width: 102px; 
+    padding-top:20px; 
+    padding-bottom:20px;
+    text-align: center;
+    background-color: #FFFFFF; 
+    border-radius: 8px;
+}
