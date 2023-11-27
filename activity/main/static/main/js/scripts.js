@@ -115,27 +115,15 @@ let create_card_day = (parent, info) => {
 //Create week day
 let create_card_week = (parent, info) => {
 
-    let card = document.createElement("div");
-    card.className = "card card-schedule row";
+    let card = document.createElement("th");
+    card.className = "card_card-schedule_row";
     card.id = `card-${uid()}`;
 
     let col_activity = document.createElement("div");
-    col_activity.className = "col-1 activity_bar";
+    col_activity.className = "activity_bar_week";
 
-    let col_body = document.createElement("div");
-    col_body.className = "col-11 body_bar";
-
-    let cardBody = document.createElement("div");
-    cardBody.className = "card-body";
-
-    let header = document.createElement("h6");
-    header.className = "card-title";
-    header.style.margin = "auto";
-
-    cardBody.appendChild(header);
-    col_body.appendChild(cardBody);
-    card.appendChild(col_activity);
-    card.appendChild(col_body);
+    card.innerText = `${info.substr(0, 2)}`;
+    card.appendChild(col_activity)
     parent.appendChild(card);
 
     return card.id;
@@ -262,61 +250,41 @@ function display_schedule(data, required_dates, display_type_id) {
         // render for week
         // TODO: render for week
         if (data["schedule"].length === 0) {
-            create_nav_student_info(data["student"]["name"], format_date_for_nav(required_dates[0]));
+            create_nav_student_info(data["student"]["name"], format_date_for_nav(`${required_dates[0]} - ${required_dates[6]}`));
             disable_screens("zero_schedule");
             ["prev", "next"].forEach(function (tag) {
-                let btn_day = document.getElementById(`z-btn-week-${tag}`);
+                let btn_day = document.getElementById(`z-btn-day-${tag}`);
                 let clone_btn = btn_day.cloneNode(true);
-                btn_day.parentNode.replaceChild(clone_btn, btn_week);
+                btn_day.parentNode.replaceChild(clone_btn, btn_day);
                 clone_btn.addEventListener("click", function (e) {
                     let new_date = change_date_per_one(required_dates[0], tag);
-                    get_schedule(data["student"], [new_date], "day");
+                    get_schedule(data["student"], [new_date], "week");
                 });
             });
         } else {
             let date = data["schedule"][0]["date"];
             create_nav_student_info(data["student"]["name"], format_date_for_nav(date));
             disable_screens("schedule_week");
-            let row = document.getElementById("schedule_week_row");
-            let cols = row.children;
-            cols[0].innerHTML = "";
-            cols[1].innerHTML = "";
-            let col_num = 0;
+            let row = document.getElementById("week_tr");
             let created_cards_id = [];
-            for (let i = 0; i < data["schedule"][0]["week"].length; i++) {
-                let info = data["schedule"][0]["week"][i];
-                created_cards_id.push(create_card_week(cols[col_num], info));
+            for (let i = 0; i < data["schedule"].length; i++) {
+                let info = data["schedule"][i]["date"];
+                created_cards_id.push(create_card_week(row, info));
             }
-            let resizeObserver = new ResizeObserver(() => {
-                created_cards_id.forEach(function (id) {
-                    let card = document.getElementById(id);
-                    if (!!card) {
-                        let body_children = card.childNodes[1].firstChild.childNodes;
-                        let text1 = body_children[1];
-                        let text2 = body_children[2];
-                        if (card.offsetWidth >= 560) {
-                            text1.style.fontSize = "16px";
-                            text2.style.fontSize = "16px";
-                        } else if (card.offsetWidth < 560 && card.offsetWidth >= 390) {
-                            text1.style.fontSize = "14px";
-                            text2.style.fontSize = "14px";
-                        } else if (card.offsetWidth < 390) {
-                            text1.style.fontSize = "12px";
-                            text2.style.fontSize = "10px";
-                        }
-                    }
-                });
-            });
-            resizeObserver.observe($(`#${created_cards_id[0]}`)[0]);
-            ["prev", "next"].forEach(function (tag) {
-                let btn_day = document.getElementById(`btn-day-${tag}`);
-                let clone_btn = btn_day.cloneNode(true);
-                btn_day.parentNode.replaceChild(clone_btn, btn_day);
-                clone_btn.addEventListener("click", function (e) {
-                    let new_date = change_date_per_one(data["schedule"][0]["date"], tag);
-                    get_schedule(data["student"], [new_date], "day");
-                });
-            });
+            // created_cards_id.addEventListener("click", function(e) {
+            //     let new_date = change_date_per_one(data["schedule"][e]["date"], tag);
+            //     get_schedule(data["student"], [new_date], "day");
+            // });
+            // resizeObserver.observe($(`#${created_cards_id[0]}`)[0]);
+            // ["prev", "next"].forEach(function (tag) {
+            //     let btn_day = document.getElementById(`btn-day-${tag}`);
+            //     let clone_btn = btn_day.cloneNode(true);
+            //     btn_day.parentNode.replaceChild(clone_btn, btn_day);
+            //     clone_btn.addEventListener("click", function (e) {
+            //         let new_date = change_date_per_one(data["schedule"][0]["date"], tag);
+            //         get_schedule(data["student"], [new_date], "day");
+            //     });
+            // });
         }
     } else if (display_type_id === "month") {
         // render for month
@@ -422,10 +390,11 @@ $(document).ready(function () {
         } else if (display_type_id === "week") {
             // array of dates from week
             // TODO: week widget
-            dates = ["06.11.2023", "07.11.2023", "08.11.2023", "09.11.2023", "10.11.2023", "11.11.2023", "12.11.2023"];
+            dates = ["13.11.2023", "14.11.2023", "15.11.2023", "16.11.2023", "17.11.2023", "18.11.2023", "19.11.2023"];
         } else if (display_type_id === "month") {
             // array of dates from month
             dates = get_days_in_month(raw_date);
+            
         }
         get_schedule(student, dates, display_type_id);
     };
