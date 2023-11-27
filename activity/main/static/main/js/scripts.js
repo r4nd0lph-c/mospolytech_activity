@@ -112,6 +112,40 @@ let create_card_day = (parent, info) => {
     return card.id;
 }
 
+function createDayCard(dayNumber) {
+    const cardContainer = document.createElement('div');
+    cardContainer.classList.add('card', 'day-card');
+
+    const cardBody = document.createElement('div');
+    cardBody.classList.add('card-body');
+
+    const title = document.createElement('h5');
+    title.classList.add('card-title');
+    title.innerText = dayNumber;
+
+    cardBody.appendChild(title);
+    cardContainer.appendChild(cardBody);
+
+    return cardContainer;
+}
+
+let create_card_week = (parent, info) => {
+   
+    let card = document.createElement ("th");
+    card.className = "card_card-schedule_row";
+    card.id = `card-${uid()}`;
+    
+    let col_activity = document. createElement ("div");
+    col_activity.className = "activity_bar_week"
+    
+    card.innerText = `${info.substr (0, 2)}`;
+    card.appendChild(col_activity)
+    parent.appendChild(card);
+    
+    return card.id;
+}
+
+
 let create_nav_student_info = (name, date) => {
     let nav_selected_student = document.getElementById("nav-selected-student");
     nav_selected_student.innerHTML = "";
@@ -143,6 +177,7 @@ function display_schedule(data, required_dates, display_type_id) {
         document.getElementById("schedule_week"),
         document.getElementById("schedule_month")
     ];
+    
 
     // disabling screens
     function disable_screens(exception) {
@@ -231,14 +266,64 @@ function display_schedule(data, required_dates, display_type_id) {
         // render for week
         // TODO: render for week
     } else if (display_type_id === "month") {
-        // render for month
-        // TODO: render for month
-    }
+        if (data["schedule"].length === 0) {
+            create_nav_student_info(data["student"]["name"], format_date_for_nav(required_dates[0]));
+            disable_screens("zero_schedule");
+            ["prev", "next"].forEach(function (tag) {
+                let btn_day = document.getElementById(`z-btn-day-${tag}`);
+                let clone_btn = btn_day.cloneNode(true);
+                btn_day.parentNode.replaceChild(clone_btn, btn_day);
+                clone_btn.addEventListener("click", function (e) {
+                    let new_date = change_date_per_one(required_dates[0], tag);
+                    get_schedule(data["student"], [new_date], "month");
+                });
+            });
+            
+        }else{
+
+            let date = data["schedule"][0]["date"];
+            create_nav_student_info(data["student"]["name"], format_date_for_nav(date));
+            disable_screens("schedule_month");
+            
+            let table = document.getElementById("monthCalendar");
+            let created_cards_id = [];
+            
+            // Clear existing content
+            table.innerHTML = "";
+
+            let weekdaysRow = document.createElement("tr");
+            weekdaysRow.style.display = "flex";
+            weekdaysRow.style.gap = "16px";
+            ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"].forEach(day => {
+                let th = document.createElement("th");
+                th.className = "weekdays";
+                th.innerText = day;
+                weekdaysRow.appendChild(th);
+            });
+                table.appendChild(weekdaysRow);
+            disable_screens("schedule_month");
+            for (let i = 0; i < data["schedule"].length; i++) {
+                let info = data["schedule"][i]["date"];
+                let weekRow = document.getElementById(`week_tr_${Math.floor(i / 7)}`);
+                
+                if (!weekRow) {
+                    // Create a new row for every 7 days
+                    weekRow = document.createElement("tr");
+                    weekRow.id = `week_tr_${Math.floor(i / 7)}`;
+                    weekRow.style.display = "flex";
+                    weekRow.style.marginTop = "16px";
+                    weekRow.style.gap = "16px";
+                    table.appendChild(weekRow);
+                }
+            
+                created_cards_id.push(create_card_week(weekRow, info));
+            }}}
+             
 }
+// Добавить строку с днями недели в таблицу
 
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
-
 
 // input: "2023-10-17", output: "17.10.2023"
 function reformat_date(dateStr) {
