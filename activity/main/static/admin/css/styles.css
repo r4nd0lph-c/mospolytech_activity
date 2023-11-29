@@ -3,10 +3,12 @@
 :root {
     --white: #FFFFFF;
     --light: #F5F5F5;
+    --more-light: #fefefe;
     --bs-border-color: #DEE2E6;
     --secondary: #CED4DA;
     --text-secondary: #6C757D;
     --dark: #212529;
+    --semi-dark: #30363b;
     --primary: #969ea8;
     --pr-accent: #86B7FE;
     --bs-font-sans-serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans","Liberation Sans",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
@@ -149,11 +151,16 @@ div.breadcrumbs {
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
-    color: var(--text-secondary);
+    color: var(--semi-dark);
     cursor: pointer;
     border-style: solid !important;
     border-width: 1px !important;
     border-color: var(--secondary) !important;
+}
+
+/* непонятный прикол с ховером */
+.submit-row input, a.button[hover] {
+    background: var(--light);
 }
 
 .button.default, input[type=submit].default, .submit-row input.default {
@@ -167,4 +174,20 @@ div.breadcrumbs {
 .select2-container--admin-autocomplete .select2-results__option--highlighted[aria-selected] {
     background-color: var(--selected-row) !important;
     color: var(--dark) !important;
+}
+
+.submit-row a.closelink {
+    border-style: solid !important;
+    border-width: 1px !important;
+    border-color: var(--secondary) !important;
+    background: var(--white) !important;
+    color: var(--semi-dark) !important;
+}
+
+.submit-row a.closelink:hover {
+    background: var(--light) !important; 
+}
+
+#changelist .actions .button {
+    box-shadow: none !important;
 }
