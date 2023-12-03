@@ -138,3 +138,44 @@ nav {
     border-top-left-radius: inherit;
     border-bottom-left-radius: inherit;
 }
+
+
+/* YEAR ACTIVITY TABLE */
+.activity-table-label {
+    margin-bottom: 2px;
+    margin-top: 16px;
+}
+
+#year-activity-table-container td {
+    border: 1px solid var(--secondary);
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+#year-activity-table-container td.in-range {
+    background-color: var(--secondary);
+    color: #000000;
+}
+
+td.in-range.red {
+    border: 1px solid #DC3545 !important;
+    background-color: #DC3545 !important;
+    color: #FFFFFF !important;
+}
+
+td.in-range.yellow {
+    border: 1px solid #FFC107 !important;
+    background-color: #FFC107 !important;
+    color: #000000 !important;
+}
+
+td.in-range.green {
+    border: 1px solid #198754 !important;
+    background-color: #198754 !important;
+    color: #FFFFFF !important;
+}
+
+td.in-range.unchecked {
+    background-color: #A3AAB1 !important;
+    color: #000000;
+}

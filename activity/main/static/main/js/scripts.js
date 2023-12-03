@@ -65,10 +65,11 @@ function get_year_activity(student, start_year) {
         },
         success: function (data) {
             console.log(data); // TODO: clear console logs
-            display_year_activity(data);
+            display_year_activity(data, student, start_year);
         },
         error: function () {
             console.log("get_year_activity() error");
+            display_year_activity(null, student, start_year);
         }
     });
 }
@@ -183,7 +184,7 @@ function display_schedule(data, required_dates, display_type_id) {
             create_nav_student_info(data["student"]["name"], format_date_for_nav(required_dates[0]));
             disable_screens("zero_schedule");
             ["prev", "next"].forEach(function (tag) {
-                let btn_day = document.getElementById(`z-btn-day-${tag}`);
+                let btn_day = document.getElementById(`z-btn-${tag}`);
                 let clone_btn = btn_day.cloneNode(true);
                 btn_day.parentNode.replaceChild(clone_btn, btn_day);
                 clone_btn.addEventListener("click", function (e) {
@@ -258,10 +259,140 @@ function display_schedule(data, required_dates, display_type_id) {
     }
 }
 
-function display_year_activity(data) {
-    // TODO: render logic
-    disable_screens("schedule_year");
-    console.log("display_year_activity() is called");
+function display_year_activity(data, student, start_year) {
+    // function for adding events to "next" & "prev" buttons
+    function next_prev_events(btn_name) {
+        ["prev", "next"].forEach(function (tag) {
+            let btn = document.getElementById(`${btn_name}-${tag}`);
+            let clone_btn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(clone_btn, btn);
+            clone_btn.addEventListener("click", function (e) {
+                let k = tag === "next" ? 1 : -1;
+                get_year_activity(student, Number(start_year) + k);
+            });
+        });
+    }
+
+    // detect errors
+    let error_flag = 0;
+    if (data === null)
+        error_flag = 1;
+    else if (data["activity"]["subjects"].length === 0)
+        error_flag = 1;
+
+    // render screens
+    if (error_flag) {
+        // render error screen
+        disable_screens("zero_schedule");
+
+        // add events to "next" & "prev" buttons
+        next_prev_events("z-btn");
+    } else {
+        // render year screen
+        disable_screens("schedule_year");
+
+        // render nav info
+        create_nav_student_info(student["name"], `Учебный год ${start_year} – ${Number(start_year) + 1}`);
+
+        // add option(s) to subject select box
+        let subject_select = document.getElementById("subject-select");
+        subject_select.innerHTML = "";
+        let subjects = data["activity"]["subjects"];
+        for (let i = 0; i < subjects.length; i++) {
+            let opt = document.createElement("option");
+            opt.value = `${i}`;
+            opt.innerHTML = `${subjects[i]["title"]} (${subjects[i]["group"]} – ${subjects[i]["semester"]} семестр, ${subjects[i]["year"]})`;
+            subject_select.appendChild(opt);
+        }
+
+        // const(s) for month naming in activity table(s)
+        const month_names = [
+            "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
+            "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+        ];
+
+        // function for creating activity table
+        function create_activity_table(container, sbj, month, year) {
+            function days_in_month(month, year) {
+                return new Date(year, month, 0).getDate();
+            }
+
+            function parse_date_str(str) {
+                let [day, month, year] = str.split(/[.-]/);
+                return new Date(year, month - 1, day);
+            }
+
+            function date_in_range(date, sbj) {
+                let date_check = parse_date_str(date);
+                let date_start = parse_date_str(sbj["dates"][0]);
+                let date_end = parse_date_str(sbj["dates"][1]);
+                return date_start <= date_check && date_check <= date_end;
+            }
+
+            let label = document.createElement("p");
+            label.className = "activity-table-label";
+            label.innerText = `${month_names[month - 1]}, ${year}`;
+
+            let table = document.createElement("table");
+            table.className = "table table-sm";
+            let tbody = document.createElement("tbody");
+            let tr = document.createElement("tr");
+
+            let days = days_in_month(month, year);
+            let date_today = new Date();
+            for (let i = 0; i < days; i++) {
+                let td = document.createElement("td");
+                td.innerText = `${i + 1}`;
+                td.id = `${i + 1}-${month}-${year}`;
+                if (date_in_range(td.id, sbj)) {
+                    td.className = "in-range";
+                    let date_check = parse_date_str(td.id);
+                    sbj["visits"].forEach(function (visit) {
+                        let date_visit = parse_date_str(visit["date"]);
+                        if (date_check.getTime() === date_visit.getTime()) {
+                            if (date_check > date_today)
+                                td.classList.add("unchecked");
+                            else {
+                                // TODO: check "visits" status
+                                td.classList.add("red");
+                            }
+                        }
+                    });
+                }
+                tr.appendChild(td);
+            }
+
+            container.appendChild(label);
+            container.appendChild(table);
+            table.appendChild(tbody);
+            tbody.appendChild(tr);
+        }
+
+        // function for rendering subject activity
+        function subject_activity(subject_val) {
+            let container = document.getElementById("year-activity-table-container");
+            container.innerHTML = "";
+
+            let sbj = subjects[subject_val];
+
+            let year = data["activity"]["years"][sbj["semester"] - 1];
+            let month_first = Number(data["activity"]["semesters"][sbj["semester"]]["date_start"].split(".")[1]);
+            let month_last = Number(data["activity"]["semesters"][sbj["semester"]]["date_end"].split(".")[1]);
+
+            for (let month = month_first; month <= month_last; month++) {
+                create_activity_table(container, sbj, month, year)
+            }
+        }
+
+        // render subject activity event
+        subject_select.onchange = (event) => {
+            subject_activity(Number(event.target.value));
+        }
+        subject_activity(0);
+
+        // add events to "next" & "prev" buttons
+        next_prev_events("btn-year");
+    }
 }
 
 

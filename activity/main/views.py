@@ -222,10 +222,10 @@ def get_year_activity(request):
             ]
 
             # find subjects
-            subjects_filter = []
             subjects = []
             semester = 0
             for schedule in schedules:
+                subjects_filter = []
                 semester += 1
                 if schedule is not None:
                     day_num = -1
