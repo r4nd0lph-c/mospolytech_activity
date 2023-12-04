@@ -113,7 +113,7 @@ let create_card_day = (parent, info) => {
 }
 
 //Create week day
-let create_card_week = (parent, info) => {
+let create_card_week = (parent, info, student) => {
 
     let card = document.createElement("th");
     card.className = "card_card-schedule_row";
@@ -125,6 +125,10 @@ let create_card_week = (parent, info) => {
     card.innerText = `${info.substr(0, 2)}`;
     card.appendChild(col_activity)
     parent.appendChild(card);
+
+    card.addEventListener("click", function(){
+        get_schedule(student, [info], "day");
+    });
 
     return card.id;
 }
@@ -250,7 +254,9 @@ function display_schedule(data, required_dates, display_type_id) {
         // render for week
         // TODO: render for week
         if (data["schedule"].length === 0) {
-            create_nav_student_info(data["student"]["name"], format_date_for_nav(`${required_dates[0]} - ${required_dates[6]}`));
+            let date = data["schedule"][0]["date"];
+            let date2= data["schedule"][6]["date"];
+            create_nav_student_info(data["student"]["name"], format_date_for_nav_week(date, date2));
             disable_screens("zero_schedule");
             ["prev", "next"].forEach(function (tag) {
                 let btn_day = document.getElementById(`z-btn-day-${tag}`);
@@ -263,16 +269,18 @@ function display_schedule(data, required_dates, display_type_id) {
             });
         } else {
             let date = data["schedule"][0]["date"];
-            create_nav_student_info(data["student"]["name"], format_date_for_nav(date));
+            let date2= data["schedule"][6]["date"];
+            create_nav_student_info(data["student"]["name"], format_date_for_nav_week(date, date2));
             disable_screens("schedule_week");
             let row = document.getElementById("week_tr");
+            row.innerHTML = "";
             let created_cards_id = [];
+            let student = data["student"];
             for (let i = 0; i < data["schedule"].length; i++) {
-                let info = data["schedule"][i]["date"];
-                created_cards_id.push(create_card_week(row, info));
+                created_cards_id.push(create_card_week(row, data["schedule"][i]["date"], student));
             }
             // created_cards_id.addEventListener("click", function(e) {
-            //     let new_date = change_date_per_one(data["schedule"][e]["date"], tag);
+            //     let new_date = change_date_per_one(data["schedule"][0]["date"], tag);
             //     get_schedule(data["student"], [new_date], "day");
             // });
             // resizeObserver.observe($(`#${created_cards_id[0]}`)[0]);
@@ -314,6 +322,24 @@ function format_date_for_nav(inputDate) {
     const [day, month, year] = inputDate.split('.');
     const date = new Date(`${year}-${month}-${day}`);
     return `${day} ${months[date.getMonth()]} ${year}, ${weekDays[date.getDay()]}`;
+}
+
+//input: "13.11.2023", "19.11.2023" output: "13 - 19 Ноября 2023" or "27 Ноября - 3 Декабря, 2023"
+function format_date_for_nav_week(inputDate, inputDate2) {
+    const months = [
+        "Января", "Февраля", "Марта", "Апреля", "Мая", "Июня",
+        "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"
+    ];
+    const [day, month, year] = inputDate.split('.');
+    const [day2, month2, year2] = inputDate2.split('.');
+    const date = new Date(`${year}-${month}-${day}`);
+    const date2 = new Date(`${year}-${month2}-${day2}`);
+    if (month == month2){
+        return `${day} - ${day2} ${months[date.getMonth()]} ${year}`;
+    }else{
+        return `${day} ${months[date.getMonth()]} - ${day2} ${months[date2.getMonth()]} ${year}`;
+    }
+    
 }
 
 function change_date_per_one(inputDate, param) {
@@ -391,6 +417,7 @@ $(document).ready(function () {
             // array of dates from week
             // TODO: week widget
             dates = ["13.11.2023", "14.11.2023", "15.11.2023", "16.11.2023", "17.11.2023", "18.11.2023", "19.11.2023"];
+            //dates = ["27.11.2023", "28.11.2023", "29.11.2023", "30.11.2023", "01.12.2023", "02.12.2023", "03.12.2023"];
         } else if (display_type_id === "month") {
             // array of dates from month
             dates = get_days_in_month(raw_date);
