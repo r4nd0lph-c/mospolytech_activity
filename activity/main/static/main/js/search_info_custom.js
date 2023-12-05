@@ -73,6 +73,25 @@ $(document).ready(function () {
     }
 
     // TODO: make visual for week picker
+    var startDate, 
+    endDate; 
+     
+    $('#id_date_week').datepicker({  
+        format: "dd.mm.yyyy", 
+        
+    }).on("changeDate", function(e) { 
+        var date = e.date; 
+        //date.format = "dd.mm.yyyy"; 
+        console.log(date); 
+        startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
+        
+        console.log(startDate); 
+        endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay()+6);
+        console.log(endDate); 
+        $('#id_date_week').datepicker("update", startDate); 
+        $('#id_date_week').val(startDate.getDate() + '.' + (startDate.getMonth() + 1) + '.' +  startDate.getFullYear() +  
+        ' - ' + endDate.getDate() + '.' + (endDate.getMonth() + 1) + '.' + endDate.getFullYear()); 
+    });
 
     update_df_visibility("day");
 

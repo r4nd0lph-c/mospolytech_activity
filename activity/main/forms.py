@@ -81,9 +81,11 @@ class SearchInfoForm(forms.Form):
         widget=DatePickerInput(
             attrs={"class": "form-control"},
             options={
-                "locale": get_language()
+                "locale": get_language(),
+                "format": "DD.MM.YYYY",
             },
-        ))
+        )
+        )
     date_month = forms.DateField(
         widget=MonthPickerInput(
             attrs={"class": "form-control"},
