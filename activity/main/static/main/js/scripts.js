@@ -449,6 +449,26 @@ function get_days_in_month(inputDate) {
     return daysInMonth;
 }
 
+function get_days_in_week(inputDate) {
+    const inputDateFormat = new Date(inputDate);
+    const inputDayOfWeek = inputDateFormat.getDay();
+
+    const mondayOffset = inputDayOfWeek === 0 ? 6 : inputDayOfWeek - 1;
+    const mondayDate = new Date(inputDateFormat);
+    mondayDate.setDate(mondayDate.getDate() - mondayOffset);
+
+    const weekDates = [];
+    for (let i = 0; i < 7; i++) {
+        const currentDate = new Date(mondayDate);
+        currentDate.setDate(currentDate.getDate() + i);
+        const formattedDate = currentDate.toLocaleDateString("ru-RU", {
+            year: "numeric", month: "2-digit", day: "2-digit"
+        }).replace(/\./g, "-").split("-").join(".");
+        weekDates.push(formattedDate);
+    }
+    return weekDates;
+}
+
 function get_raw_date(display_type_id) {
     let raw_date = document.getElementsByName("date_" + display_type_id)[0].value;
     if (raw_date === "") {
@@ -493,8 +513,7 @@ $(document).ready(function () {
             get_schedule(student, dates, display_type_id);
         } else if (display_type_id === "week") {
             // array of dates from week
-            // TODO: week widget
-            dates = [];
+            dates = get_days_in_week(raw_date);
             get_schedule(student, dates, display_type_id);
         } else if (display_type_id === "month") {
             // array of dates from month
