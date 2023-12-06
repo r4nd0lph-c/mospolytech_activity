@@ -259,12 +259,12 @@ function display_schedule(data, required_dates, display_type_id) {
             create_nav_student_info(data["student"]["name"], format_date_for_nav_week(date, date2));
             disable_screens("zero_schedule");
             ["prev", "next"].forEach(function (tag) {
-                let btn_day = document.getElementById(`z-btn-day-${tag}`);
-                let clone_btn = btn_day.cloneNode(true);
-                btn_day.parentNode.replaceChild(clone_btn, btn_day);
+                let btn_week = document.getElementById(`btn-week-${tag}`);
+                let clone_btn = btn_week.cloneNode(true);
+                btn_week.parentNode.replaceChild(clone_btn, btn_week);
                 clone_btn.addEventListener("click", function (e) {
-                    let new_date = change_date_per_one(required_dates[0], tag);
-                    get_schedule(data["student"], [new_date], "week");
+                    let new_dates = change_dates_per_week(data["schedule"][0]["date"], tag);
+                    get_schedule(data["student"], new_dates, "week");
                 });
             });
         } else {
@@ -279,20 +279,15 @@ function display_schedule(data, required_dates, display_type_id) {
             for (let i = 0; i < data["schedule"].length; i++) {
                 created_cards_id.push(create_card_week(row, data["schedule"][i]["date"], student));
             }
-            // created_cards_id.addEventListener("click", function(e) {
-            //     let new_date = change_date_per_one(data["schedule"][0]["date"], tag);
-            //     get_schedule(data["student"], [new_date], "day");
-            // });
-            // resizeObserver.observe($(`#${created_cards_id[0]}`)[0]);
-            // ["prev", "next"].forEach(function (tag) {
-            //     let btn_day = document.getElementById(`btn-day-${tag}`);
-            //     let clone_btn = btn_day.cloneNode(true);
-            //     btn_day.parentNode.replaceChild(clone_btn, btn_day);
-            //     clone_btn.addEventListener("click", function (e) {
-            //         let new_date = change_date_per_one(data["schedule"][0]["date"], tag);
-            //         get_schedule(data["student"], [new_date], "day");
-            //     });
-            // });
+            ["prev", "next"].forEach(function (tag) {
+                let btn_week = document.getElementById(`btn-week-${tag}`);
+                let clone_btn = btn_week.cloneNode(true);
+                btn_week.parentNode.replaceChild(clone_btn, btn_week);
+                clone_btn.addEventListener("click", function (e) {
+                    let new_dates = change_dates_per_week(data["schedule"][0]["date"], tag);
+                    get_schedule(data["student"], new_dates, "week");
+                });
+            });
         }
     } else if (display_type_id === "month") {
         // render for month
@@ -356,6 +351,34 @@ function change_date_per_one(inputDate, param) {
     const nextMonth = date.getMonth() + 1;
     const nextYear = date.getFullYear();
     return `${String(nextDay).padStart(2, '0')}.${String(nextMonth).padStart(2, '0')}.${nextYear}`;
+}
+
+function change_dates_per_week(inputDate, param) {
+    const parts = inputDate.split(".");
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10);
+    const year = parseInt(parts[2], 10);
+    const date = new Date(year, month - 1, day);
+    
+    // Переместить дату на начало следующей недели
+    if (param === "next") {
+        date.setDate(date.getDate() + (8 - date.getDay()));
+    } else if (param === "prev") {
+        //date.setDate(date.getDate() - date.getDay() - 1);
+        date.setDate(date.getDate() - date.getDay() - 6);
+    }
+
+    const new_dates = [];
+    // Создать массив дат для следующей недели
+    for (let i = 0; i < 7; i++) {
+        const nextDay = date.getDate();
+        const nextMonth = date.getMonth() + 1;
+        const nextYear = date.getFullYear();
+        new_dates.push(`${String(nextDay).padStart(2, '0')}.${String(nextMonth).padStart(2, '0')}.${nextYear}`);
+        date.setDate(date.getDate() + 1);
+    }
+
+    return new_dates;
 }
 
 function get_days_in_month(inputDate) {
