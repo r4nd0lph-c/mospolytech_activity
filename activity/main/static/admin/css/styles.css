@@ -141,9 +141,9 @@ nav {
 
 .weekdays {
     width: 102px; 
+    text-align: center;
     padding-top:11.5px; 
     padding-bottom:11.5px;
-    text-align: center;
     background-color: #FFFFFF; 
     border-radius: 8px;
 }
@@ -175,7 +175,7 @@ nav {
     border-bottom-right-radius: inherit;
 
     }
-  .card_card-schedule_row { 
+  .card_card-schedule_row{ 
     width: 102px;
     padding-top: 20px; 
     padding-bottom: 30px; 
@@ -183,6 +183,14 @@ nav {
     background-color:
     #FFFFFF;
     border-radius: 8px;
+    
+    }
+
+
+    #monthCalendar tr {
+        display: flex;
+        margin-bottom: 16px;
+        gap: 16px;
     }
 
 
