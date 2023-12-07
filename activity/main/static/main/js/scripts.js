@@ -176,45 +176,6 @@ let create_card_week = (parent, info, student, flag) => {
     return card.id;
 }
 
-function createDayCard(dayNumber) {
-    const cardContainer = document.createElement('div');
-    cardContainer.classList.add('card', 'day-card');
-
-    const cardBody = document.createElement('div');
-    cardBody.classList.add('card-body');
-
-    const title = document.createElement('h5');
-    title.classList.add('card-title');
-    title.innerText = dayNumber;
-
-    cardBody.appendChild(title);
-    cardContainer.appendChild(cardBody);
-
-    return cardContainer;
-}
-
-let create_card_month = (parent, info, student) => {
-
-    let card = document.createElement ("th");
-    card.className = "card_card-schedule_row";
-    card.id = `card-${uid()}`;
-
-    let col_activity = document. createElement ("div");
-    col_activity.className = "activity_bar_week"
-
-    card.innerText = `${info.substr (0, 2)}`;
-    card.appendChild(col_activity)
-    parent.appendChild(card);
-
-    card.addEventListener("click", function(e){
-        console.log(info, student);
-        get_schedule(student, [info], "day")
-    });
-
-    return card.id;
-}
-
-
 let create_nav_student_info = (name, date) => {
     let nav_selected_student = document.getElementById("nav-selected-student");
     nav_selected_student.innerHTML = "";
@@ -361,7 +322,72 @@ function display_schedule(data, required_dates, display_type_id) {
         }
     } else if (display_type_id === "month") {
         // render for month
-        // TODO: render for month
+        function next_prev_events_month(btn_name) {
+            ["prev", "next"].forEach(function (tag) {
+                let btn_month = document.getElementById(`${btn_name}-${tag}`);
+                let clone_btn = btn_month.cloneNode(true);
+                btn_month.parentNode.replaceChild(clone_btn, btn_month);
+                clone_btn.addEventListener("click", function (e) {
+                    let new_date = tag === "prev" ? required_dates[0] : required_dates[required_dates.length - 1];
+                    new_date = change_date_per_one(new_date, tag).split(".").reverse().join("-");
+                    let new_dates = get_days_in_month(new_date);
+                    get_schedule(data["student"], new_dates, "month");
+                });
+            });
+        }
+
+        if (data["schedule"].length === 0) {
+            create_nav_student_info(data["student"]["name"], format_month_for_nav(required_dates[0]));
+            disable_screens("zero_schedule");
+            next_prev_events_month("z-btn");
+        } else {
+            let dateString = data["schedule"][0]["date"];
+            create_nav_student_info(data["student"]["name"], format_month_for_nav(dateString));
+            disable_screens("schedule_month");
+
+            let table = document.getElementById("monthCalendar");
+            table.innerHTML = "";
+            let weekdaysRow = document.createElement("tr");
+            ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"].forEach(day => {
+                let th = document.createElement("th");
+                th.className = "weekdays";
+                th.innerText = day;
+                weekdaysRow.appendChild(th);
+            });
+            table.appendChild(weekdaysRow);
+
+            let created_cards_id = [];
+            let student = data["student"];
+            let dateParts = dateString.split(".");
+            let date = new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`);
+            let firstDayOfMonth = new Date(date);
+            firstDayOfMonth.setDate(1);
+            let startingDay = (firstDayOfMonth.getDay() + 6) % 7;
+            let lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+            let fullM = lastDayOfMonth.getDate();
+            let daysInMonth = lastDayOfMonth.getDate() % 7 + 1;
+
+            // Создаем первую неделю и добавляем пустые ячейки для дней предыдущего месяца
+            let weekRow = document.createElement("tr");
+            for (let j = 0; j < startingDay; j++) {
+                let emptyCell = document.createElement("td");
+                emptyCell.innerText = "";
+                emptyCell.className = "card_card-schedule_row"
+                weekRow.appendChild(emptyCell);
+            }
+            table.appendChild(weekRow);
+
+            for (let i = 0; i < data["schedule"].length; i++) {
+                let info = data["schedule"][i]["date"];
+                if (weekRow.childElementCount === 7) {
+                    weekRow = document.createElement("tr");
+                }
+                created_cards_id.push(create_card_week(weekRow, info, student, true));
+                table.appendChild(weekRow);
+            }
+
+            next_prev_events_month("btn-month");
+        }
     }
 }
 
@@ -511,7 +537,7 @@ function reformat_date(dateStr) {
     return dArr[2] + "." + dArr[1] + "." + dArr[0];
 }
 
-function format_month_for_nav(inputDate){
+function format_month_for_nav(inputDate) {
     const months = [
         "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
         "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
@@ -680,6 +706,7 @@ $(document).ready(function () {
         } else if (display_type_id === "month") {
             // array of dates from month
             dates = get_days_in_month(raw_date);
+            console.log(dates);
             get_schedule(student, dates, display_type_id);
         } else if (display_type_id === "year") {
             // academic year activity

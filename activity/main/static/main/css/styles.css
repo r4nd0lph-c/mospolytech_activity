@@ -147,13 +147,13 @@ nav {
     height: 100%;
     width: 100% !important;
     border-bottom-left-radius: inherit;
-    margin-top: 30px;
+    margin-top: 10px;
     border-bottom-right-radius: inherit;
 }
 
 .card_card-schedule_row {
     width: 102px;
-    padding: 20px 0;
+    padding: 10px 0;
     text-align: center;
     background-color: #FFFFFF;
     border-radius: 8px;
@@ -171,6 +171,34 @@ nav {
     text-align: center;
     background-color: #FFFFFF;
     border-radius: 8px;
+}
+
+
+/* MONTH DISPLAY */
+
+.calendar-day {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    margin: 5px;
+}
+
+.month-day {
+    width: 102px;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    text-align: center;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+}
+
+#monthCalendar tr {
+    display: flex;
+    margin-bottom: 40px;
+    gap: 16px;
 }
 
 
