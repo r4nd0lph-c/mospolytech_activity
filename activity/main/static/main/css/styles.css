@@ -153,17 +153,21 @@ nav {
 
 .card_card-schedule_row {
     width: 102px;
-    padding-top:20px;
-    padding-bottom:20px;
+    padding: 20px 0;
     text-align: center;
     background-color: #FFFFFF;
     border-radius: 8px;
 }
 
+.card_card-schedule_row.empty {
+    background-color: var(--light) !important;
+    border: 1px solid var(--secondary);
+}
+
 .weekdays {
     width: 102px;
-    padding-top:11.5px;
-    padding-bottom:11.5px;
+    padding-top: 11px;
+    padding-bottom: 11px;
     text-align: center;
     background-color: #FFFFFF;
     border-radius: 8px;
