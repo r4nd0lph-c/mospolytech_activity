@@ -192,8 +192,33 @@
                     <!-- schedule day END -->
 
                     <!-- schedule week START -->
-                    <div id="schedule_week" class="inner container" style="display: none;">
-
+                    <div id="schedule_week" class="inner-wide" style="display: none;">
+                        <div style="display: flex;">
+                            <div class="inner-wide" style="padding-left: 0 !important; margin-bottom: 40px;">
+                                <i id="btn-week-prev" class="bi bi-chevron-left"
+                                   style="font-size: 32px; cursor: pointer;"></i>
+                            </div>
+                            <div id="schedule_week_row" class="row" style=" height:30vh;">
+                                <table>
+                                    <tr class="week" style="display: flex; grid-gap: 16px">
+                                        <th class ="weekdays">ПН</th>
+                                        <th class ="weekdays">ВТ</th>
+                                        <th class ="weekdays">СР</th>
+                                        <th class ="weekdays">ЧТ</th>
+                                        <th class ="weekdays">ПТ</th>
+                                        <th class ="weekdays">СБ</th>
+                                        <th class ="weekdays">ВС</th>
+                                    </tr>
+                                    <tr id="week_tr" style="display: flex; margin-top:16px; grid-gap: 16px">
+                                        
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="inner-wide" style="padding-right: 0 !important; margin-bottom: 40px;">
+                                <i id="btn-week-next" class="bi bi-chevron-right"
+                                   style="font-size: 32px; cursor: pointer;"></i>
+                            </div>
+                        </div>
                     </div>
                     <!-- schedule week END -->
 

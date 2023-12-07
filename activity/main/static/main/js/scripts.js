@@ -154,6 +154,29 @@ let create_card_day = (parent, info) => {
     return card.id;
 }
 
+//Create week day
+let create_card_week = (parent, info, student) => {
+
+    let card = document.createElement("th");
+    card.className = "card_card-schedule_row";
+    card.id = `card-${uid()}`;
+
+    let col_activity = document.createElement("div");
+    col_activity.className = "activity_bar_week";
+
+    card.innerText = `${info.substr(0, 2)}`;
+    card.appendChild(col_activity)
+    parent.appendChild(card);
+
+    card.addEventListener("click", function(){
+        get_schedule(student, [info], "day");
+    });
+
+    return card.id;
+}
+
+//--------------------------------------------------------------------------
+
 let create_nav_student_info = (name, date) => {
     let nav_selected_student = document.getElementById("nav-selected-student");
     nav_selected_student.innerHTML = "";
@@ -253,6 +276,42 @@ function display_schedule(data, required_dates, display_type_id) {
     } else if (display_type_id === "week") {
         // render for week
         // TODO: render for week
+        if (data["schedule"].length === 0) {
+            let date = data["schedule"][0]["date"];
+            let date2= data["schedule"][6]["date"];
+            create_nav_student_info(data["student"]["name"], format_date_for_nav_week(date, date2));
+            disable_screens("zero_schedule");
+            ["prev", "next"].forEach(function (tag) {
+                let btn_week = document.getElementById(`btn-week-${tag}`);
+                let clone_btn = btn_week.cloneNode(true);
+                btn_week.parentNode.replaceChild(clone_btn, btn_week);
+                clone_btn.addEventListener("click", function (e) {
+                    let new_dates = change_dates_per_week(data["schedule"][0]["date"], tag);
+                    get_schedule(data["student"], new_dates, "week");
+                });
+            });
+        } else {
+            let date = data["schedule"][0]["date"];
+            let date2= data["schedule"][6]["date"];
+            create_nav_student_info(data["student"]["name"], format_date_for_nav_week(date, date2));
+            disable_screens("schedule_week");
+            let row = document.getElementById("week_tr");
+            row.innerHTML = "";
+            let created_cards_id = [];
+            let student = data["student"];
+            for (let i = 0; i < data["schedule"].length; i++) {
+                created_cards_id.push(create_card_week(row, data["schedule"][i]["date"], student));
+            }
+            ["prev", "next"].forEach(function (tag) {
+                let btn_week = document.getElementById(`btn-week-${tag}`);
+                let clone_btn = btn_week.cloneNode(true);
+                btn_week.parentNode.replaceChild(clone_btn, btn_week);
+                clone_btn.addEventListener("click", function (e) {
+                    let new_dates = change_dates_per_week(data["schedule"][0]["date"], tag);
+                    get_schedule(data["student"], new_dates, "week");
+                });
+            });
+        }
     } else if (display_type_id === "month") {
         // render for month
         // TODO: render for month
@@ -419,6 +478,24 @@ function format_date_for_nav(inputDate) {
     return `${day} ${months[date.getMonth()]} ${year}, ${weekDays[date.getDay()]}`;
 }
 
+//input: "13.11.2023", "19.11.2023" output: "13 - 19 Ноября 2023" or "27 Ноября - 3 Декабря, 2023"
+function format_date_for_nav_week(inputDate, inputDate2) {
+    const months = [
+        "Января", "Февраля", "Марта", "Апреля", "Мая", "Июня",
+        "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"
+    ];
+    const [day, month, year] = inputDate.split('.');
+    const [day2, month2, year2] = inputDate2.split('.');
+    const date = new Date(`${year}-${month}-${day}`);
+    const date2 = new Date(`${year}-${month2}-${day2}`);
+    if (month == month2){
+        return `${day} - ${day2} ${months[date.getMonth()]} ${year}`;
+    }else{
+        return `${day} ${months[date.getMonth()]} - ${day2} ${months[date2.getMonth()]} ${year}`;
+    }
+
+}
+
 function change_date_per_one(inputDate, param) {
     const parts = inputDate.split(".");
     const day = parseInt(parts[0], 10);
@@ -433,6 +510,34 @@ function change_date_per_one(inputDate, param) {
     const nextMonth = date.getMonth() + 1;
     const nextYear = date.getFullYear();
     return `${String(nextDay).padStart(2, '0')}.${String(nextMonth).padStart(2, '0')}.${nextYear}`;
+}
+
+function change_dates_per_week(inputDate, param) {
+    const parts = inputDate.split(".");
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10);
+    const year = parseInt(parts[2], 10);
+    const date = new Date(year, month - 1, day);
+
+    // Переместить дату на начало следующей недели
+    if (param === "next") {
+        date.setDate(date.getDate() + (8 - date.getDay()));
+    } else if (param === "prev") {
+        //date.setDate(date.getDate() - date.getDay() - 1);
+        date.setDate(date.getDate() - date.getDay() - 6);
+    }
+
+    const new_dates = [];
+    // Создать массив дат для следующей недели
+    for (let i = 0; i < 7; i++) {
+        const nextDay = date.getDate();
+        const nextMonth = date.getMonth() + 1;
+        const nextYear = date.getFullYear();
+        new_dates.push(`${String(nextDay).padStart(2, '0')}.${String(nextMonth).padStart(2, '0')}.${nextYear}`);
+        date.setDate(date.getDate() + 1);
+    }
+
+    return new_dates;
 }
 
 function get_days_in_month(inputDate) {
