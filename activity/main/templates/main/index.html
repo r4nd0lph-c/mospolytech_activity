@@ -28,7 +28,6 @@
                                 <p> {{ search_info_form.date_day }} </p>
                                 <p> {{ search_info_form.date_week }} </p>
                                 <p> {{ search_info_form.date_month }} </p>
-                                <p> {{ search_info_form.date_year }} </p>
                                 <div id="form-buttons" class="row mt-4">
                                     <div class="col-sm-6 mb-3">
                                         <button type="button" id="btn-search" class="btn btn-primary">
@@ -210,7 +209,7 @@
                                         <th class ="weekdays">ВС</th>
                                     </tr>
                                     <tr id="week_tr" style="display: flex; margin-top:16px; grid-gap: 16px">
-                                        
+
                                     </tr>
                                 </table>
                             </div>
@@ -223,7 +222,27 @@
                     <!-- schedule week END -->
 
                     <!-- schedule month START -->
-                    <div id="schedule_month" class="inner container" style="display: none;">
+                    <div id="schedule_month" class="inner container" style="display: none">
+                        <div style="display: flex;">
+                            <div class="inner-wide" style="padding-left: 0 !important; margin-bottom: 40px;">
+                                <i id="btn-month-prev" class="bi bi-chevron-left"
+                                   style="font-size: 32px; cursor: pointer;"></i>
+                            </div>
+                            <div>
+                                <div id="schedule_day_row" class="row" style=" height:70vh;">
+                                    <table id="monthCalendar" class="month-calendar">
+
+                                        <tr id="week_tr" style="display:flex; margin-top:16px; grid-gap:16px"></tr>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                            <div class="inner-wide" style="padding-right: 0 !important; margin-bottom: 40px;">
+                                <i id="btn-month-next" class="bi bi-chevron-right"
+                                   style="font-size: 32px; cursor: pointer;"></i>
+                            </div>
+                        </div>
 
                     </div>
                     <!-- schedule month END -->

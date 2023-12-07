@@ -176,7 +176,44 @@ let create_card_week = (parent, info, student, flag) => {
     return card.id;
 }
 
-//--------------------------------------------------------------------------
+function createDayCard(dayNumber) {
+    const cardContainer = document.createElement('div');
+    cardContainer.classList.add('card', 'day-card');
+
+    const cardBody = document.createElement('div');
+    cardBody.classList.add('card-body');
+
+    const title = document.createElement('h5');
+    title.classList.add('card-title');
+    title.innerText = dayNumber;
+
+    cardBody.appendChild(title);
+    cardContainer.appendChild(cardBody);
+
+    return cardContainer;
+}
+
+let create_card_month = (parent, info, student) => {
+
+    let card = document.createElement ("th");
+    card.className = "card_card-schedule_row";
+    card.id = `card-${uid()}`;
+
+    let col_activity = document. createElement ("div");
+    col_activity.className = "activity_bar_week"
+
+    card.innerText = `${info.substr (0, 2)}`;
+    card.appendChild(col_activity)
+    parent.appendChild(card);
+
+    card.addEventListener("click", function(e){
+        console.log(info, student);
+        get_schedule(student, [info], "day")
+    });
+
+    return card.id;
+}
+
 
 let create_nav_student_info = (name, date) => {
     let nav_selected_student = document.getElementById("nav-selected-student");
@@ -198,6 +235,10 @@ let create_nav_student_info = (name, date) => {
     nav_selected_student.appendChild(h5);
     nav_selected_student.appendChild(p);
 }
+
+
+//--------------------------------------------------------------------------
+
 
 // changing screens for schedules
 function display_schedule(data, required_dates, display_type_id) {
@@ -468,6 +509,16 @@ function display_year_activity(data, student, start_year) {
 function reformat_date(dateStr) {
     let dArr = dateStr.split("-");
     return dArr[2] + "." + dArr[1] + "." + dArr[0];
+}
+
+function format_month_for_nav(inputDate){
+    const months = [
+        "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
+        "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+    ];
+    const [day, month, year] = inputDate.split('.');
+    const date = new Date(`${year}-${month}-${day}`);
+    return `${months[date.getMonth()]} ${year}`;
 }
 
 //input: "17.10.2023", output: "17 Октября 2023, Вторник"
