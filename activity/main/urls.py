@@ -13,5 +13,7 @@ urlpatterns = [
     path("logout/", logout_user, name="logout"),
     path("get_groups/", get_groups, name="get_groups"),
     path("get_students/", get_students, name="get_students"),
-    path("get_schedule/", get_schedule, name="get_schedule")
+    path("get_schedule/", get_schedule, name="get_schedule"),
+    path("get_schedule_group/", get_schedule, name="get_schedule_group"),
+    path("get_year_activity/", get_year_activity, name="get_year_activity"),
 ]
