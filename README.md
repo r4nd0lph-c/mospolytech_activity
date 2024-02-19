@@ -1,28 +1,60 @@
 # Mospolytech Activity
 
-__Mospolytech Activity__ is a project created for internal use by employees of
-the [Moscow Polytechnic University](https://mospolytech.ru/en/).
-This Web-application allows users to view and analyze the history of university visits by a student.
+## О проекте
 
-## Requirements
+__Мосполитех.Активность__ – информационная система (web-приложение) для работников [Московского Политехнического Университета](https://mospolytech.ru/), предоставляющая в удобном для анализа виде информацию о посещениях студентами ВУЗа.
 
-Third-party dependencies are required for the project to work.
+
+## Использование
+
+Для работы проекта необходимы сторонние зависимости.
 
 ```
 pip install -r /path/to/requirements.txt
 ```
 
-List of dependencies:
+Требуемые зависимости:
 
 1. django==4.1.5
 2. django-admin-autocomplete-filter==0.7.1
 3. django-autocomplete-light==3.9.4
 4. django-bootstrap-datepicker-plus==5.0.3
-5. pygments==2.14.0
-6. python-decouple==3.7
-7. requests==2.28.2
+5. django4-background-tasks==1.2.7
+6. pygments==2.14.0
+7. python-decouple==3.7
+8. requests==2.28.2
 
-## Contacts
 
-If you want to help with development or if you have questions, you can contact the repository
-creator ([@rand0lphc](https://t.me/rand0lphc)) in telegram.
+## Изображения
+
+__Авторизация__ – система является закрытой.
+![Авторизация](img/1.jpg)
+
+__Главный экран__ – начальная страница, с которой осуществляется поиск необходимой информации.
+![Главный экран](img/2.jpg)
+
+__Фильтры__ – примеры различных фильтров по датам.
+![Фильтры](img/3.jpg)
+
+__Виджет дня__ – отображение активности студента за выбранный день.
+![День](img/4.jpg)
+
+__Виджет месяца__ – отображение активности студента за выбранный месяц.
+![Месяц](img/5.jpg)
+
+__Виджет учебного года__ – отображение активности студента за выбранный учебный год (с возможностью просматривать посещения по отдельным предметам).
+![Учебный год](img/6.jpg)
+
+__Админ-панель__ – панель для управления пользователями и данными(страница навигации).
+![Админ-панель 1](img/7.jpg)
+
+__Админ-панель__ – панель для управления пользователями и данными(список расписаний).
+![Админ-панель 2](img/8.jpg)
+
+__Админ-панель__ – панель для управления пользователями и данными(детальная информация о расписании).
+![Админ-панель 3](img/9.jpg)
+
+
+## Контакты
+
+Если вы хотите помочь в разработке или у вас есть вопросы, вы можете связаться с создателем репозитория ([@rand0lphc](https://t.me/rand0lphc)) в telegram.
