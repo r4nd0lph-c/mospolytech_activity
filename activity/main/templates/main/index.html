@@ -138,7 +138,7 @@
                     <div id="zero_schedule" class="inner" style="display: none;">
                         <div style="display: flex;">
                             <div class="inner-wide" style="padding-left: 0 !important; margin-bottom: 40px;">
-                                <i id="z-btn-day-prev" class="bi bi-chevron-left"
+                                <i id="z-btn-prev" class="bi bi-chevron-left"
                                    style="font-size: 32px; cursor: pointer;"></i>
                             </div>
                             <div>
@@ -157,7 +157,7 @@
                                 </div>
                             </div>
                             <div class="inner-wide" style="padding-right: 0 !important; margin-bottom: 40px;">
-                                <i id="z-btn-day-next" class="bi bi-chevron-right"
+                                <i id="z-btn-next" class="bi bi-chevron-right"
                                    style="font-size: 32px; cursor: pointer;"></i>
                             </div>
                         </div>
@@ -192,24 +192,81 @@
                     <!-- schedule day END -->
 
                     <!-- schedule week START -->
-                    <div id="schedule_week" class="inner container" style="display: none;">
+                    <div id="schedule_week" class="inner-wide" style="display: none;">
+                        <div style="display: flex;">
+                            <div class="inner-wide" style="padding-left: 0 !important; margin-bottom: 40px;">
+                                <i id="btn-week-prev" class="bi bi-chevron-left"
+                                   style="font-size: 32px; cursor: pointer;"></i>
+                            </div>
+                            <div id="schedule_week_row" class="row" style=" height:30vh;">
+                                <table>
+                                    <tr class="week" style="display: flex; grid-gap: 16px">
+                                        <th class ="weekdays">ПН</th>
+                                        <th class ="weekdays">ВТ</th>
+                                        <th class ="weekdays">СР</th>
+                                        <th class ="weekdays">ЧТ</th>
+                                        <th class ="weekdays">ПТ</th>
+                                        <th class ="weekdays">СБ</th>
+                                        <th class ="weekdays">ВС</th>
+                                    </tr>
+                                    <tr id="week_tr" style="display: flex; margin-top:16px; grid-gap: 16px">
 
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="inner-wide" style="padding-right: 0 !important; margin-bottom: 40px;">
+                                <i id="btn-week-next" class="bi bi-chevron-right"
+                                   style="font-size: 32px; cursor: pointer;"></i>
+                            </div>
+                        </div>
                     </div>
                     <!-- schedule week END -->
 
                     <!-- schedule month START -->
-                    <div id="schedule_month" class="inner container" style="display: none;">
-
+                    <div id="schedule_month" class="inner-wide" style="display: none">
+                        <div style="display: flex;">
+                            <div class="inner-wide" style="padding-left: 0 !important; margin-bottom: 40px;">
+                                <i id="btn-month-prev" class="bi bi-chevron-left"
+                                   style="font-size: 32px; cursor: pointer;"></i>
+                            </div>
+                            <div>
+                                <div id="schedule_day_row" class="row" style=" height:70vh;">
+                                    <table id="monthCalendar" class="month-calendar">
+                                        <tr id="week_tr" style="display:flex; margin-top:16px; grid-gap:16px"></tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="inner-wide" style="padding-right: 0 !important; margin-bottom: 40px;">
+                                <i id="btn-month-next" class="bi bi-chevron-right"
+                                   style="font-size: 32px; cursor: pointer;"></i>
+                            </div>
+                        </div>
                     </div>
                     <!-- schedule month END -->
 
                     <!-- schedule year START -->
-                    <div id="schedule_year" class="inner container" style="display: none;">
-                        <div style="text-align: center;">
-                            <br>
-                            <a href="{% url 'index' %}" class="text-decoration-none">
-                                {% trans "Reset search parameters" %}
-                            </a>
+                    <div id="schedule_year" class="inner-wide" style="display: none;">
+                        <div style="display: flex;">
+                            <div class="inner-wide" style="padding-left: 0 !important; margin-bottom: 40px;">
+                                <i id="btn-year-prev" class="bi bi-chevron-left"
+                                   style="font-size: 32px; cursor: pointer;"></i>
+                            </div>
+                            <div>
+                                <div>
+                                    <select class="form-select" id="subject-select"></select>
+                                    <div id="year-activity-table-container" class="my-4"></div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <br>
+                                    <a href="{% url 'index' %}" class="text-decoration-none">
+                                        {% trans "Reset search parameters" %}
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="inner-wide" style="padding-right: 0 !important; margin-bottom: 40px;">
+                                <i id="btn-year-next" class="bi bi-chevron-right"
+                                   style="font-size: 32px; cursor: pointer;"></i>
+                            </div>
                         </div>
                     </div>
                     <!-- schedule year END -->

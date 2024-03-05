@@ -82,7 +82,8 @@ class SearchInfoForm(forms.Form):
             attrs={"class": "form-control"},
             options={
                 "locale": get_language(),
-                "format": "DD.MM.YYYY",
+                "format": "DD.MM.YYYY – DD.MM.YYYY",
+                "defaultDate": datetime.today()
             },
         )
         )
