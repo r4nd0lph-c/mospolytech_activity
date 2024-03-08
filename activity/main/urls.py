@@ -1,6 +1,7 @@
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import path
 from django.views.generic import RedirectView
+from .views import StudentRatingView
 
 from main.views import *
 
@@ -13,5 +14,7 @@ urlpatterns = [
     path("logout/", logout_user, name="logout"),
     path("get_groups/", get_groups, name="get_groups"),
     path("get_students/", get_students, name="get_students"),
-    path("get_schedule/", get_schedule, name="get_schedule")
+    path("get_schedule/", get_schedule, name="get_schedule"),
+    path("get_year_activity/", get_year_activity, name="get_year_activity"),
+    path('student_rating/', StudentRatingView.as_view(), name='student_rating'),
 ]
