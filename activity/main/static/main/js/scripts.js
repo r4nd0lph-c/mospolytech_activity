@@ -75,6 +75,23 @@ function get_year_activity(student, start_year) {
 }
 
 
+
+function get_students_rating() {
+    $.ajax({
+        type: "POST",
+        url: "get_student_rating/",
+        data: {
+            csrfmiddlewaretoken: CSRF_TOKEN
+        },
+        success: function (data) {
+            console.log(data);
+        },
+        error: function () {
+            console.log("Ошибка при получении рейтинга студентов");
+        }
+    });
+}
+
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
 
@@ -675,49 +692,58 @@ function get_raw_date(display_type_id) {
 $(document).ready(function () {
     // button_search init
     let button_search = document.getElementById("btn-search");
-    button_search.disabled = true;
+    let formId = $(button_search).closest('form').attr('id');
 
-    // detecting "student" field changes & unable / disable button_search
-    $(":input[name$=student]").on("change", function () {
-        let selected = $(this).select2("data")[0];
-        button_search.disabled = selected.id === "";
-    });
+    if (formId === 'schedule-form') {
+        button_search.disabled = true;
+        // detecting "student" field changes & unable / disable button_search
+        $(":input[name$=student]").on("change", function () {
+            let selected = $(this).select2("data")[0];
+            button_search.disabled = selected.id === "";
+        });
 
-    // detecting button_search click & processing data
-    button_search.onclick = function (e) {
-        // creating "student" object
-        let selected_student = $(":input[name$=student]").select2("data")[0].text;
-        let student = {
-            group: selected_student.split(")")[0].substr(1),
-            name: selected_student.split(")")[1].substr(1)
-        }
-        // creating "dates" array
-        let display_type_id = $(":input[name$=display_type]").select2("data")[0].id;
-        let raw_date = get_raw_date(display_type_id);
-        let dates = [];
-        if (display_type_id === "day") {
-            // array of dates from day
-            dates = [reformat_date(raw_date)];
-            get_schedule(student, dates, display_type_id);
-        } else if (display_type_id === "week") {
-            // array of dates from week
-            dates = get_days_in_week(raw_date);
-            get_schedule(student, dates, display_type_id);
-        } else if (display_type_id === "month") {
-            // array of dates from month
-            dates = get_days_in_month(raw_date);
-            console.log(dates);
-            get_schedule(student, dates, display_type_id);
-        } else if (display_type_id === "year") {
-            // academic year activity
-            let start_year = document.getElementsByName("date_year")[0].value.split("-")[0];
-            if (start_year === "") {
-                let today_date = new Date();
-                const offset = today_date.getTimezoneOffset()
-                today_date = new Date(today_date.getTime() - (offset * 60 * 1000))
-                start_year = today_date.toISOString().split("T")[0].split("-")[0]
+        // detecting button_search click & processing data
+        button_search.onclick = function (e) {
+            // creating "student" object
+            let selected_student = $(":input[name$=student]").select2("data")[0].text;
+            let student = {
+                group: selected_student.split(")")[0].substr(1),
+                name: selected_student.split(")")[1].substr(1)
             }
-            get_year_activity(student, start_year);
+            // creating "dates" array
+            let display_type_id = $(":input[name$=display_type]").select2("data")[0].id;
+            let raw_date = get_raw_date(display_type_id);
+            let dates = [];
+            if (display_type_id === "day") {
+                // array of dates from day
+                dates = [reformat_date(raw_date)];
+                get_schedule(student, dates, display_type_id);
+            } else if (display_type_id === "week") {
+                // array of dates from week
+                dates = get_days_in_week(raw_date);
+                get_schedule(student, dates, display_type_id);
+            } else if (display_type_id === "month") {
+                // array of dates from month
+                dates = get_days_in_month(raw_date);
+                console.log(dates);
+                get_schedule(student, dates, display_type_id);
+            } else if (display_type_id === "year") {
+                // academic year activity
+                let start_year = document.getElementsByName("date_year")[0].value.split("-")[0];
+                if (start_year === "") {
+                    let today_date = new Date();
+                    const offset = today_date.getTimezoneOffset()
+                    today_date = new Date(today_date.getTime() - (offset * 60 * 1000))
+                    start_year = today_date.toISOString().split("T")[0].split("-")[0]
+                }
+                get_year_activity(student, start_year);
+            }
+        };
+    } else if (formId === 'rating-form') {
+        button_search.onclick = function (e) { 
+
+            get_students_rating();
         }
-    };
+    }
+   
 });

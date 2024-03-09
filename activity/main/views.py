@@ -286,6 +286,19 @@ def get_year_activity(request):
             })
     return JsonResponse({"message": "you don't have enough rights!"})
 
+import random 
+
+def get_students_rating(request):
+    if request.method == "POST":
+        queryset = Student.objects.filter(is_active=True)[:100]
+        for student in queryset:
+            student.rating = random.randint(1, 100)
+            student.save()
+        sorted_queryset = sorted(queryset, key=lambda x: x.rating, reverse=True)
+        students_data = [{"name": student.name, "rating": student.rating} for student in sorted_queryset]
+        return JsonResponse({"students": students_data})
+    return JsonResponse({"message": "You don't have enough rights!"})
+
 
 def page_not_found(request, exception):
     response = render(

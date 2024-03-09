@@ -57,7 +57,6 @@ $(document).ready(function () {
     setTimeout(function () {
         let input_week_hidden = getElementByXpath("//*[@id='sidebar']/div/div/form/input[2]");
         observer_hidden.observe(input_week_hidden, {attributes: true});
-        console.log(input_week_hidden)
     }, 50);
 
     // returns DOM obj by its XPath

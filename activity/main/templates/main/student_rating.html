@@ -18,8 +18,8 @@
                             </div>
                         </header>
                         <div class="content">
-                            <form style="align-self: center;"> 
-                            {# TODO: type directly in control (not input box) for single-select "student" #}
+                            <form style="align-self: center;" id="rating-form"> 
+                                {% csrf_token %}
                                 <div class="container">
                                     <h5 class="fw-light mb-2 text-truncate">{% trans "Display" %}</h5>
                                     <p> {{ rating_display_form.display_choices }} </p>
@@ -31,7 +31,7 @@
                                 </div>
                                 <div id="form-buttons" class="row mt-4">
                                     <div class="col-sm-6 mb-3">
-                                        <button type="submit" id="btn-search" class="btn btn-primary">
+                                        <button type="button" id="btn-search" class="btn btn-primary">
                                             {% trans "Search" %}
                                         </button>
                                     </div>
@@ -133,7 +133,7 @@
                             </div>
                         </header>
                         <div>
-                            <p style="text-align: center;">{% trans "Вы ещё не выберите критерии рейтинга" %}</p>
+                            <p style="text-align: center;">{% trans "Выберите критерии рейтинга" %}</p>
                             <br>
                         </div>
                     </div>
