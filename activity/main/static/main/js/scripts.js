@@ -76,22 +76,23 @@ function get_year_activity(student, start_year) {
 
 
 
-function get_students_rating() {
+function get_rating(display_choice , dates , display_type_id) {
     $.ajax({
         type: "POST",
-        url: "get_student_rating/",
+        url: "get_rating/",
         data: {
+            display_choice: display_choice,
+            dates : dates,
             csrfmiddlewaretoken: CSRF_TOKEN
         },
         success: function (data) {
             console.log(data);
         },
         error: function () {
-            console.log("Ошибка при получении рейтинга студентов");
+            console.log("Ошибка при получении рейтинга");
         }
     });
 }
-
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
 
@@ -741,8 +742,24 @@ $(document).ready(function () {
         };
     } else if (formId === 'rating-form') {
         button_search.onclick = function (e) { 
-
-            get_students_rating();
+            let display_choice = $(":input[name$=display_choices]").select2("data")[0].id;
+            let display_type_id = $(":input[name$=display_type]").select2("data")[0].id;
+            let raw_date = get_raw_date(display_type_id);
+            let dates = [];
+            if (display_type_id === "day") {
+                // array of dates from day
+                dates = [reformat_date(raw_date)];
+                get_rating(display_choice, dates, display_type_id)
+            } else if (display_type_id === "week") {
+                // array of dates from week
+                dates = get_days_in_week(raw_date);
+                get_rating(display_choice, dates, display_type_id)
+            } else if (display_type_id === "month") {
+                // array of dates from month
+                dates = get_days_in_month(raw_date);
+                console.log(dates);
+                get_rating(display_choice, dates, display_type_id)
+            }
         }
     }
    

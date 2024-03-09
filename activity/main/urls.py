@@ -15,6 +15,6 @@ urlpatterns = [
     path("get_students/", get_students, name="get_students"),
     path("get_schedule/", get_schedule, name="get_schedule"),
     path("get_year_activity/", get_year_activity, name="get_year_activity"),
-    path('student_rating/', StudentRatingView.as_view(), name='student_rating'),
-    path('student_rating/get_student_rating/', get_students_rating , name='get_student_rating'),
+    path('students_rating/', StudentsRatingView.as_view(), name='student_rating'),
+    path('students_rating/get_rating/', get_rating , name='get_students_rating'),
 ]

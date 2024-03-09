@@ -26,7 +26,7 @@ class Index(LoginRequiredMixin, TemplateView):
         return context
 
 
-class StudentRatingView(TemplateView):
+class StudentsRatingView(TemplateView):
     template_name = 'main/student_rating.html'
     login_url = reverse_lazy("auth")
 
@@ -288,17 +288,22 @@ def get_year_activity(request):
 
 import random 
 
-def get_students_rating(request):
+def get_rating(request):
     if request.method == "POST":
-        queryset = Student.objects.filter(is_active=True)[:100]
-        for student in queryset:
-            student.rating = random.randint(1, 100)
-            student.save()
-        sorted_queryset = sorted(queryset, key=lambda x: x.rating, reverse=True)
-        students_data = [{"name": student.name, "rating": student.rating} for student in sorted_queryset]
-        return JsonResponse({"students": students_data})
+        display_choice = request.POST.get('display_choice', None)
+        if display_choice == "student":
+            queryset = Student.objects.filter(is_active=True)[:100]
+            data = [{"name": student.name, "minutes": random.randint(1, 100)} for student in queryset]
+            sorted_data = sorted(data, key=lambda x: x["minutes"], reverse=True)
+            return JsonResponse({"students": sorted_data})
+        elif display_choice == "group":
+            queryset = StudyGroup.objects.filter(is_active=True)[:100]
+            data = [{"name": group.name, "minutes": random.randint(1, 100)} for group in queryset]
+            sorted_data = sorted(data, key=lambda x: x["minutes"], reverse=True)
+            return JsonResponse({"groups": sorted_data})
+        else:
+            return JsonResponse({"message": "Invalid display choice"})
     return JsonResponse({"message": "You don't have enough rights!"})
-
 
 def page_not_found(request, exception):
     response = render(
