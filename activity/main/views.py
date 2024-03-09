@@ -26,6 +26,22 @@ class Index(LoginRequiredMixin, TemplateView):
         return context
 
 
+class StudentRatingView(TemplateView):
+    template_name = 'main/student_rating.html'
+    login_url = reverse_lazy("auth")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = _("Main | Activity")
+        context["logo_link"] = "main/graphics/logo/" + _("logo_en") + ".svg"
+        username = (self.request.user.first_name + " " + self.request.user.last_name).strip()
+        context["username"] = self.request.user.username if username == "" else username
+
+        # Загрузка формы с рейтингом
+        context["rating_display_form"] = RatingDisplayForm()
+
+        return context
+
 class GroupAutoComplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         if not self.request.user.is_authenticated:

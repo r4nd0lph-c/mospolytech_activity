@@ -111,3 +111,75 @@ class SearchInfoForm(forms.Form):
             "all": ("main/css/search_info_custom.css",)
         }
         js = ("main/js/search_info_custom.js",)
+
+
+
+
+
+class RatingDisplayForm(forms.Form):
+    DISPLAY_CHOICES = [
+        ('student', _('По студентам')),
+        ('group', _('По учебным группам')),
+    ]
+
+    TIME_INTERVAL_CHOICES = [
+        ('year', _('Academic Year')),
+        ('month', _('Month')),
+        ('week', _('Week')),
+        ('semester', _('Semester')),
+    ]
+
+    display_choices = forms.ChoiceField(
+        label=_('Display Choices'),
+        choices=DISPLAY_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+    )
+    DISPLAY_TYPES = (("day", _("Day")), ("week", _("Week")), ("month", _("Month")), ("year", _("Academic year")))
+    display_type = forms.ChoiceField(
+        choices=DISPLAY_TYPES,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+    )
+    
+    date_day = forms.DateField(
+        widget=DatePickerInput(
+            attrs={"class": "form-control"},
+            options={
+                "locale": get_language(),
+                "format": "DD.MM.YYYY",
+                "defaultDate": datetime.today()
+            },
+        ))
+    date_week = forms.DateField(
+        widget=DatePickerInput(
+            attrs={"class": "form-control"},
+            options={
+                "locale": get_language(),
+                "format": "DD.MM.YYYY – DD.MM.YYYY",
+                "defaultDate": datetime.today()
+            },
+        ))
+    date_month = forms.DateField(
+        widget=MonthPickerInput(
+            attrs={"class": "form-control"},
+            options={
+                "locale": get_language(),
+                "format": "MMMM YYYY",
+                "defaultDate": datetime.today()
+            },
+        ))
+    date_year = forms.DateField(
+        widget=YearPickerInput(
+            attrs={"class": "form-control"},
+            options={
+                "locale": get_language(),
+                "format": "YYYY",
+                "defaultDate": datetime.today()
+            },
+        ))
+
+    class Media:
+        css = {
+            "all": ("main/css/rating_display_form.css",),
+            
+        }
+        js = ("main/js/rating_display_form.js",)

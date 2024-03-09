@@ -1,47 +1,5 @@
-$(document).ready(function () {
-    // removing empty choice "-----" for select2 field with given id
-    function remove_empty_option(select_id) {
-        document.getElementById(select_id)[0].selected = false;
-    }
+$(document).ready(function () { 
 
-    // clearing "student" field if "group" field is changed
-    $(":input[name$=group]").on("change", function () {
-        let prefix = $(this).getFormPrefix();
-        $(":input[name=" + prefix + "student]").val(null).trigger("change");
-    });
-
-    // closing "group" list if "remove all items" was pressed
-    // removing "group" empty choice "-----"
-    $("#id_group").on("select2:unselecting", function (e) {
-        $(this).data('unselecting', true);
-        remove_empty_option("id_group");
-    }).on("select2:opening", function (e) {
-        if ($(this).data("unselecting")) {
-            $(this).removeData("unselecting");
-            e.preventDefault();
-        }
-    });
-
-    // closing "student" list if "remove all items" was pressed
-    $("#id_student").on("select2:unselecting", function (e) {
-        $(this).data('unselecting', true);
-    }).on("select2:opening", function (e) {
-        if ($(this).data("unselecting")) {
-            $(this).removeData("unselecting");
-            e.preventDefault();
-        }
-    });
-
-    // removing "group" empty choice "-----"
-    remove_empty_option("id_group");
-
-    // making "display_type" choice field default style looks like select2 style
-    // hiding "display_type" search field
-    $("#id_display_type").select2({
-        minimumResultsForSearch: Infinity
-    });
-
-    // -----
     // visual for week picker (start)
 
     let additional_week_style =
@@ -52,20 +10,18 @@ $(document).ready(function () {
         ".datepicker .datepicker-days tr td.active{\n" +
         "  border-radius: 0;\n" +
         "}";
-
+        
     let input_week_visible = document.getElementById("id_date_week");
+    
     setTimeout(function () {
-        let input_week_hidden = getElementByXpath("//*[@id='sidebar']/div/div/form/input[2]");
+        let input_week_hidden = getElementByXpath("//*[@id='sidebar']/div/div/form/div[1]/input[2]");
         observer_hidden.observe(input_week_hidden, {attributes: true});
-        console.log(input_week_hidden)
     }, 50);
 
     // returns DOM obj by its XPath
     function getElementByXpath(path) {
         return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
     }
-
-    
 
     // date obj -> "dd.mm.yyyy"
     function date_to_string(date) {
@@ -89,17 +45,21 @@ $(document).ready(function () {
         return [date_to_string(first_day), date_to_string(last_day)];
     }
 
+    // -----
+    
+    
     // sets visual week range (date = "yyyy-mm-dd")
     function set_week_range(date) {
         let [start, end] = calc_date(date);
         input_week_visible.value = `${start} – ${end}`;
     }
 
+    
     // detects hidden input week value changes
     let observer_hidden = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutation) {
             if (mutation.type === "attributes") {
-                let input_week_hidden = getElementByXpath("//*[@id='sidebar']/div/div/form/input[2]");
+                let input_week_hidden = getElementByXpath("//*[@id='sidebar']/div/div/form/div[1]/input[2]");
                 let date_selected = input_week_hidden.value;
                 set_week_range(date_selected);
             }
@@ -133,6 +93,7 @@ $(document).ready(function () {
             }
         }, 10);
     });
+
 
     // visual for week picker (end)
     // -----
@@ -176,7 +137,8 @@ $(document).ready(function () {
 
         // special init value for week widget
         if (this.value === "week") {
-            let input_week_hidden = getElementByXpath("//*[@id='sidebar']/div/div/form/input[2]");
+            let input_week_hidden = getElementByXpath("//*[@id='sidebar']/div/div/form/div[1]/input[2]");
+            
             if (input_week_hidden.value === "") {
                 let today = new Date();
                 set_week_range(today.toISOString().split("T")[0]);
@@ -195,4 +157,6 @@ $(document).ready(function () {
                 style.remove();
         }
     });
-});
+
+})
+

@@ -15,4 +15,5 @@ urlpatterns = [
     path("get_students/", get_students, name="get_students"),
     path("get_schedule/", get_schedule, name="get_schedule"),
     path("get_year_activity/", get_year_activity, name="get_year_activity"),
+    path('student_rating/', StudentRatingView.as_view(), name='student_rating'),
 ]
