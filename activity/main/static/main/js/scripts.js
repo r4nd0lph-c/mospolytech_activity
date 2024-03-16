@@ -83,6 +83,7 @@ function get_rating(display_choice , dates , display_type_id) {
         data: {
             display_choice: display_choice,
             dates : dates,
+            display_type_id : display_type_id,
             csrfmiddlewaretoken: CSRF_TOKEN
         },
         success: function (data) {
@@ -718,10 +719,12 @@ $(document).ready(function () {
             if (display_type_id === "day") {
                 // array of dates from day
                 dates = [reformat_date(raw_date)];
+                console.log(dates);
                 get_schedule(student, dates, display_type_id);
             } else if (display_type_id === "week") {
                 // array of dates from week
                 dates = get_days_in_week(raw_date);
+                console.log(dates);
                 get_schedule(student, dates, display_type_id);
             } else if (display_type_id === "month") {
                 // array of dates from month
@@ -742,23 +745,25 @@ $(document).ready(function () {
         };
     } else if (formId === 'rating-form') {
         button_search.onclick = function (e) { 
-            let display_choice = $(":input[name$=display_choices]").select2("data")[0].id;
-            let display_type_id = $(":input[name$=display_type]").select2("data")[0].id;
+            let display_choice = document.querySelector("[name$='display_choices']").value;
+            let display_type_id = document.querySelector("[name$='display_type']").value;
             let raw_date = get_raw_date(display_type_id);
             let dates = [];
             if (display_type_id === "day") {
                 // array of dates from day
                 dates = [reformat_date(raw_date)];
-                get_rating(display_choice, dates, display_type_id)
+                console.log(dates);
+                    get_rating(display_choice, dates, display_type_id)
             } else if (display_type_id === "week") {
                 // array of dates from week
                 dates = get_days_in_week(raw_date);
-                get_rating(display_choice, dates, display_type_id)
+                console.log(dates);
+                    get_rating(display_choice, dates, display_type_id)
             } else if (display_type_id === "month") {
                 // array of dates from month
                 dates = get_days_in_month(raw_date);
                 console.log(dates);
-                get_rating(display_choice, dates, display_type_id)
+                    get_rating(display_choice, dates, display_type_id)
             }
         }
     }

@@ -10,7 +10,8 @@ from django.views.generic import TemplateView
 from main.services.mospolytech_api.schedule import Schedule as ScheduleAPI
 from main.services.logs_writer import LogsWriter
 from main.forms import *
-
+from main.services.schedule_parser import ScheduleParser
+from django.db.models import Min
 
 class Index(LoginRequiredMixin, TemplateView):
     template_name = "main/index.html"
@@ -291,19 +292,35 @@ import random
 def get_rating(request):
     if request.method == "POST":
         display_choice = request.POST.get('display_choice', None)
+        dates = request.POST.getlist('dates[]', None)
         if display_choice == "student":
             queryset = Student.objects.filter(is_active=True)[:100]
-            data = [{"name": student.name, "minutes": random.randint(1, 100)} for student in queryset]
-            sorted_data = sorted(data, key=lambda x: x["minutes"], reverse=True)
+            data = []
+            for student in queryset:
+                parser = ScheduleParser(student.study_group.name, 2022)  # Создаем экземпляр парсера для студента
+                parser.count_subjects()  # Парсим расписание для студента
+                subjects_count = parser.get_subjects_count()  # Получаем данные о занятиях
+                total_lessons = parser.get_total_lessons()  # Получаем общее количество занятий
+                visited_minutes = random.randint(0, total_lessons)
+                data.append({"name": student.name, "minutes": total_lessons,"visited_minutes": visited_minutes, "subjects_count": subjects_count})
+            sorted_data = sorted(data, key=lambda x: x["visited_minutes"], reverse=True)
             return JsonResponse({"students": sorted_data})
         elif display_choice == "group":
             queryset = StudyGroup.objects.filter(is_active=True)[:100]
-            data = [{"name": group.name, "minutes": random.randint(1, 100)} for group in queryset]
+            data = []
+            for group in queryset:
+                parser = ScheduleParser(group.name, 2022)  # Создаем экземпляр парсера для группы
+                parser.count_subjects()  # Парсим расписание для группы
+                subjects_count = parser.get_subjects_count()  # Получаем данные о занятиях
+                total_lessons = parser.get_total_lessons()  # Получаем общее количество занятий
+                visited_minutes = random.randint(0, total_lessons)
+                data.append({"name": group.name, "minutes": total_lessons,"visited_minutes": visited_minutes, "subjects_count": subjects_count})
             sorted_data = sorted(data, key=lambda x: x["minutes"], reverse=True)
             return JsonResponse({"groups": sorted_data})
         else:
             return JsonResponse({"message": "Invalid display choice"})
     return JsonResponse({"message": "You don't have enough rights!"})
+
 
 def page_not_found(request, exception):
     response = render(
