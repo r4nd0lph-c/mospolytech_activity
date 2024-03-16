@@ -52,18 +52,18 @@ function get_schedule(student, dates, display_type_id) {
     });
 }
 
-function get_schedule_group(student, dates, display_type_id) {
+function get_schedule_group(group, dates, display_type_id) {
     $.ajax({
         type: "POST",
         url: "get_schedule_group/",
         data: {
-            group: student["group"],
+            group: group["group"],
             dates: dates,
             csrfmiddlewaretoken: CSRF_TOKEN
         },
         success: function (data) {
             console.log(data); // TODO: clear console logs
-            display_schedule(data, dates, display_type_id);
+            display_group_schedule(data, dates, display_type_id);
         },
         error: function () {
             console.log("get_schedule() error");
@@ -71,6 +71,171 @@ function get_schedule_group(student, dates, display_type_id) {
     });
 }
 
+
+function display_group_schedule(data, dates, display_type_id) {
+    if (display_type_id === "month") {
+        // render for month
+        function next_prev_events_month_group(btn_name) {
+            ["prev", "next"].forEach(function (tag) {
+                let btn_month = document.getElementById(`${btn_name}-${tag}`);
+                let clone_btn = btn_month.cloneNode(true);
+                btn_month.parentNode.replaceChild(clone_btn, btn_month);
+                // clone_btn.addEventListener("click", function (e) {
+                //     let new_date = tag === "prev" ? required_dates[0] : required_dates[required_dates.length - 1];
+                //     new_date = change_date_per_one(new_date, tag).split(".").reverse().join("-");
+                //     let new_dates = get_days_in_month(new_date);
+                //     get_schedule_group(data["group"], new_dates, "month");
+                // });
+            });
+        }
+
+        if (data["schedule"].length === 0) {
+            create_nav_group_info(data["group"]["group"], format_month_for_nav(required_dates[0]));
+            disable_screens("zero_schedule");
+            next_prev_events_month_group("z-btn");
+        } else {
+            let dateString = data["schedule"][0]["date"];
+            create_nav_group_info(data["group"]["group"], format_month_for_nav(dateString));
+            disable_screens("schedule_month");
+
+            let table = document.getElementById("monthCalendar");
+            table.innerHTML = "";
+            let weekdaysRow = document.createElement("tr");
+            ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"].forEach(day => {
+                let th = document.createElement("th");
+                th.className = "weekdays";
+                th.innerText = day;
+                weekdaysRow.appendChild(th);
+            });
+            table.appendChild(weekdaysRow);
+
+            let created_cards_id = [];
+            let group = data["group"]["group"];
+            let dateParts = dateString.split(".");
+            let date = new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`);
+            let firstDayOfMonth = new Date(date);
+            firstDayOfMonth.setDate(1);
+            let startingDay = (firstDayOfMonth.getDay() + 6) % 7;
+            let lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+            let fullM = lastDayOfMonth.getDate();
+            let daysInMonth = lastDayOfMonth.getDate() % 7 + 1;
+
+            // Создаем первую неделю и добавляем пустые ячейки для дней предыдущего месяца
+            let weekRow = document.createElement("tr");
+            for (let j = 0; j < startingDay; j++) {
+                let emptyCell = document.createElement("td");
+                emptyCell.innerText = "";
+                emptyCell.className = "card_card-schedule_row"
+                weekRow.appendChild(emptyCell);
+            }
+            table.appendChild(weekRow);
+
+            for (let i = 0; i < data["schedule"].length; i++) {
+                let info = data["schedule"][i]["date"];
+                if (weekRow.childElementCount === 7) {
+                    weekRow = document.createElement("tr");
+                }
+                created_cards_id.push(create_card_week_group(weekRow, info, group, true));
+                table.appendChild(weekRow);
+            }
+
+            next_prev_events_month_group("btn-month");
+        }
+    }
+}
+
+//Create week day fow group
+let create_card_week_group = (parent, info, group, flag) => {
+
+    let card = document.createElement("th");
+    card.className = flag === true ? "card_card-schedule_row" : "card_card-schedule_row empty";
+    card.style.cursor = 'pointer';
+    card.id = `card-${uid()}`;
+
+    let col_activity = document.createElement("div");
+    col_activity.className = "activity_bar_week";
+
+    card.innerText = `${info.substr(0, 2)}`;
+    card.appendChild(col_activity);
+    // card.appendChild(modal_button);
+    parent.appendChild(card);
+
+    //MODAL_WINDOW
+    if (flag)
+        card.addEventListener("click", function () {
+            $('#myModal').modal('show');
+    });
+
+    let modaldate = info;
+    document.getElementById('modal_date').innerHTML = modaldate;
+
+    // let modalgroup = group;
+    // document.getElementById('modal_group').innerHTML = modalgroup;
+
+
+    //24 11 и 5 - фейковые данные о посещаемости
+    var missed = 24;
+    var visited = 11;
+    var late = 5;
+
+    var canvas = document.getElementById('doughnut-chart');
+    var ctx = canvas.getContext('2d');
+
+    var options = {
+        labels: ['Студент(ов) присутствовал(о):', 'Студент(ов) отсутствовал(о):', "Студент(ов) опоздал(о):"],
+        data: [visited, missed, late],
+        backgroundColor: ['#198754', '#DC3545', '#FFC107']
+    };
+  
+    var total = options.data.reduce((a, b) => a + b, 0);
+    var startAngle = -Math.PI / 2;
+  
+    for (var i = 0; i < options.data.length; i++) {
+        var sliceAngle = (options.data[i] / total) * 2 * Math.PI;
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2, canvas.height / 2);
+        ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, startAngle, startAngle + sliceAngle);
+        ctx.fillStyle = options.backgroundColor[i];
+        ctx.fill();
+        startAngle += sliceAngle;
+    }
+
+    document.getElementById('modal_labels').innerHTML =
+    `<div style="min-height: 25px;"></div>
+    <div id="circ_visited" style="display: inline-block; min-width: 25px; min-height: 25px; border-radius: 50%; background-color: ${options.backgroundColor[0]}"></div>
+    <p>${options.labels[0]} ${options.data[0]}/40</p>
+    <div style="min-height: 20px;"></div>
+    <div id="circ_missed" style="display: inline-block; min-width: 25px; min-height: 25px; border-radius: 50%; background-color: ${options.backgroundColor[1]}"></div>
+    <p>${options.labels[1]} ${options.data[1]}/40</p>
+    <div style="min-height: 20px;"></div>
+    <div id="circ_late" style="display: inline-block; min-width: 25px; min-height: 25px; border-radius: 50%; background-color: ${options.backgroundColor[2]}"></div>
+    <p>${options.labels[2]} ${options.data[2]}/40</p>`;
+    
+    return card.id;
+}
+
+
+
+let create_nav_group_info = (group, date) => {
+    let nav_selected_group = document.getElementById("nav-selected-student");
+    nav_selected_group.innerHTML = "";
+
+    let h5 = document.createElement("h5");
+    h5.className = "fw-light m-0";
+    h5.innerText = "Группа ";
+
+    let b = document.createElement("b");
+    b.innerText = `${group}`;
+
+    let p = document.createElement("p");
+    p.innerText = `${date}`;
+    p.style.color = "var(--text-secondary)";
+    p.style.margin = "0";
+
+    h5.appendChild(b);
+    nav_selected_group.appendChild(h5);
+    nav_selected_group.appendChild(p);
+}
 
 function get_year_activity(student, start_year) {
     /* student = {"name": "...", "group": "..."} year = "YYYY" */
@@ -703,13 +868,30 @@ $(document).ready(function () {
         button_search.disabled = selected.id === "";
     });
 
+    $(":input[name$=group]").on("change", function () {
+        let selected_group = $(this).select2("data")[0];
+        button_search.disabled = selected_group.id === "";
+    });
+
+
     // detecting button_search click & processing data
     button_search.onclick = function (e) {
         // creating "student" object
         let selected_student = $(":input[name$=student]").select2("data")[0].text;
-        let student = {
-            group: selected_student.split(")")[0].substr(1),
-            name: selected_student.split(")")[1].substr(1)
+        console.log("!!"+ selected_student);
+        let student;
+        if (selected_student != "---------") {
+            student = {
+                group: selected_student.split(")")[0].substr(1),
+                name: selected_student.split(")")[1].substr(1)
+            }
+        } else {
+            student = null; 
+        }
+        //creating "group" object
+        let selected_group = $(":input[name$=group]").select2("data")[0].text;
+        let group = {
+            group: selected_group
         }
         // creating "dates" array
         let display_type_id = $(":input[name$=display_type]").select2("data")[0].id;
@@ -727,7 +909,11 @@ $(document).ready(function () {
             // array of dates from month
             dates = get_days_in_month(raw_date);
             console.log(dates);
-            get_schedule(student, dates, display_type_id);
+            if (student==null) {
+                get_schedule_group(group, dates, display_type_id);
+            } else { 
+                get_schedule(student, dates, display_type_id);
+            }
         } else if (display_type_id === "year") {
             // academic year activity
             let start_year = document.getElementsByName("date_year")[0].value.split("-")[0];
