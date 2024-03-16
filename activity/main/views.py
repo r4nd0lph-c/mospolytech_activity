@@ -201,7 +201,7 @@ def get_schedule_group(request):
                 "group": {"group": study_group},
                 "schedule": schedule
             })
-    return JsonResponse({"message": "you don't have enough rights!"})
+    return JsonResponse({"message": "yoKKKKKKKKKKKKKKKKKKKKKKKKsu don't hafvights!"})
 
 
 def get_year_activity(request):
