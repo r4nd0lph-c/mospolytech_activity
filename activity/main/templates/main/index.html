@@ -3,6 +3,19 @@
 {% load static %}
 
 {% block body %}
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="groupModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="text-align: center;">
+        <div class="modal-header" style="justify-content: center;">
+          <h5 class="modal-title" id="modal_date" style="text-align: center;"></h5>
+        </div>
+        <div class="modal-body">
+          <canvas id="doughnut-chart"></canvas>
+          <div id="modal_labels"></div>
+        </div>
+      </div>
+    </div>
+    </div>
     {{ search_info_form.media }}
     <!-- main START -->
     <main class="container-fluid">
@@ -98,7 +111,7 @@
                             </a>
                         </div>
                         <div id="nav-selected-student" class="col-lg">
-                            <h5 class="fw-light m-0">{% trans "Select a student to see the information" %}</h5>
+                            <h5 class="fw-light m-0">Выберите студента или группу, чтобы увидеть информацию</h5>
                         </div>
                         <div class="col-auto">
                             <span class="me-2">{% trans "You are logged in as" %} <b>{{ username }}</b></span>
@@ -106,6 +119,8 @@
                                 <a href="{% url 'admin:index' %}" class="text-decoration-none">
                                     {% trans "View admin panel" %}
                                 </a>
+                                <span> / </span>
+                                <a href="{% url 'student_rating' %}">Рейтинг</a>
                                 <span> / </span>
                             {% endif %}
                             <a href="{% url 'logout' %}" class="text-decoration-none">

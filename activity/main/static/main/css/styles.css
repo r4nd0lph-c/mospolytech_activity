@@ -241,3 +241,78 @@ td.in-range.unchecked {
     background-color: #A3AAB1 !important;
     color: #000000;
 }
+
+/* RATING STUDENT */
+.activity-table-label {
+    margin-bottom: 2px;
+    margin-top: 16px;
+}
+
+#students-rating-container td {
+    border: 1px solid var(--secondary);
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+#students-rating-container td.in-range {
+    background-color: var(--secondary);
+    color: #000000;
+}
+
+#rat{
+    width: 100%;
+}
+
+
+
+.student::after {
+    content: "";
+    display: inline-block;
+    width: 20px; /* Ширина пустого бара */
+    height: 10px; /* Высота пустого бара */
+    background-color: lightgray; /* Цвет пустого бара */
+    margin-left: 5px; /* Отступ между пустыми барами */
+}
+
+#students-rating-list {
+    max-width: 100%;
+    margin-bottom: -0.1rem!important;
+}
+
+
+
+#table-students td:nth-child(1) {
+    width: 320px; 
+}
+
+#table-students td:nth-child(2) {
+    padding-right: 60px; 
+}
+
+#table-students th:nth-child(3) {
+    text-align: center;
+   
+}
+#table-students td:nth-child(3) {
+    text-align: center;
+    align-items: center;
+}
+
+.progress-bar {
+    height: 30px;
+    border-radius: 10px;
+    position: relative;
+   
+}
+
+.progress-number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+
+
+
