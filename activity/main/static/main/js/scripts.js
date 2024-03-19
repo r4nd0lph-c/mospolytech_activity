@@ -102,7 +102,7 @@ function get_schedule_group(group, dates, display_type_id) {
         type: "POST",
         url: "get_schedule_group/",
         data: {
-            group: group["group"],
+            group: group,
             dates: dates,
             csrfmiddlewaretoken: CSRF_TOKEN
         },
@@ -1012,7 +1012,7 @@ function display_raiting(data, display_choice , dates , display_type_id){
                         barColor = 'green';
                     } else if (studentSubjectMinutes >= (studentTotalMin * 0.3) &&
                         studentSubjectMinutes <= studentTotalMin * 0.5) {
-                        barColor = 'yellow';
+                        barColor = '#FFC107';
                     }
 
                     var barWidth = '320px';
@@ -1085,18 +1085,17 @@ $(document).ready(function () {
             let selected_student = $(":input[name$=student]").select2("data")[0].text;
             console.log("!!"+ selected_student);
             let student;
+            let group
             if (selected_student != "---------") {
                 student = {
                     group: selected_student.split(")")[0].substr(1),
                     name: selected_student.split(")")[1].substr(1)
                 }
+                group = student["group"]
             } else {
                 student = null; 
-            }
-            //creating "group" object
-            let selected_group = $(":input[name$=group]").select2("data")[0].text;
-            let group = {
-                group: selected_group
+                let selected_group = $(":input[name$=group]").select2("data")[0].text;
+                group = selected_group
             }
             // creating "dates" array
             let display_type_id = $(":input[name$=display_type]").select2("data")[0].id;
@@ -1154,7 +1153,8 @@ $(document).ready(function () {
                 dates = get_days_in_month(raw_date);
                 console.log(dates);
                     get_rating(display_choice, dates, display_type_id)
-            }
+            } 
+
         }
     }
    
