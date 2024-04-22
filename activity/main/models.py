@@ -5,27 +5,13 @@ from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
 
 class AbstractDatestamp(models.Model):
-    date_created = models.DateTimeField(auto_now_add=True, verbose_name=_("Date created"))
+    date_created = models.DateTimeField(auto_now_add=True , verbose_name=_("Date created"))
     date_updated = models.DateTimeField(auto_now=True, verbose_name=_("Date updated"))
 
     class Meta:
         abstract = True
 
 
-
-class AcademicYear(models.Model):
-    year = models.IntegerField(
-        unique=True,
-        help_text=_("Academic year."),
-        verbose_name=_("Year")
-    )
-
-    def __str__(self):
-        return str(self.year)
-
-    class Meta:
-        verbose_name = _("Academic year")
-        verbose_name_plural = _("Academic years")
 
 
 class Institution(MPTTModel):
@@ -50,11 +36,11 @@ class Institution(MPTTModel):
         order_insertion_by = ['name']
 
     class Meta:
-        verbose_name = _("Institution")
-        verbose_name_plural = _("Institutions")
+        verbose_name = _("ВУЗ/филиал/вуз-партнёр")
+        verbose_name_plural = _("ВУЗ/филиал/вуз-партнёр")
 
 
-class Faculty(MPTTModel):
+class Department(MPTTModel):
     name = models.CharField(
         max_length=100,
         help_text=_("Name of the faculty."),
@@ -72,8 +58,8 @@ class Faculty(MPTTModel):
         order_insertion_by = ['name']
 
     class Meta:
-        verbose_name = _("Faculty")
-        verbose_name_plural = _("Faculties")
+        verbose_name = _("Факультет")
+        verbose_name_plural = _("Факультеты")
 
 
 class EducationalProgram(models.Model):
@@ -82,17 +68,21 @@ class EducationalProgram(models.Model):
         help_text=_("Name of the educational program."),
         verbose_name=_("Name")
     )
-    faculty = models.ForeignKey(
-        'Faculty',
+    department = models.ForeignKey(
+        'Department',
         on_delete=models.CASCADE
     )
-
+    year = models.IntegerField(
+        unique=True,
+        help_text=_("Academic year."),
+        verbose_name=_("Год")
+    )
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = _("Educational program")
-        verbose_name_plural = _("Educational programs")
+        verbose_name = _("Программа обучения")
+        verbose_name_plural = _("Программы обучения")
 
 
 class StudyGroup(AbstractDatestamp):
@@ -100,11 +90,6 @@ class StudyGroup(AbstractDatestamp):
         max_length=16,
         help_text=_("Name of the study group."),
         verbose_name=_("Name")
-    )
-    academic_year = models.ForeignKey(
-        'AcademicYear',
-        on_delete=models.CASCADE,
-        null= True
     )
     educational_program = models.ForeignKey(
         'EducationalProgram',
@@ -120,7 +105,7 @@ class StudyGroup(AbstractDatestamp):
 
     def __str__(self):
         return self.name
-
+    
     class Meta:
         verbose_name = _("Study group")
         verbose_name_plural = _("Study groups")

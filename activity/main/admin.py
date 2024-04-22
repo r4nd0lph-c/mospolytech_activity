@@ -32,30 +32,26 @@ class StudyGroupFilter(AutocompleteFilter):
     title = _("Study Group")
     field_name = "study_group"
 
-@admin.register(AcademicYear)
-class AcademicYearAdmin(admin.ModelAdmin):
-    list_display = ('year',)
-    search_fields = ('year',) 
 
 @admin.register(Institution)
 class InstitutionAdmin(admin.ModelAdmin):
-    list_display = ('name',) 
-    search_fields = ('name',)
+    list_display = ('name', 'parent') 
+    search_fields = ('name', 'parent')
 
-@admin.register(Faculty)
-class FacultyAdmin(admin.ModelAdmin):
-    list_display = ('name',) 
-    search_fields = ('name',)
+@admin.register(Department)
+class DepartmentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'parent') 
+    search_fields = ('name', 'parent')
 
 @admin.register(EducationalProgram)
 class EducationalProgramAdmin(admin.ModelAdmin):
-    list_display = ('name',) 
-    search_fields = ('name',)
+    list_display = ('name','department','year') 
+    search_fields = ('name','department','year')
 
 
 @admin.register(StudyGroup)
 class StudyGroupAdmin(AbstractLockedAdmin):
-    list_display = ("id", "name", "academic_year","educational_program", "is_active", "date_created", "date_updated")
+    list_display = ("id", "name","educational_program", "is_active", "date_created", "date_updated")
     list_display_links = ("id",)
     ordering = ("name",)
     list_filter = ("is_active",)
