@@ -10,7 +10,8 @@ from django.views.generic import TemplateView
 from main.services.mospolytech_api.schedule import Schedule as ScheduleAPI
 from main.services.logs_writer import LogsWriter
 from main.forms import *
-
+from main.services.schedule_parser import ScheduleParser
+from django.db.models import Min
 
 class Index(LoginRequiredMixin, TemplateView):
     template_name = "main/index.html"
@@ -25,6 +26,22 @@ class Index(LoginRequiredMixin, TemplateView):
         context["search_info_form"] = SearchInfoForm()
         return context
 
+
+class StudentsRatingView(TemplateView):
+    template_name = 'main/student_rating.html'
+    login_url = reverse_lazy("auth")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = _("Main | Activity")
+        context["logo_link"] = "main/graphics/logo/" + _("logo_en") + ".svg"
+        username = (self.request.user.first_name + " " + self.request.user.last_name).strip()
+        context["username"] = self.request.user.username if username == "" else username
+
+        # Загрузка формы с рейтингом
+        context["rating_display_form"] = RatingDisplayForm()
+
+        return context
 
 class GroupAutoComplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
@@ -101,7 +118,6 @@ def get_students(request):
 
 def get_schedule(request):
     """ returns formatted Schedule() objects from db and additional info """
-
     def fill_schedule(group: str, d: datetime) -> list:
         sch = []
         db_schedules = Schedule.objects.filter(study_group__name=actual_group).order_by("date_start")
@@ -119,15 +135,12 @@ def get_schedule(request):
                 }
                 sch.append(ScheduleAPI(obj).get_day(d.strftime("%d.%m.%Y")))
         return sch
-
     if request.method == "POST":
         study_group = request.POST.get("group", None)
         name = request.POST.get("name", None)
-
         if (study_group is not None) and (name is not None):
             student = Student.objects.filter(study_group__name=study_group).filter(name=name)[0]
             dates = sorted([datetime.strptime(d, "%d.%m.%Y") for d in request.POST.getlist("dates[]", None)])
-
             schedule = []
             group_history = StudyGroupOld.objects.filter(student=student)
             for date in dates:
@@ -144,18 +157,14 @@ def get_schedule(request):
                     else:
                         actual_group = student.study_group.name
                     schedule += fill_schedule(actual_group, date)
-
             return JsonResponse({
                 "student": {"name": name, "group": study_group},
                 "schedule": schedule
             })
     return JsonResponse({"message": "you don't have enough rights!"})
-
-
-
+    
 def get_schedule_group(request):
     """ returns formatted Schedule() objects from db and additional info """
-
     def fill_schedule(group: str, d: datetime) -> list:
         sch = []
         db_schedules = Schedule.objects.filter(study_group__name=actual_group).order_by("date_start")
@@ -173,13 +182,10 @@ def get_schedule_group(request):
                 }
                 sch.append(ScheduleAPI(obj).get_day(d.strftime("%d.%m.%Y")))
         return sch
-
     if request.method == "POST":
         study_group = request.POST.get("group", None)
-
         if (study_group is not None):
             dates = sorted([datetime.strptime(d, "%d.%m.%Y") for d in request.POST.getlist("dates[]", None)])
-
             schedule = []
             group_history = StudyGroupOld.objects.filter()
             for date in dates:
@@ -196,13 +202,11 @@ def get_schedule_group(request):
                     else:
                         actual_group = study_group.name
                     schedule += fill_schedule(actual_group, date)
-
             return JsonResponse({
                 "group": {"group": study_group},
                 "schedule": schedule
             })
     return JsonResponse({"message": "yoKKKKKKKKKKKKKKKKKKKKKKKKsu don't hafvights!"})
-
 
 def get_year_activity(request):
     """ returns info about student academic year activity """
@@ -321,6 +325,51 @@ def get_year_activity(request):
                 "activity": activity
             })
     return JsonResponse({"message": "you don't have enough rights!"})
+
+import random 
+
+def get_rating(request):
+    if request.method == "POST":
+        display_choice = request.POST.get('display_choice', None)
+        dates = request.POST.getlist('dates[]', None)
+        if display_choice == "student":
+            queryset = Student.objects.filter(is_active=True)[:100]
+            data = []
+            for student in queryset:
+                parser = ScheduleParser(student.study_group.name, 2022)  # Создаем экземпляр парсера для студента
+                parser.count_subjects()  # Парсим расписание для студента
+                subjects_count = parser.get_subjects_count()  # Получаем данные о занятиях
+                total_lessons = parser.get_total_lessons()  # Получаем общее количество занятий
+                subjects_visited_minutes = {}
+                total_visited_minutes = 0
+                for subject, count in subjects_count.items():
+                    minutes = random.randint(0, count * 90) 
+                    subjects_visited_minutes[subject] = minutes
+                    total_visited_minutes += minutes
+                data.append({"name": student.name, "group": student.study_group.name , "minutes": total_lessons,"total_visited_minutes": total_visited_minutes, "subjects_count": subjects_count , 'subjects_visited_minutes' :subjects_visited_minutes})
+            sorted_data = sorted(data, key=lambda x: x["total_visited_minutes"], reverse=True)
+            return JsonResponse({"students": sorted_data})
+        elif display_choice == "group":
+            queryset = StudyGroup.objects.filter(is_active=True)[:100]
+            data = []
+            for group in queryset:
+                parser = ScheduleParser(group.name, 2022)  # Создаем экземпляр парсера для группы
+                parser.count_subjects()  # Парсим расписание для группы
+                subjects_count = parser.get_subjects_count()  # Получаем данные о занятиях
+                total_lessons = parser.get_total_lessons()  # Получаем общее количество занятий
+                subjects_visited_minutes = {}
+                total_visited_minutes = 0
+                for subject, count in subjects_count.items():
+                    minutes = random.randint(0, count * 90) 
+                    subjects_visited_minutes[subject] = minutes
+                    total_visited_minutes += minutes
+                data.append({"name": group.name, "minutes": total_lessons,"total_visited_minutes": total_visited_minutes, "subjects_count": subjects_count , 'subjects_visited_minutes' :subjects_visited_minutes})
+            sorted_data = sorted(data, key=lambda x: x["minutes"], reverse=True)
+            return JsonResponse({"groups": sorted_data})
+        else:
+            return JsonResponse({"message": "Invalid display choice"})
+    return JsonResponse({"message": "You don't have enough rights!"})
+
 
 
 def page_not_found(request, exception):

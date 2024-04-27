@@ -138,3 +138,185 @@ nav {
     border-top-left-radius: inherit;
     border-bottom-left-radius: inherit;
 }
+
+
+/* WEEK DISPLAY */
+
+.activity_bar_week {
+    background-color: var(--secondary);
+    height: 100%;
+    width: 100% !important;
+    border-bottom-left-radius: inherit;
+    margin-top: 10px;
+    border-bottom-right-radius: inherit;
+}
+
+.card_card-schedule_row {
+    width: 102px;
+    padding: 10px 0;
+    text-align: center;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+}
+
+.card_card-schedule_row.empty {
+    background-color: var(--light) !important;
+    border: 1px solid var(--secondary);
+}
+
+.weekdays {
+    width: 102px;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    text-align: center;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+}
+
+
+/* MONTH DISPLAY */
+
+.calendar-day {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    margin: 5px;
+}
+
+.month-day {
+    width: 102px;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    text-align: center;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+}
+
+#monthCalendar tr {
+    display: flex;
+    margin-bottom: 40px;
+    gap: 16px;
+}
+
+
+/* YEAR ACTIVITY TABLE */
+.activity-table-label {
+    margin-bottom: 2px;
+    margin-top: 16px;
+}
+
+#year-activity-table-container td {
+    border: 1px solid var(--secondary);
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+#year-activity-table-container td.in-range {
+    background-color: var(--secondary);
+    color: #000000;
+}
+
+td.in-range.red {
+    border: 1px solid #DC3545 !important;
+    background-color: #DC3545 !important;
+    color: #FFFFFF !important;
+}
+
+td.in-range.yellow {
+    border: 1px solid #FFC107 !important;
+    background-color: #FFC107 !important;
+    color: #000000 !important;
+}
+
+td.in-range.green {
+    border: 1px solid #198754 !important;
+    background-color: #198754 !important;
+    color: #FFFFFF !important;
+}
+
+td.in-range.unchecked {
+    background-color: #A3AAB1 !important;
+    color: #000000;
+}
+
+/* RATING STUDENT */
+.activity-table-label {
+    margin-bottom: 2px;
+    margin-top: 16px;
+}
+
+#students-rating-container td {
+    border: 1px solid var(--secondary);
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+#students-rating-container td.in-range {
+    background-color: var(--secondary);
+    color: #000000;
+}
+
+#rat{
+    width: 100%;
+}
+
+
+
+.student::after {
+    content: "";
+    display: inline-block;
+    width: 20px; /* Ширина пустого бара */
+    height: 10px; /* Высота пустого бара */
+    background-color: lightgray; /* Цвет пустого бара */
+    margin-left: 5px; /* Отступ между пустыми барами */
+}
+
+#students-rating-list {
+    max-width: 100%;
+    margin-bottom: -0.1rem!important;
+}
+
+
+
+#table-students td:nth-child(1) {
+    width: 320px; 
+}
+
+#table-students td:nth-child(2) {
+    padding-right: 60px; 
+}
+
+#table-students th:nth-child(3) {
+    text-align: center;
+   
+}
+#table-students td:nth-child(3) {
+    text-align: center;
+    align-items: center;
+}
+
+.progress-bar {
+    height: 30px;
+    border-radius: 10px;
+    position: relative;
+   
+}
+
+.progress-number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.yellow{
+    background-color: #FFC107;
+}
+
+
+
+

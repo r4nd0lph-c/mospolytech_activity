@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-18 17:40+0300\n"
-"PO-Revision-Date: 2023-10-18 17:18+0300\n"
+"POT-Creation-Date: 2023-11-19 15:04+0300\n"
+"PO-Revision-Date: 2023-11-19 15:04+0300\n"
 "Last-Translator: r4nd0lph-c\n"
 "Language: Russian\n"
 "MIME-Version: 1.0\n"
@@ -90,6 +90,10 @@ msgstr "Неделя"
 #: .\main\forms.py:67
 msgid "Month"
 msgstr "Месяц"
+
+#: .\main\forms.py:67
+msgid "Academic year"
+msgstr "Учебный год"
 
 #: .\main\models.py:8
 msgid "Date created"
@@ -348,23 +352,23 @@ msgstr "Поиск студента"
 msgid "Display"
 msgstr "Отображение"
 
-#: .\main\templates\main\index.html:34
+#: .\main\templates\main\index.html:35
 msgid "Search"
 msgstr "Поиск"
 
-#: .\main\templates\main\index.html:40
+#: .\main\templates\main\index.html:41
 msgid "Export"
 msgstr "Экспорт"
 
-#: .\main\templates\main\index.html:49 .\main\templates\main\index.html:63
+#: .\main\templates\main\index.html:50 .\main\templates\main\index.html:64
 msgid "About Service"
 msgstr "О сервисе"
 
-#: .\main\templates\main\index.html:67
+#: .\main\templates\main\index.html:68
 msgid "In order to use the service"
 msgstr "Для того, чтобы воспользоваться сервисом"
 
-#: .\main\templates\main\index.html:71
+#: .\main\templates\main\index.html:72
 msgid ""
 "Enter the student's case-sensitive full name in the first field. The search "
 "will be performed across all groups. If you want to search for a specific "
@@ -378,7 +382,7 @@ msgstr ""
 "его указания отобразится список студентов данной группы. Далее, выберите "
 "необходимого студента из обновлённого списка."
 
-#: .\main\templates\main\index.html:75
+#: .\main\templates\main\index.html:76
 msgid ""
 "Below, in the third field, select the date display format: 'Day', 'Week', "
 "'Month'. Then select the desired date."
@@ -386,7 +390,7 @@ msgstr ""
 "Ниже, в третьем поле, выберите формат отображения даты: 'День', 'Неделя', "
 "'Месяц'. Затем выберите нужную дату."
 
-#: .\main\templates\main\index.html:79
+#: .\main\templates\main\index.html:80
 msgid ""
 "After clicking the 'Search' button, the entire attendance of the student you "
 "are interested in during the specified period will be displayed."
@@ -394,43 +398,43 @@ msgstr ""
 "После нажатия кнопки 'Поиск' будет отображена вся посещаемость интересующего "
 "Вас студента в указанный период."
 
-#: .\main\templates\main\index.html:96
+#: .\main\templates\main\index.html:97
 msgid "Menu"
 msgstr "Меню"
 
-#: .\main\templates\main\index.html:100
-msgid "Select a student to see the information"
-msgstr "Выберите студента, чтобы увидеть информацию"
+#: .\main\templates\main\index.html:101
+msgid "Select a student or group to see the information"
+msgstr "Выберите студента или группу, чтобы увидеть информацию"
 
-#: .\main\templates\main\index.html:103
+#: .\main\templates\main\index.html:104
 msgid "You are logged in as"
 msgstr "Вы вошли как"
 
-#: .\main\templates\main\index.html:106
+#: .\main\templates\main\index.html:107
 msgid "View admin panel"
 msgstr "Открыть админ-панель"
 
-#: .\main\templates\main\index.html:111
+#: .\main\templates\main\index.html:112
 msgid "Log Out"
 msgstr "Выйти"
 
-#: .\main\templates\main\index.html:125
+#: .\main\templates\main\index.html:126
 msgid "Empty Filler (svg)"
 msgstr "Изображение [Заполнитель] (svg)"
 
-#: .\main\templates\main\index.html:130
+#: .\main\templates\main\index.html:131
 msgid "You haven't selected any students yet"
 msgstr "Вы не выбрали ни одного студента"
 
-#: .\main\templates\main\index.html:141
+#: .\main\templates\main\index.html:148
 msgid "Zero Schedule Filler (svg)"
 msgstr "Изображение [Отсутствует расписание] (svg)"
 
-#: .\main\templates\main\index.html:146
+#: .\main\templates\main\index.html:153
 msgid "No schedule was found for specified dates"
 msgstr "Для указанных дат расписание не найдено"
 
-#: .\main\templates\main\index.html:148 .\main\templates\main\index.html:163
+#: .\main\templates\main\index.html:155 .\main\templates\main\index.html:182
 msgid "Reset search parameters"
 msgstr "Сбросить параметры поиска"
 

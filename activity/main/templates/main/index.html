@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block body %}
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="groupModalLabel" aria-hidden="true">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="groupModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content" style="text-align: center;">
         <div class="modal-header" style="justify-content: center;">
@@ -16,7 +16,6 @@
       </div>
     </div>
     </div>
-    
     {{ search_info_form.media }}
     <!-- main START -->
     <main class="container-fluid">
@@ -32,7 +31,15 @@
                             </div>
                         </header>
                         <div class="content">
-                            <form style="align-self: center;">
+                            <form style="align-self: center;" id="schedule-form">
+                                <div class="row mt-4">
+                                    <div class="col-sm-6 mb-3">
+                                        <a href="{% url 'index' %}" class="btn btn-primary" style="width: 100%">Статистика</a>
+                                    </div>
+                                    <div class="col-sm-6 mb-3">
+                                        <a href="{% url 'student_rating' %}" class="btn btn-light" style="border-color: #babbbc; width: 100%;">Рейтинг</a>
+                                    </div>
+                                </div>
                                 <h5 class="fw-light mb-2 text-truncate">{% trans "Student Search" %}</h5>
                                 {# TODO: type directly in control (not input box) for single-select "student" #}
                                 <p> {{ search_info_form.student }} </p>
