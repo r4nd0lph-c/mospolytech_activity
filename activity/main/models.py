@@ -17,7 +17,7 @@ class AbstractDatestamp(models.Model):
 class Institution(MPTTModel):
     name = models.CharField(
         max_length=100,
-        help_text=_("Name of the institution."),
+        help_text=_("Название обучающей организации."),
         verbose_name=_("Name")
     )
     parent = TreeForeignKey(
@@ -26,7 +26,8 @@ class Institution(MPTTModel):
         blank=True,
         related_name='children',
         db_index=True,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        verbose_name=_("Головной Вуз")
     )
 
     def __str__(self):
@@ -43,12 +44,13 @@ class Institution(MPTTModel):
 class Department(MPTTModel):
     name = models.CharField(
         max_length=100,
-        help_text=_("Name of the faculty."),
+        help_text=_("Название Отделения."),
         verbose_name=_("Name")
     )
     parent = TreeForeignKey(
         'Institution',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        verbose_name = _("ВУЗ/филиал/вуз-партнёр")
     )
 
     def __str__(self):
@@ -58,23 +60,24 @@ class Department(MPTTModel):
         order_insertion_by = ['name']
 
     class Meta:
-        verbose_name = _("Факультет")
-        verbose_name_plural = _("Факультеты")
+        verbose_name = _("Отделение")
+        verbose_name_plural = _("Отделения")
 
 
 class EducationalProgram(models.Model):
     name = models.CharField(
         max_length=100,
-        help_text=_("Name of the educational program."),
+        help_text=_("Название программы обучения."),
         verbose_name=_("Name")
     )
     department = models.ForeignKey(
         'Department',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        verbose_name = _("Отделение")
     )
     year = models.IntegerField(
         unique=True,
-        help_text=_("Academic year."),
+        help_text=_("Год начала обучения."),
         verbose_name=_("Год")
     )
     def __str__(self):
@@ -94,7 +97,8 @@ class StudyGroup(AbstractDatestamp):
     educational_program = models.ForeignKey(
         'EducationalProgram',
         on_delete=models.CASCADE,
-        null= True
+        null= True,
+        verbose_name = _("Программа обучения")
     )
 
     is_active = models.BooleanField(
