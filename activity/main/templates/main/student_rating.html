@@ -20,7 +20,7 @@
                         <div class="content">
                             <form style="align-self: center; width: 100%" id="rating-form"> 
                                 {% csrf_token %}
-                                <div class="row mt-4">
+                                <div class="row mt-4" style="margin-bottom: 40px;">
                                     <div class="col-sm-6 mb-3">
                                         <a href="{% url 'index' %}" class="btn btn-light" style="border-color: #babbbc; width: 100%;">Статистика</a>
                                     </div>
@@ -28,7 +28,7 @@
                                         <a href="{% url 'student_rating' %}" class="btn btn-primary" style="width: 100%">Рейтинг</a>
                                     </div>
                                 </div>
-                                <div class="container">
+                                <div class="container" style="margin-bottom: 80px;">
                                     <h5 class="fw-light mb-2 text-truncate">{% trans "Display" %}</h5>
                                     <p> {{ rating_display_form.display_choices }} </p>
                                     <p> {{ rating_display_form.display_type }} </p>
@@ -153,6 +153,16 @@
                             <div id = "rat">
                                 <!-- Выпадающий список для выбора предмета -->
                                 <div>
+                                    <select class="form-select">
+                                        <!-- Опции выбора программы -->
+                                        <option>Все программы подготовки</option>
+                                    </select>
+                                    <p></p>
+                                    <select class="form-select">
+                                        <!-- Опции выбора года набора -->
+                                        <option>Все годы набора</option>
+                                    </select>
+                                    <p></p>
                                     <select class="form-select" id="subject-rating">
                                         <!-- Опции выбора предмета -->
                                     </select>
