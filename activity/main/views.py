@@ -340,13 +340,14 @@ def get_rating(request):
                 parser.count_subjects()  # Парсим расписание для студента
                 subjects_count = parser.get_subjects_count()  # Получаем данные о занятиях
                 total_lessons = parser.get_total_lessons()  # Получаем общее количество занятий
+                educational_program = student.study_group.educational_program
                 subjects_visited_minutes = {}
                 total_visited_minutes = 0
                 for subject, count in subjects_count.items():
                     minutes = random.randint(0, count * 90) 
                     subjects_visited_minutes[subject] = minutes
                     total_visited_minutes += minutes
-                data.append({"name": student.name, "group": student.study_group.name , "minutes": total_lessons,"total_visited_minutes": total_visited_minutes, "subjects_count": subjects_count , 'subjects_visited_minutes' :subjects_visited_minutes})
+                data.append({"name": student.name, "group": student.study_group.name,"educational_program": educational_program , "minutes": total_lessons,"total_visited_minutes": total_visited_minutes, "subjects_count": subjects_count , 'subjects_visited_minutes' :subjects_visited_minutes})
             sorted_data = sorted(data, key=lambda x: x["total_visited_minutes"], reverse=True)
             return JsonResponse({"students": sorted_data})
         elif display_choice == "group":
@@ -363,7 +364,7 @@ def get_rating(request):
                     minutes = random.randint(0, count * 90) 
                     subjects_visited_minutes[subject] = minutes
                     total_visited_minutes += minutes
-                data.append({"name": group.name, "minutes": total_lessons,"total_visited_minutes": total_visited_minutes, "subjects_count": subjects_count , 'subjects_visited_minutes' :subjects_visited_minutes})
+                data.append({"name": group.name , "educational_program": group.educational_program , "minutes": total_lessons,"total_visited_minutes": total_visited_minutes, "subjects_count": subjects_count , 'subjects_visited_minutes' :subjects_visited_minutes})
             sorted_data = sorted(data, key=lambda x: x["minutes"], reverse=True)
             return JsonResponse({"groups": sorted_data})
         else:
