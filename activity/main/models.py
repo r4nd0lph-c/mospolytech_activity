@@ -33,6 +33,8 @@ class StudyGroup(AbstractDatestamp):
 
 
 class Student(AbstractDatestamp):
+
+    id = models.AutoField(primary_key=True)
     guid = models.CharField(
         max_length=36,
         unique=True,
@@ -58,7 +60,7 @@ class Student(AbstractDatestamp):
     )
 
     def __str__(self):
-        return f"({self.study_group}) {self.name}"
+        return f"ID: {self.id} ({self.study_group}) {self.name}"
 
     class Meta:
         verbose_name = _("Student")
