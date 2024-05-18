@@ -328,30 +328,63 @@ def get_year_activity(request):
 
 import random 
 
+
+def filter_by_educational_program(queryset, educational_program_name):
+    if educational_program_name:
+        return queryset.filter(educational_program_name=educational_program_name)
+    return queryset
+
+def filter_by_department(queryset, department_name):
+    if department_name:
+        return queryset.filter(educational_program__department_name=department_name)
+    return queryset
+
+def filter_by_institution(queryset, institution_name):
+    if institution_name:
+        return queryset.filter(educational_program__department__institution_name=institution_name)
+    return queryset
+
 def get_rating(request):
     if request.method == "POST":
         display_choice = request.POST.get('display_choice', None)
         dates = request.POST.getlist('dates[]', None)
+        educational_programs = EducationalProgram.objects.all()
+        educational_program_name = request.POST.get('educational_program_name', None)
+        department_name = request.POST.get('department_name', None)
+        institution_name = request.POST.get('institution_name', None)
+       
         if display_choice == "student":
             queryset = Student.objects.filter(is_active=True)[:100]
+            queryset = filter_by_educational_program(queryset, educational_program_name)
+            queryset = filter_by_department(queryset, department_name)
+            queryset = filter_by_institution(queryset, institution_name)
             data = []
             for student in queryset:
                 parser = ScheduleParser(student.study_group.name, 2022)  # Создаем экземпляр парсера для студента
                 parser.count_subjects()  # Парсим расписание для студента
                 subjects_count = parser.get_subjects_count()  # Получаем данные о занятиях
                 total_lessons = parser.get_total_lessons()  # Получаем общее количество занятий
-                educational_program = student.study_group.educational_program
+                educational_program = random.choice(educational_programs)
+                filters_data = {
+                    "name": educational_program.name,
+                    "department": educational_program.department.name,
+                    "institution": educational_program.department.parent.name,
+                    "year": educational_program.year,      
+                }
                 subjects_visited_minutes = {}
                 total_visited_minutes = 0
                 for subject, count in subjects_count.items():
                     minutes = random.randint(0, count * 90) 
                     subjects_visited_minutes[subject] = minutes
                     total_visited_minutes += minutes
-                data.append({"name": student.name, "group": student.study_group.name,"educational_program": educational_program , "minutes": total_lessons,"total_visited_minutes": total_visited_minutes, "subjects_count": subjects_count , 'subjects_visited_minutes' :subjects_visited_minutes})
+                data.append({"name": student.name, "group": student.study_group.name,"filters_data": filters_data , "minutes": total_lessons,"total_visited_minutes": total_visited_minutes, "subjects_count": subjects_count , 'subjects_visited_minutes' :subjects_visited_minutes})
             sorted_data = sorted(data, key=lambda x: x["total_visited_minutes"], reverse=True)
             return JsonResponse({"students": sorted_data})
         elif display_choice == "group":
             queryset = StudyGroup.objects.filter(is_active=True)[:100]
+            queryset = filter_by_educational_program(queryset, educational_program_name)
+            queryset = filter_by_department(queryset, department_name)
+            queryset = filter_by_institution(queryset, institution_name)
             data = []
             for group in queryset:
                 parser = ScheduleParser(group.name, 2022)  # Создаем экземпляр парсера для группы
@@ -359,12 +392,19 @@ def get_rating(request):
                 subjects_count = parser.get_subjects_count()  # Получаем данные о занятиях
                 total_lessons = parser.get_total_lessons()  # Получаем общее количество занятий
                 subjects_visited_minutes = {}
+                educational_program = random.choice(educational_programs)
+                filters_data = {
+                    "name": educational_program.name,
+                    "department": educational_program.department.name,
+                    "institution": educational_program.department.parent.name,
+                    "year": educational_program.year,      
+                }
                 total_visited_minutes = 0
                 for subject, count in subjects_count.items():
                     minutes = random.randint(0, count * 90) 
                     subjects_visited_minutes[subject] = minutes
                     total_visited_minutes += minutes
-                data.append({"name": group.name , "educational_program": group.educational_program , "minutes": total_lessons,"total_visited_minutes": total_visited_minutes, "subjects_count": subjects_count , 'subjects_visited_minutes' :subjects_visited_minutes})
+                data.append({"name": group.name , "filters_data": filters_data , "minutes": total_lessons,"total_visited_minutes": total_visited_minutes, "subjects_count": subjects_count , 'subjects_visited_minutes' :subjects_visited_minutes})
             sorted_data = sorted(data, key=lambda x: x["minutes"], reverse=True)
             return JsonResponse({"groups": sorted_data})
         else:

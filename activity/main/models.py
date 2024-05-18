@@ -76,7 +76,7 @@ class EducationalProgram(models.Model):
         verbose_name = _("Отделение")
     )
     year = models.IntegerField(
-        unique=True,
+        unique=False,
         help_text=_("Год начала обучения."),
         verbose_name=_("Год")
     )
