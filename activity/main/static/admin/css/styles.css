@@ -61,7 +61,7 @@ h3 {
 }
 
 a:link, a:visited {
-    color: var(--dark);
+    color: var(--light);
     font-family: var(--bs-body-font-family);
     text-decoration: none;
 }

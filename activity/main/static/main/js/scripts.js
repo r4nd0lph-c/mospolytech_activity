@@ -33,17 +33,22 @@ function get_students(groups) {
 
 function get_schedule(student, dates, display_type_id) {
     /* student = {"name": "...", "group": "..."} dates = ["dd.mm.yyyy", ...] */
+   var queryString = "name=" + encodeURIComponent(student["name"]) +
+                      "&group=" + encodeURIComponent(student["group"]) +
+                      "&dates=" + encodeURIComponent(JSON.stringify(dates));
+
+    // Формируем новый URL с параметрами запроса
+    var newUrl = "get_schedule/?" + queryString;
+
+    // Обновляем адресную строку браузера
+    history.pushState({ path: newUrl }, '', newUrl);
+
+    // Отправляем AJAX-запрос
     $.ajax({
-        type: "POST",
-        url: "get_schedule/",
-        data: {
-            name: student["name"],
-            group: student["group"],
-            dates: dates,
-            csrfmiddlewaretoken: CSRF_TOKEN
-        },
+        type: "GET", // Меняем метод запроса на GET
+        url: newUrl, // Используем новый URL с параметрами
         success: function (data) {
-            console.log(data); // TODO: clear console logs
+            console.log(data);
             display_schedule(data, dates, display_type_id);
         },
         error: function () {
@@ -51,6 +56,7 @@ function get_schedule(student, dates, display_type_id) {
         }
     });
 }
+
 
 function get_year_activity(student, start_year) {
     /* student = {"name": "...", "group": "..."} year = "YYYY" */
