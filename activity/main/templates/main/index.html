@@ -128,6 +128,8 @@
                                     {% trans "View admin panel" %}
                                 </a>
                                 <span> / </span>
+                                <a href="{% url 'student_rating' %}" class="text-decoration-none">Рейтинг</a>
+                                <span> / </span>
                             {% endif %}
                             <a href="{% url 'logout' %}" class="text-decoration-none">
                                 {% trans "Log Out" %}

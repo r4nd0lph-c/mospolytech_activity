@@ -33,18 +33,88 @@ function get_students(groups) {
 
 function get_schedule(student, dates, display_type_id) {
     /* student = {"name": "...", "group": "..."} dates = ["dd.mm.yyyy", ...] */
+   var queryString = "name=" + encodeURIComponent(student["name"]) +
+                      "&group=" + encodeURIComponent(student["group"]) +
+                      "&dates=" + encodeURIComponent(JSON.stringify(dates));
+
+    // Формируем новый URL с параметрами запроса
+    var newUrl = "get_schedule/?" + queryString;
+
+    // Обновляем адресную строку браузера
+    history.pushState({ path: newUrl }, '', newUrl);
+
+    // Отправляем AJAX-запрос
+    $.ajax({
+        type: "GET", // Меняем метод запроса на GET
+        url: newUrl, // Используем новый URL с параметрами
+        success: function (data) {
+            console.log(data);
+            display_schedule(data, dates, display_type_id);
+        },
+        error: function () {
+            console.log("get_schedule() error");
+        }
+    });
+}
+
+
+function get_year_activity(student, start_year) {
+    /* student = {"name": "...", "group": "..."} year = "YYYY" */
     $.ajax({
         type: "POST",
-        url: "get_schedule/",
+        url: "get_year_activity/",
         data: {
             name: student["name"],
             group: student["group"],
+            start_year: start_year,
+            csrfmiddlewaretoken: CSRF_TOKEN
+        },
+        success: function (data) {
+            console.log(data); // TODO: clear console logs
+            display_year_activity(data, student, start_year);
+        },
+        error: function () {
+            console.log("get_year_activity() error");
+            display_year_activity(null, student, start_year);
+        }
+    });
+}
+
+
+
+function get_rating(display_choice , dates , display_type_id) {
+    $.ajax({
+        type: "POST",
+        url: "get_rating/",
+        data: {
+            display_choice: display_choice,
+            dates : dates,
+            display_type_id : display_type_id,
+            csrfmiddlewaretoken: CSRF_TOKEN
+        },
+        success: function (data) {
+            console.log(data);
+            display_raiting(data, display_choice , dates , display_type_id);
+        },
+        error: function () {
+            console.log("Ошибка при получении рейтинга");
+        }
+    });
+}
+
+
+function get_schedule_group(group, dates, display_type_id) {
+    $.ajax({
+        type: "POST",
+        url: "get_schedule_group/",
+        data: {
+            group: group,
             dates: dates,
             csrfmiddlewaretoken: CSRF_TOKEN
         },
         success: function (data) {
             console.log(data); // TODO: clear console logs
-            display_schedule(data, dates, display_type_id);
+            display_group_schedule(data, dates, display_type_id);
         },
         error: function () {
             console.log("get_schedule() error");
