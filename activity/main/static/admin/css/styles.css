@@ -3,20 +3,24 @@
 :root {
     --white: #FFFFFF;
     --light: #F5F5F5;
+    --more-light: #fefefe;
     --bs-border-color: #DEE2E6;
     --secondary: #CED4DA;
     --text-secondary: #6C757D;
     --dark: #212529;
+    --semi-dark: #30363b;
     --primary: #969ea8;
     --pr-accent: #86B7FE;
     --bs-font-sans-serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans","Liberation Sans",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     --bs-body-font-family: var(--bs-font-sans-serif);
-    --selected-row: #CED4DA;
+    --selected-row: #d5e6ff;
     --bs-border-radius: 0.5rem;
     --bs-border-color-translucent: rgba(0, 0, 0, 0.175);
     --bs-border-width: 1px;
     --bs-border-coor:var(--dark);
     --bs-a-hrefs: #0D6EFD;
+    --button-hover-bg: #FFFFFF;
+    --default-button-hover-bg: #0A58CA;
 }
 
 #branding h1 a:link, #branding h1 a:visited {
@@ -57,7 +61,7 @@ h3 {
 }
 
 a:link, a:visited {
-    color: var(--dark);
+    color: var(--light);
     font-family: var(--bs-body-font-family);
     text-decoration: none;
 }
@@ -66,7 +70,7 @@ a:link, a:visited {
     border-radius: var(--bs-border-radius);
     border-style: solid !important;
     border-width: 1px !important;
-    border-color: var(--text-secondary) !important;
+    border-color: var(--secondary) !important;
     font-family: var(--bs-body-font-family);
 }
 
@@ -139,4 +143,51 @@ div.breadcrumbs {
     background-repeat: no-repeat;
     background-position: right 7px center;
     padding-right: 26px;
+}
+
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: var(--white);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    color: var(--semi-dark);
+    cursor: pointer;
+    border-style: solid !important;
+    border-width: 1px !important;
+    border-color: var(--secondary) !important;
+}
+
+/* непонятный прикол с ховером */
+.submit-row input, a.button[hover] {
+    background: var(--light);
+}
+
+.button.default, input[type=submit].default, .submit-row input.default {
+    float: right;
+    border: none;
+    font-weight: 400;
+    background: var(--bs-a-hrefs);
+    color: var(--white);
+}
+
+.select2-container--admin-autocomplete .select2-results__option--highlighted[aria-selected] {
+    background-color: var(--selected-row) !important;
+    color: var(--dark) !important;
+}
+
+.submit-row a.closelink {
+    border-style: solid !important;
+    border-width: 1px !important;
+    border-color: var(--secondary) !important;
+    background: var(--white) !important;
+    color: var(--semi-dark) !important;
+}
+
+.submit-row a.closelink:hover {
+    background: var(--light) !important; 
+}
+
+#changelist .actions .button {
+    box-shadow: none !important;
 }

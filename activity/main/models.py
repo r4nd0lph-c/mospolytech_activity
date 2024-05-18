@@ -2,14 +2,90 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db import models
-
+from mptt.models import MPTTModel, TreeForeignKey
 
 class AbstractDatestamp(models.Model):
-    date_created = models.DateTimeField(auto_now_add=True, verbose_name=_("Date created"))
+    date_created = models.DateTimeField(auto_now_add=True , verbose_name=_("Date created"))
     date_updated = models.DateTimeField(auto_now=True, verbose_name=_("Date updated"))
 
     class Meta:
         abstract = True
+
+
+
+
+class Institution(MPTTModel):
+    name = models.CharField(
+        max_length=100,
+        help_text=_("Название обучающей организации."),
+        verbose_name=_("Name")
+    )
+    parent = TreeForeignKey(
+        'self',
+        null=True,
+        blank=True,
+        related_name='children',
+        db_index=True,
+        on_delete=models.CASCADE,
+        verbose_name=_("Головной Вуз")
+    )
+
+    def __str__(self):
+        return self.name
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
+
+    class Meta:
+        verbose_name = _("ВУЗ/филиал/вуз-партнёр")
+        verbose_name_plural = _("ВУЗ/филиал/вуз-партнёр")
+
+
+class Department(MPTTModel):
+    name = models.CharField(
+        max_length=100,
+        help_text=_("Название Отделения."),
+        verbose_name=_("Name")
+    )
+    parent = TreeForeignKey(
+        'Institution',
+        on_delete=models.CASCADE,
+        verbose_name = _("ВУЗ/филиал/вуз-партнёр")
+    )
+
+    def __str__(self):
+        return self.name
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
+
+    class Meta:
+        verbose_name = _("Отделение")
+        verbose_name_plural = _("Отделения")
+
+
+class EducationalProgram(models.Model):
+    name = models.CharField(
+        max_length=100,
+        help_text=_("Название программы обучения."),
+        verbose_name=_("Name")
+    )
+    department = models.ForeignKey(
+        'Department',
+        on_delete=models.CASCADE,
+        verbose_name = _("Отделение")
+    )
+    year = models.IntegerField(
+        unique=False,
+        help_text=_("Год начала обучения."),
+        verbose_name=_("Год")
+    )
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _("Программа обучения")
+        verbose_name_plural = _("Программы обучения")
 
 
 class StudyGroup(AbstractDatestamp):
@@ -18,6 +94,13 @@ class StudyGroup(AbstractDatestamp):
         help_text=_("Name of the study group."),
         verbose_name=_("Name")
     )
+    educational_program = models.ForeignKey(
+        'EducationalProgram',
+        on_delete=models.CASCADE,
+        null= True,
+        verbose_name = _("Программа обучения")
+    )
+
     is_active = models.BooleanField(
         default=True,
         help_text=_("Determines whether an entity is active in the system."),
@@ -26,7 +109,7 @@ class StudyGroup(AbstractDatestamp):
 
     def __str__(self):
         return self.name
-
+    
     class Meta:
         verbose_name = _("Study group")
         verbose_name_plural = _("Study groups")
