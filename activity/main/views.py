@@ -64,10 +64,6 @@ class StudentAutoComplete(autocomplete.Select2QuerySetView):
         if self.q:
             qs = qs.filter(name__contains=self.q)
         return qs
-        
-    def get_result_label(self, student):
- 
-        return f"({student.study_group.name}) {student.name}"
 
 
 class Auth(LoginView):
@@ -116,26 +112,11 @@ def get_students(request):
             db_students = Student.objects.filter(is_active=True, study_group__name__in=requested_groups)
         else:
             db_students = Student.objects.filter(is_active=True)
-        return JsonResponse({"students": [{"guid": student.guid, "name": s.name, "group": s.study_group.name} for s in db_students]})
-    return JsonResponse({"message": "you don't have enough right"})
+        return JsonResponse({"students": [{"name": s.name, "group": s.study_group.name} for s in db_students]})
+    return JsonResponse({"message": "you don't have enough rights!"})
 
 
-def loadStudentURL(request, studentid, display_type, date):
-    if request.method == "POST":
-        if studentid:
-            try:
-                student = Student.objects.get(id=studentid)
-                return JsonResponse({"student": {"id": student.id, "name": student.name}})
-                 
-            except Student.DoesNotExist:
-                return JsonResponse({"error": "Студент с указанным ID не найден"}, status=404)
-        else:
-            return JsonResponse({"error": "Не указан ID студента"}, status=400)
-    else:
-        return JsonResponse({"error": "Метод запроса не поддерживается"}, status=405)
-
-
-def get_schedule(request, post_guid):
+def get_schedule(request):
     """ returns formatted Schedule() objects from db and additional info """
     def fill_schedule(group: str, d: datetime) -> list:
         sch = []
@@ -161,7 +142,6 @@ def get_schedule(request, post_guid):
             student = Student.objects.filter(study_group__name=study_group).filter(name=name)[0]
             dates = sorted([datetime.strptime(d, "%d.%m.%Y") for d in request.POST.getlist("dates[]", None)])
             schedule = []
-            post_guid = student.guid
             group_history = StudyGroupOld.objects.filter(student=student)
             for date in dates:
                 # if group history is empty
@@ -178,7 +158,7 @@ def get_schedule(request, post_guid):
                         actual_group = student.study_group.name
                     schedule += fill_schedule(actual_group, date)
             return JsonResponse({
-                "student": { "guid": student.guid, "name": name, "group": study_group},
+                "student": {"name": name, "group": study_group},
                 "schedule": schedule
             })
     return JsonResponse({"message": "you don't have enough rights!"})

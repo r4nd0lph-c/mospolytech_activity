@@ -1,7 +1,21 @@
 {% extends "main/base.html" %}
 {% load i18n %}
 {% load static %}
+
 {% block body %}
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="groupModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="text-align: center;">
+        <div class="modal-header" style="justify-content: center;">
+          <h5 class="modal-title" id="modal_date" style="text-align: center;"></h5>
+        </div>
+        <div class="modal-body">
+          <canvas id="doughnut-chart"></canvas>
+          <div id="modal_labels"></div>
+        </div>
+      </div>
+    </div>
+    </div>
     {{ search_info_form.media }}
     <!-- main START -->
     <main class="container-fluid">
@@ -17,7 +31,15 @@
                             </div>
                         </header>
                         <div class="content">
-                            <form style="align-self: center;">
+                            <form style="align-self: center;" id="schedule-form">
+                                <div class="row mt-4">
+                                    <div class="col-sm-6 mb-3">
+                                        <a href="{% url 'index' %}" class="btn btn-primary" style="width: 100%">Статистика</a>
+                                    </div>
+                                    <div class="col-sm-6 mb-3">
+                                        <a href="{% url 'student_rating' %}" class="btn btn-light" style="border-color: #babbbc; width: 100%;">Рейтинг</a>
+                                    </div>
+                                </div>
                                 <h5 class="fw-light mb-2 text-truncate">{% trans "Student Search" %}</h5>
                                 {# TODO: type directly in control (not input box) for single-select "student" #}
                                 <p> {{ search_info_form.student }} </p>
@@ -27,6 +49,7 @@
                                 <p> {{ search_info_form.date_day }} </p>
                                 <p> {{ search_info_form.date_week }} </p>
                                 <p> {{ search_info_form.date_month }} </p>
+                                <p> {{ search_info_form.date_year }} </p>
                                 <div id="form-buttons" class="row mt-4">
                                     <div class="col-sm-6 mb-3">
                                         <button type="button" id="btn-search" class="btn btn-primary">
@@ -96,7 +119,7 @@
                             </a>
                         </div>
                         <div id="nav-selected-student" class="col-lg">
-                            <h5 class="fw-light m-0">{% trans "Select a student to see the information" %}</h5>
+                            <h5 class="fw-light m-0">Выберите студента или группу, чтобы увидеть информацию</h5>
                         </div>
                         <div class="col-auto">
                             <span class="me-2">{% trans "You are logged in as" %} <b>{{ username }}</b></span>
@@ -104,6 +127,8 @@
                                 <a href="{% url 'admin:index' %}" class="text-decoration-none">
                                     {% trans "View admin panel" %}
                                 </a>
+                                <span> / </span>
+                                <a href="{% url 'student_rating' %}" class="text-decoration-none">Рейтинг</a>
                                 <span> / </span>
                             {% endif %}
                             <a href="{% url 'logout' %}" class="text-decoration-none">
@@ -117,7 +142,7 @@
                 <!-- content START -->
                 <div id="main-content" class="p-4 content">
                     <!-- empty filler START -->
-                    <div id="empty_filler" class="inner" style="display: none;">
+                    <div id="empty_filler" class="inner">
                         <header>
                             <div class="inner">
                                 <img src="{% static 'main/graphics/empty_filler.svg' %}"
@@ -136,7 +161,7 @@
                     <div id="zero_schedule" class="inner" style="display: none;">
                         <div style="display: flex;">
                             <div class="inner-wide" style="padding-left: 0 !important; margin-bottom: 40px;">
-                                <i id="z-btn-day-prev" class="bi bi-chevron-left"
+                                <i id="z-btn-prev" class="bi bi-chevron-left"
                                    style="font-size: 32px; cursor: pointer;"></i>
                             </div>
                             <div>
@@ -155,7 +180,7 @@
                                 </div>
                             </div>
                             <div class="inner-wide" style="padding-right: 0 !important; margin-bottom: 40px;">
-                                <i id="z-btn-day-next" class="bi bi-chevron-right"
+                                <i id="z-btn-next" class="bi bi-chevron-right"
                                    style="font-size: 32px; cursor: pointer;"></i>
                             </div>
                         </div>
@@ -190,13 +215,38 @@
                     <!-- schedule day END -->
 
                     <!-- schedule week START -->
-                    <div id="schedule_week" class="inner container" style="display: none">
+                    <div id="schedule_week" class="inner-wide" style="display: none;">
+                        <div style="display: flex;">
+                            <div class="inner-wide" style="padding-left: 0 !important; margin-bottom: 40px;">
+                                <i id="btn-week-prev" class="bi bi-chevron-left"
+                                   style="font-size: 32px; cursor: pointer;"></i>
+                            </div>
+                            <div id="schedule_week_row" class="row" style=" height:30vh;">
+                                <table>
+                                    <tr class="week" style="display: flex; grid-gap: 16px">
+                                        <th class ="weekdays">ПН</th>
+                                        <th class ="weekdays">ВТ</th>
+                                        <th class ="weekdays">СР</th>
+                                        <th class ="weekdays">ЧТ</th>
+                                        <th class ="weekdays">ПТ</th>
+                                        <th class ="weekdays">СБ</th>
+                                        <th class ="weekdays">ВС</th>
+                                    </tr>
+                                    <tr id="week_tr" style="display: flex; margin-top:16px; grid-gap: 16px">
 
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="inner-wide" style="padding-right: 0 !important; margin-bottom: 40px;">
+                                <i id="btn-week-next" class="bi bi-chevron-right"
+                                   style="font-size: 32px; cursor: pointer;"></i>
+                            </div>
+                        </div>
                     </div>
                     <!-- schedule week END -->
 
                     <!-- schedule month START -->
-                    <div id="schedule_month" class="inner container" style="display: none">
+                    <div id="schedule_month" class="inner-wide" style="display: none">
                         <div style="display: flex;">
                             <div class="inner-wide" style="padding-left: 0 !important; margin-bottom: 40px;">
                                 <i id="btn-month-prev" class="bi bi-chevron-left"
@@ -204,22 +254,45 @@
                             </div>
                             <div>
                                 <div id="schedule_day_row" class="row" style=" height:70vh;">
-                                    <table table id="monthCalendar" class="month-calendar">
-                                        
+                                    <table id="monthCalendar" class="month-calendar">
                                         <tr id="week_tr" style="display:flex; margin-top:16px; grid-gap:16px"></tr>
                                     </table>
-                                    
                                 </div>
                             </div>
-                            
                             <div class="inner-wide" style="padding-right: 0 !important; margin-bottom: 40px;">
                                 <i id="btn-month-next" class="bi bi-chevron-right"
                                    style="font-size: 32px; cursor: pointer;"></i>
                             </div>
                         </div>
-                        
                     </div>
                     <!-- schedule month END -->
+
+                    <!-- schedule year START -->
+                    <div id="schedule_year" class="inner-wide" style="display: none;">
+                        <div style="display: flex;">
+                            <div class="inner-wide" style="padding-left: 0 !important; margin-bottom: 40px;">
+                                <i id="btn-year-prev" class="bi bi-chevron-left"
+                                   style="font-size: 32px; cursor: pointer;"></i>
+                            </div>
+                            <div>
+                                <div>
+                                    <select class="form-select" id="subject-select"></select>
+                                    <div id="year-activity-table-container" class="my-4"></div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <br>
+                                    <a href="{% url 'index' %}" class="text-decoration-none">
+                                        {% trans "Reset search parameters" %}
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="inner-wide" style="padding-right: 0 !important; margin-bottom: 40px;">
+                                <i id="btn-year-next" class="bi bi-chevron-right"
+                                   style="font-size: 32px; cursor: pointer;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- schedule year END -->
                 </div>
                 <!-- content END -->
             </div>

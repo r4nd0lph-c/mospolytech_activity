@@ -1,5 +1,3 @@
-
-
 // date obj -> "dd.mm.yyyy"
 function date_to_string(date) {
     const day = date.getDate().toString().padStart(2, "0");

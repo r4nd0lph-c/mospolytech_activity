@@ -1,196 +1,193 @@
-/* GENERAL */
+/* REWRITE ADMIN PANEL STYLES */
 
 :root {
     --white: #FFFFFF;
     --light: #F5F5F5;
+    --more-light: #fefefe;
     --bs-border-color: #DEE2E6;
     --secondary: #CED4DA;
     --text-secondary: #6C757D;
     --dark: #212529;
-    --primary: #0D6EFD;
+    --semi-dark: #30363b;
+    --primary: #969ea8;
     --pr-accent: #86B7FE;
+    --bs-font-sans-serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans","Liberation Sans",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    --bs-body-font-family: var(--bs-font-sans-serif);
+    --selected-row: #d5e6ff;
+    --bs-border-radius: 0.5rem;
+    --bs-border-color-translucent: rgba(0, 0, 0, 0.175);
+    --bs-border-width: 1px;
+    --bs-border-coor:var(--dark);
+    --bs-a-hrefs: #0D6EFD;
+    --button-hover-bg: #FFFFFF;
+    --default-button-hover-bg: #0A58CA;
 }
 
-*:focus {
+#branding h1 a:link, #branding h1 a:visited {
+    color: var(--dark);
+    font-family: var(--bs-body-font-family);
+    font-weight: 300;
+}
+
+#header{
+    background: var(--light);
+    /* color: var(--white); */
+    color: var(--dark);
+    border-bottom: solid var(--bs-border-color);
+    border-width: 1px;
+    font-family: var(--bs-body-font-family);
+}
+
+#header a:link, #header a:visited, #logout-form button {
+    color: var(--bs-a-hrefs);
+    font-weight: 500;
+    font-family: var(--bs-body-font-family);
+}
+
+#user-tools, #logout-form button {
+    font-family: var(--bs-body-font-family);
+}
+
+h1, h2 {
+    color: var(--dark);
+    font-family: var(--bs-body-font-family);
+    font-weight: 300 !important;
+}
+
+h3 {
+    color: var(--text-secondary);
+    font-family: var(--bs-body-font-family);
+    font-weight: 400;
+}
+
+a:link, a:visited {
+    color: var(--light);
+    font-family: var(--bs-body-font-family);
+    text-decoration: none;
+}
+
+#content-related {
+    border-radius: var(--bs-border-radius);
+    border-style: solid !important;
+    border-width: 1px !important;
+    border-color: var(--secondary) !important;
+    font-family: var(--bs-body-font-family);
+}
+
+#nav-sidebar .current-app .section:link, #nav-sidebar .current-app .section:visited {
+    color: var(--white);
+    font-weight: bold;
+    font-family: var(--bs-body-font-family);
+}
+
+#content-main {
+    border-radius: var(--bs-border-radius) !important;
+    border-style: solid !important;
+    border-width: 1px !important;
+    border-color: var(--secondary) !important;
+    font-family: var(--bs-body-font-family);
+}
+
+div.breadcrumbs {
+    background: var(--breadcrumbs-bg);
+    padding: 10px 40px;
+    border: none;
+    color: var(--white);
+    text-align: left;
+    font-family: var(--bs-body-font-family);
+}
+
+#toolbar form input[type="submit"] {
+    border: 1px solid var(--bs-a-hrefs) !important;
+    font-size: 0.8125rem;
+    padding: 4px 8px;
+    margin: 0;
+    vertical-align: middle;
+    background: var(--bs-a-hrefs) !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    color: var(--white) !important;
+}
+
+#changelist .actions .button {
+    font-size: 0.8125rem;
+    border: 1px solid var(--bs-a-hrefs) !important;
+    border-radius: 4px;
+    background: var(--bs-a-hrefs) !important;
+    box-shadow: none;
+    cursor: pointer;
+    height: 24px;
+    line-height: 1;
+    padding: 4px 8px;
+    margin: 0;
+    color: var(--white) !important;
+}
+
+.object-tools a:link, .object-tools a:visited {
+    display: block;
+    float: left;
+    padding: 3px 12px;
+    background: var(--bs-a-hrefs);
+    color: var(--white);
+    font-weight: 400;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.object-tools a.addlink {
+    background-image: url(../img/tooltag-add.svg);
+}
+
+.object-tools a.viewsitelink, .object-tools a.addlink {
+    background-repeat: no-repeat;
+    background-position: right 7px center;
+    padding-right: 26px;
+}
+
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: var(--white);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    color: var(--semi-dark);
+    cursor: pointer;
+    border-style: solid !important;
+    border-width: 1px !important;
+    border-color: var(--secondary) !important;
+}
+
+/* непонятный прикол с ховером */
+.submit-row input, a.button[hover] {
+    background: var(--light);
+}
+
+.button.default, input[type=submit].default, .submit-row input.default {
+    float: right;
+    border: none;
+    font-weight: 400;
+    background: var(--bs-a-hrefs);
+    color: var(--white);
+}
+
+.select2-container--admin-autocomplete .select2-results__option--highlighted[aria-selected] {
+    background-color: var(--selected-row) !important;
+    color: var(--dark) !important;
+}
+
+.submit-row a.closelink {
+    border-style: solid !important;
+    border-width: 1px !important;
+    border-color: var(--secondary) !important;
+    background: var(--white) !important;
+    color: var(--semi-dark) !important;
+}
+
+.submit-row a.closelink:hover {
+    background: var(--light) !important; 
+}
+
+#changelist .actions .button {
     box-shadow: none !important;
 }
-
-html,
-body {
-    background-color: var(--light);
-    height: 100%;
-    margin: 0;
-}
-
-
-/* CUSTOM CONTAINER */
-
-.custom-container {
-    display: flex;
-    flex-flow: column;
-    height: 100%;
-}
-
-.custom-container header {
-    flex: 0 1 auto;
-    margin-top: 16px;
-    margin-bottom: 32px;
-}
-
-.custom-container header .inner {
-    max-width: 544px;
-    padding: 0 16px 0 16px;
-    margin: 0 auto;
-}
-
-.custom-container header .inner img {
-    width: 100%;
-    height: auto;
-    margin: auto;
-}
-
-.custom-container .content {
-    flex: 1 1 auto;
-    display: flex;
-    justify-content: center;
-}
-
-.custom-container .content .inner {
-    align-self: center;
-    
-    padding: 0 16px 0 16px;
-    margin: 0 auto;
-}
-
-.custom-container .content .inner-wide {
-    align-self: center;
-    padding: 0 16px 0 16px;
-    margin: 0 auto;
-}
-
-.custom-container footer {
-    flex: 0 1 40px;
-    margin-top: 32px;
-    margin-bottom: 16px;
-}
-
-
-/* AUTH PAGE */
-
-.auth-error-alert {
-    max-width: 544px;
-    padding: 0 16px 0 16px;
-}
-
-.form-login {
-    width: 100%;
-    max-width: 320px;
-    min-width: 256px;
-    padding: 0 16px 0 16px;
-    margin: auto;
-}
-
-.form-floating-group input {
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-}
-
-.input-group-text {
-    cursor: pointer;
-    background-color: var(--white);
-}
-
-.form-check .form-check-input {
-    float: none;
-    margin-left: 0;
-    padding-left: 0;
-}
-
-
-/* INDEX PAGE */
-
-#sidebar {
-    background-color: var(--white);
-}
-
-nav {
-    background-color: var(--white);
-}
-
-#form-buttons .btn {
-    width: 100%;
-}
-
-
-/* CARD-SCHEDULE */
-
-.card-schedule {
-    margin: 14px 0 6px 0;
-    height: 150px;
-    min-width: 335px;
-    max-width: 696px;
-}
-
-.activity_bar {
-    background-color: var(--secondary);
-    height: 100%;
-    width: 10% !important;
-    border-top-left-radius: inherit;
-    border-bottom-left-radius: inherit;
-}
-
-.weekdays {
-    width: 102px; 
-    text-align: center;
-    padding-top:11.5px; 
-    padding-bottom:11.5px;
-    background-color: #FFFFFF; 
-    border-radius: 8px;
-}
-.calendar-day {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    line-height: 30px;
-    border: 1px solid #ccc;
-    margin: 5px;
-  }
-
-  .month-day {
-    width: 102px; 
-    padding-top:11.5px; 
-    padding-bottom:11.5px;
-    text-align: center;
-    background-color: #FFFFFF; 
-    border-radius: 8px;
-  }
-
-  .activity_bar_week {
-    background-color: var(--secondary);
-    height: 90%;
-    width: 100% !important;
-    border-bottom-left-radius: inherit; 
-    margin-top: 10px;
-    border-bottom-right-radius: inherit;
-
-    }
-  .card_card-schedule_row{ 
-    width: 102px;
-    padding-top: 20px; 
-    padding-bottom: 30px; 
-    text-align: center; 
-    background-color:
-    #FFFFFF;
-    border-radius: 8px;
-    
-    }
-
-
-    #monthCalendar tr {
-        display: flex;
-        margin-bottom: 16px;
-        gap: 16px;
-    }
-
-

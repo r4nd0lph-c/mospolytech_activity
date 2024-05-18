@@ -1245,5 +1245,4 @@ $(document).ready(function () {
 
         }
     }
-   
 });

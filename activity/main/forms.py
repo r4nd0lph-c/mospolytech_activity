@@ -85,7 +85,8 @@ class SearchInfoForm(forms.Form):
                 "format": "DD.MM.YYYY – DD.MM.YYYY",
                 "defaultDate": datetime.today()
             },
-        ))
+        )
+        )
     date_month = forms.DateField(
         widget=MonthPickerInput(
             attrs={"class": "form-control"},
@@ -110,6 +111,7 @@ class SearchInfoForm(forms.Form):
             "all": ("main/css/search_info_custom.css",),
             
         }
+        
         js = ("main/js/search_info_custom.js")
 
 class RatingDisplayForm(forms.Form):
@@ -177,7 +179,6 @@ class RatingDisplayForm(forms.Form):
             "all": ("main/css/rating_display_form.css",),
             
         }
+
         js = ("main/js/search_info_custom.js")
     
-
-        
