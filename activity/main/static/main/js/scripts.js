@@ -121,6 +121,70 @@ function get_schedule_group(group, dates, display_type_id) {
         }
     });
 }
+
+function get_year_activity(student, start_year) {
+    /* student = {"name": "...", "group": "..."} year = "YYYY" */
+    $.ajax({
+        type: "POST",
+        url: "get_year_activity/",
+        data: {
+            name: student["name"],
+            group: student["group"],
+            start_year: start_year,
+            csrfmiddlewaretoken: CSRF_TOKEN
+        },
+        success: function (data) {
+            console.log(data); // TODO: clear console logs
+            display_year_activity(data, student, start_year);
+        },
+        error: function () {
+            console.log("get_year_activity() error");
+            display_year_activity(null, student, start_year);
+        }
+    });
+}
+
+
+
+function get_rating(display_choice , dates , display_type_id) {
+    $.ajax({
+        type: "POST",
+        url: "get_rating/",
+        data: {
+            display_choice: display_choice,
+            dates : dates,
+            display_type_id : display_type_id,
+            csrfmiddlewaretoken: CSRF_TOKEN
+        },
+        success: function (data) {
+            console.log(data);
+            display_raiting(data, display_choice , dates , display_type_id);
+        },
+        error: function () {
+            console.log("Ошибка при получении рейтинга");
+        }
+    });
+}
+
+
+function get_schedule_group(group, dates, display_type_id) {
+    $.ajax({
+        type: "POST",
+        url: "get_schedule_group/",
+        data: {
+            group: group,
+            dates: dates,
+            csrfmiddlewaretoken: CSRF_TOKEN
+        },
+        success: function (data) {
+            console.log(data); // TODO: clear console logs
+            display_group_schedule(data, dates, display_type_id);
+        },
+        error: function () {
+            console.log("get_schedule() error");
+        }
+    });
+}
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
 
@@ -784,13 +848,29 @@ function display_group_schedule(data, required_dates, display_type_id) {
 //Create week day fow group
 let create_card_week_group = (parent, info, group, flag) => {
 
+    //24 11 и 5 - фейковые данные о посещаемости
+    var missed = 24;
+    var visited = 11;
+    var late = 5;
+
+    var backgroundColor = ['#198754', '#DC3545', '#FFC107'];
+
     let card = document.createElement("th");
     card.className = flag === true ? "card_card-schedule_row" : "card_card-schedule_row empty";
     card.style.cursor = 'pointer';
     card.id = `card-${uid()}`;
 
+    let col_act_width = 102; 
+    let width_for_each_student = col_act_width/40; 
+    let visited_bar = width_for_each_student * visited; 
+    let late_bar = width_for_each_student * late; 
+    let missed_bar = width_for_each_student * missed; 
+
     let col_activity = document.createElement("div");
     col_activity.className = "activity_bar_week";
+    col_activity.style.background = `linear-gradient(to right, ${backgroundColor[0]} 0px ${visited_bar}px,  
+        ${backgroundColor[2]} ${visited_bar}px ${visited_bar+late_bar}px, 
+        ${backgroundColor[1]} ${visited_bar+late_bar}px ${visited_bar+late_bar+missed_bar}px)`;
 
     card.innerText = `${info.substr(0, 2)}`;
     card.appendChild(col_activity);
@@ -809,11 +889,6 @@ let create_card_week_group = (parent, info, group, flag) => {
     // let modalgroup = group;
     // document.getElementById('modal_group').innerHTML = modalgroup;
 
-
-    //24 11 и 5 - фейковые данные о посещаемости
-    var missed = 24;
-    var visited = 11;
-    var late = 5;
 
     var canvas = document.getElementById('doughnut-chart');
     var ctx = canvas.getContext('2d');

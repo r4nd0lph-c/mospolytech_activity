@@ -403,8 +403,8 @@ msgid "Menu"
 msgstr "Меню"
 
 #: .\main\templates\main\index.html:101
-msgid "Select a student to see the information"
-msgstr "Выберите студента, чтобы увидеть информацию"
+msgid "Select a student or group to see the information"
+msgstr "Выберите студента или группу, чтобы увидеть информацию"
 
 #: .\main\templates\main\index.html:104
 msgid "You are logged in as"
