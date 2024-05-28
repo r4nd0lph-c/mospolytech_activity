@@ -108,7 +108,8 @@ class SearchInfoForm(forms.Form):
 
     class Media:
         css = {
-            "all": ("main/css/search_info_custom.css",)
+            "all": ("main/css/search_info_custom.css",),
+            
         }
         js = ("main/js/search_info_custom.js",)
 
