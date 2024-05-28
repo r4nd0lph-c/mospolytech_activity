@@ -402,7 +402,7 @@ msgstr ""
 msgid "Menu"
 msgstr "Меню"
 
-#: .\main\templates\main\index.html:101
+#: .\main\templates\main\index.html:100
 msgid "Select a student to see the information"
 msgstr "Выберите студента, чтобы увидеть информацию"
 
