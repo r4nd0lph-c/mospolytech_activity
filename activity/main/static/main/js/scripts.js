@@ -247,7 +247,6 @@ let create_card_week = (parent, info, student, flag) => {
     return card.id;
 }
 
-
 let create_nav_student_info = (name, date) => {
     let nav_selected_student = document.getElementById("nav-selected-student");
     nav_selected_student.innerHTML = "";
@@ -738,6 +737,366 @@ function get_raw_date(display_type_id) {
         raw_date = today_date.toISOString().split("T")[0]
     }
     return raw_date;
+}
+
+function display_group_schedule(data, required_dates, display_type_id) {
+    if (display_type_id === "month") {
+        // render for month
+        function next_prev_events_month_group(btn_name) {
+            ["prev", "next"].forEach(function (tag) {
+                let btn_month = document.getElementById(`${btn_name}-${tag}`);
+                let clone_btn = btn_month.cloneNode(true);
+                btn_month.parentNode.replaceChild(clone_btn, btn_month);
+              
+            });
+        }
+
+        if (data["schedule"].length === 0) {
+            create_nav_group_info(data["group"]["group"], format_month_for_nav(required_dates[0]));
+            disable_screens("zero_schedule");
+            next_prev_events_month_group("z-btn");
+        } else {
+            let dateString = data["schedule"][0]["date"];
+            create_nav_group_info(data["group"]["group"], format_month_for_nav(dateString));
+            disable_screens("schedule_month");
+
+            let table = document.getElementById("monthCalendar");
+            table.innerHTML = "";
+            let weekdaysRow = document.createElement("tr");
+            ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"].forEach(day => {
+                let th = document.createElement("th");
+                th.className = "weekdays";
+                th.innerText = day;
+                weekdaysRow.appendChild(th);
+            });
+            table.appendChild(weekdaysRow);
+
+            let created_cards_id = [];
+            let group = data["group"]["group"];
+            let dateParts = dateString.split(".");
+            let date = new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`);
+            let firstDayOfMonth = new Date(date);
+            firstDayOfMonth.setDate(1);
+            let startingDay = (firstDayOfMonth.getDay() + 6) % 7;
+            let lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+            let fullM = lastDayOfMonth.getDate();
+            let daysInMonth = lastDayOfMonth.getDate() % 7 + 1;
+
+            // Создаем первую неделю и добавляем пустые ячейки для дней предыдущего месяца
+            let weekRow = document.createElement("tr");
+            for (let j = 0; j < startingDay; j++) {
+                let emptyCell = document.createElement("td");
+                emptyCell.innerText = "";
+                emptyCell.className = "card_card-schedule_row"
+                weekRow.appendChild(emptyCell);
+            }
+            table.appendChild(weekRow);
+
+            for (let i = 0; i < data["schedule"].length; i++) {
+                let info = data["schedule"][i]["date"];
+                if (weekRow.childElementCount === 7) {
+                    weekRow = document.createElement("tr");
+                }
+                created_cards_id.push(create_card_week_group(weekRow, info, group, true));
+                table.appendChild(weekRow);
+            }
+
+            next_prev_events_month_group("btn-month");
+        }
+    }
+}
+
+//Create week day fow group
+let create_card_week_group = (parent, info, group, flag) => {
+
+    //24 11 и 5 - фейковые данные о посещаемости
+    var missed = 24;
+    var visited = 11;
+    var late = 5;
+
+    var backgroundColor = ['#198754', '#DC3545', '#FFC107'];
+
+    let card = document.createElement("th");
+    card.className = flag === true ? "card_card-schedule_row" : "card_card-schedule_row empty";
+    card.style.cursor = 'pointer';
+    card.id = `card-${uid()}`;
+
+    let col_act_width = 102; 
+    let width_for_each_student = col_act_width/40; 
+    let visited_bar = width_for_each_student * visited; 
+    let late_bar = width_for_each_student * late; 
+    let missed_bar = width_for_each_student * missed; 
+
+    let col_activity = document.createElement("div");
+    col_activity.className = "activity_bar_week";
+    col_activity.style.background = `linear-gradient(to right, ${backgroundColor[0]} 0px ${visited_bar}px,  
+        ${backgroundColor[2]} ${visited_bar}px ${visited_bar+late_bar}px, 
+        ${backgroundColor[1]} ${visited_bar+late_bar}px ${visited_bar+late_bar+missed_bar}px)`;
+
+    card.innerText = `${info.substr(0, 2)}`;
+    card.appendChild(col_activity);
+    // card.appendChild(modal_button);
+    parent.appendChild(card);
+
+    //MODAL_WINDOW
+    if (flag)
+        card.addEventListener("click", function () {
+            $('#myModal').modal('show');
+    });
+
+    let modaldate = info;
+    document.getElementById('modal_date').innerHTML = modaldate;
+
+    // let modalgroup = group;
+    // document.getElementById('modal_group').innerHTML = modalgroup;
+
+
+    var canvas = document.getElementById('doughnut-chart');
+    var ctx = canvas.getContext('2d');
+
+    var options = {
+        labels: ['Студент(ов) присутствовал(о):', 'Студент(ов) отсутствовал(о):', "Студент(ов) опоздал(о):"],
+        data: [visited, missed, late],
+        backgroundColor: ['#198754', '#DC3545', '#FFC107']
+    };
+  
+    var total = options.data.reduce((a, b) => a + b, 0);
+    var startAngle = -Math.PI / 2;
+  
+    for (var i = 0; i < options.data.length; i++) {
+        var sliceAngle = (options.data[i] / total) * 2 * Math.PI;
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2, canvas.height / 2);
+        ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, startAngle, startAngle + sliceAngle);
+        ctx.fillStyle = options.backgroundColor[i];
+        ctx.fill();
+        startAngle += sliceAngle;
+    }
+
+    document.getElementById('modal_labels').innerHTML =
+    `<div style="min-height: 25px;"></div>
+    <div id="circ_visited" style="display: inline-block; min-width: 25px; min-height: 25px; border-radius: 50%; background-color: ${options.backgroundColor[0]}"></div>
+    <p>${options.labels[0]} ${options.data[0]}/40</p>
+    <div style="min-height: 20px;"></div>
+    <div id="circ_missed" style="display: inline-block; min-width: 25px; min-height: 25px; border-radius: 50%; background-color: ${options.backgroundColor[1]}"></div>
+    <p>${options.labels[1]} ${options.data[1]}/40</p>
+    <div style="min-height: 20px;"></div>
+    <div id="circ_late" style="display: inline-block; min-width: 25px; min-height: 25px; border-radius: 50%; background-color: ${options.backgroundColor[2]}"></div>
+    <p>${options.labels[2]} ${options.data[2]}/40</p>`;
+    
+    return card.id;
+}
+
+
+
+let create_nav_group_info = (group, date) => {
+    let nav_selected_group = document.getElementById("nav-selected-student");
+    nav_selected_group.innerHTML = "";
+
+    let h5 = document.createElement("h5");
+    h5.className = "fw-light m-0";
+    h5.innerText = "Группа ";
+
+    let b = document.createElement("b");
+    b.innerText = `${group}`;
+
+    let p = document.createElement("p");
+    p.innerText = `${date}`;
+    p.style.color = "var(--text-secondary)";
+    p.style.margin = "0";
+
+    h5.appendChild(b);
+    nav_selected_group.appendChild(h5);
+    nav_selected_group.appendChild(p);
+}
+
+function display_raiting(data, display_choice , dates , display_type_id){
+    var currentPageSubject = 1;
+    var studentsPerPageSubject = 7;
+   
+    if (display_choice === "student"){
+        if (display_type_id === "day"){
+            // Определяем параметры 
+            var currentPage = 1;
+            var studentsPerPage = 7; // Количество студентов на странице
+
+            // Функция для отображения студентов на текущей странице
+            function displayStudents() {
+                var startIndex = (currentPage - 1) * studentsPerPage;
+                var endIndex = startIndex + studentsPerPage;
+                var studentsToShow = data.students.slice(startIndex, endIndex);
+
+                $('#students-rating-list tbody').empty();
+                
+                studentsToShow.forEach(function(student) {
+                    var barColor = 'red'; 
+
+                    if (student.total_visited_minutes > (student.minutes * 0.5)) {
+                        barColor = 'green';
+                    } else if (student.total_visited_minutes >= (student.minutes * 0.3) 
+                    && student.total_visited_minutes <= student.minutes * 0.5){
+                        barColor = 'yellow';
+                    }
+                
+                    var barWidth = (student.total_visited_minutes / 20000) * 100 + '%';
+                
+                    var barWidth = '320px'; 
+
+                    var barHtml = `
+                        <div class="progress-bar" style="width: ${barWidth}; background-color: ${barColor}; position: relative;">
+                            <span class="progress-number">${student.total_visited_minutes}/${student.minutes}</span>
+                        </div>
+                    `;
+
+                    $('#students-rating-list tbody').append(`
+                        <tr>
+                            <td>${student.name}</td>
+                            <td>${student.group}</td>
+                            <td>${barHtml}</td>
+                            
+                        </tr>
+                    `);
+                });
+            }
+
+            // Показываем первую страницу при загрузке
+            displayStudents();
+
+            $('#btn-stud-prev').click(function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayStudents();
+                }
+            });
+    
+            $('#btn-stud-next').click(function() {
+                var totalPages = Math.ceil(data.students.length / studentsPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    displayStudents();
+                }
+            });
+        }
+    } 
+
+
+    function displaySubjects(data) {
+        // Создаем объект-набор для хранения уникальных предметов
+        var uniqueSubjects = {};
+
+        // Проходим по всем студентам и добавляем их предметы в набор
+        data.students.forEach(function(student) {
+            var subjects = Object.keys(student.subjects_count);
+            // Добавляем каждый предмет в набор
+            subjects.forEach(function(subject) {
+                uniqueSubjects[subject] = true;
+            });
+        });
+
+        // Получаем список предметов из набора
+        var subjectList = Object.keys(uniqueSubjects);
+
+        // Находим элемент <select> по его id
+        var selectElement = document.getElementById("subject-rating");
+
+        // Очищаем все текущие опции внутри <select>
+        selectElement.innerHTML = "";
+
+        // Добавляем опцию "Все предметы" в начало списка
+        var allOption = document.createElement("option");
+        allOption.text = "Все предметы";
+        selectElement.add(allOption);
+
+        // Добавляем каждый предмет в элемент <select> в виде опции
+        subjectList.forEach(function(subject) {
+            var optionElement = document.createElement("option");
+            optionElement.text = subject;
+            selectElement.add(optionElement);
+        });
+
+        // Обработчик события изменения выбранного предмета
+        selectElement.addEventListener('change', function() {
+            var selectedSubject = selectElement.value;
+            if (selectedSubject === "Все предметы") {
+                // Если выбрана опция "Все предметы", отображаем всех студентов
+                currentPageSubject = 1;
+                displayStudents();
+            } else {
+                // Иначе отображаем студентов только с выбранным предметом
+                currentPageSubject = 1;
+                displayStudentsBySubject(data, selectedSubject);
+            }
+        });
+    }
+
+    // Вызываем функцию отображения предметов с вашими данными
+    displaySubjects(data);
+
+    // Функция для отображения студентов с выбранным предметом
+    function displayStudentsBySubject(data, subject) {
+        // Функция для отображения студентов по предмету
+        function renderStudents(studentsToShow) {
+            var startIndex = (currentPageSubject - 1) * studentsPerPageSubject;
+            var endIndex = startIndex + studentsPerPageSubject;
+            var studentsToRender = studentsToShow.slice(startIndex, endIndex);
+            // Очищаем тело таблицы
+            $('#students-rating-list tbody').empty();
+
+            // Проходим по всем студентам
+            studentsToRender.forEach(function(student) {
+                // Проверяем, есть ли у студента выбранный предмет
+                if (student.subjects_count.hasOwnProperty(subject)) {
+                    var studentSubjectMinutes = student.subjects_visited_minutes[subject]; // Минуты студента по выбранному предмету
+                    var studentTotalMin = student.subjects_count[subject] * 90
+                    var barColor = 'red';
+
+                    if (studentSubjectMinutes > (studentTotalMin * 0.5)) {
+                        barColor = 'green';
+                    } else if (studentSubjectMinutes >= (studentTotalMin * 0.3) &&
+                        studentSubjectMinutes <= studentTotalMin * 0.5) {
+                        barColor = '#FFC107';
+                    }
+
+                    var barWidth = '320px';
+
+                    var barHtml = `
+                        <div class="progress-bar" style="width: ${barWidth}; background-color: ${barColor}; position: relative;">
+                            <span class="progress-number">${studentSubjectMinutes}/${studentTotalMin}</span>
+                        </div>
+                    `;
+
+                    // Вставляем строку в таблицу с именем студента, его группой и количеством минут по выбранному предмету
+                    $('#students-rating-list tbody').append(`
+                        <tr>
+                            <td>${student.name}</td>
+                            <td>${student.group}</td>
+                            <td>${barHtml}</td>
+                        </tr>
+                    `);
+                }
+            });
+        }
+
+        // Показываем первую страницу при загрузке
+        renderStudents(data.students);
+
+        // Обработчики кнопок перелистывания для студентов по выбранному предмету
+        $('#btn-stud-prev').click(function() {
+            if (currentPageSubject > 1) {
+                currentPageSubject--;
+                renderStudents(data.students);
+            }
+        });
+
+        $('#btn-stud-next').click(function() {
+            var totalPages = Math.ceil(data.students.length / studentsPerPageSubject);
+            if (currentPageSubject < totalPages) {
+                currentPageSubject++;
+                renderStudents(data.students);
+            }
+        });
+    }
+    
 }
 
 function display_group_schedule(data, required_dates, display_type_id) {
@@ -1490,37 +1849,98 @@ checkURLParametersAndLoad();
 $(document).ready(function () {
     // button_search init
     let button_search = document.getElementById("btn-search");
-    button_search.disabled = true;
+    let formId = $(button_search).closest('form').attr('id');
 
-    // detecting "student" field changes & unable / disable button_search
-    $(":input[name$=student]").on("change", function () {
-        let selected = $(this).select2("data")[0];
-        button_search.disabled = selected.id === "";
-    });
+    if (formId === 'schedule-form') {
+        button_search.disabled = true;
+        // detecting "student" field changes & unable / disable button_search
+        $(":input[name$=student]").on("change", function () {
+            let selected = $(this).select2("data")[0];
+            button_search.disabled = selected.id === "";
+        });
 
-    // detecting button_search click & processing data
-    button_search.onclick = function (e) {
-        // creating "student" object
-        let selected_student = $(":input[name$=student]").select2("data")[0].text;
-        let student = {
-            group: selected_student.split(")")[0].substr(1),
-            name: selected_student.split(")")[1].substr(1)
+        $(":input[name$=group]").on("change", function () {
+            let selected_group = $(this).select2("data")[0];
+            button_search.disabled = selected_group.id === "";
+        });
+
+        // detecting button_search click & processing data
+        button_search.onclick = function (e) {
+            // creating "student" object
+            let selected_student = $(":input[name$=student]").select2("data")[0].text;
+            console.log("!!"+ selected_student);
+            let student;
+            let group
+            if (selected_student != "---------") {
+                student = {
+                    group: selected_student.split(")")[0].substr(1),
+                    name: selected_student.split(")")[1].substr(1)
+                }
+                group = student["group"]
+            } else {
+                student = null; 
+                let selected_group = $(":input[name$=group]").select2("data")[0].text;
+                group = selected_group
+            }
+            // creating "dates" array
+            let display_type_id = $(":input[name$=display_type]").select2("data")[0].id;
+            let raw_date = get_raw_date(display_type_id);
+            let dates = [];
+            if (display_type_id === "day") {
+                // array of dates from day
+                dates = [reformat_date(raw_date)];
+                console.log(dates);
+                get_schedule(student, dates, display_type_id);
+            } else if (display_type_id === "week") {
+                // array of dates from week
+                dates = get_days_in_week(raw_date);
+                console.log(dates);
+                get_schedule(student, dates, display_type_id);
+            } else if (display_type_id === "month") {
+                // array of dates from month
+                dates = get_days_in_month(raw_date);
+                console.log(dates);
+                if (student==null) {
+                    get_schedule_group(group, dates, display_type_id);
+                } else { 
+                    get_schedule(student, dates, display_type_id);
+                }
+            } else if (display_type_id === "year") {
+                // academic year activity
+                let start_year = document.getElementsByName("date_year")[0].value.split("-")[0];
+                if (start_year === "") {
+                    let today_date = new Date();
+                    const offset = today_date.getTimezoneOffset()
+                    today_date = new Date(today_date.getTime() - (offset * 60 * 1000))
+                    start_year = today_date.toISOString().split("T")[0].split("-")[0]
+                }
+                get_year_activity(student, start_year);
+            }
+        };
+    } else if (formId === 'rating-form') {
+        button_search.onclick = function (e) { 
+            let display_choice = document.querySelector("[name$='display_choices']").value;
+            let display_type_id = document.querySelector("[name$='display_type']").value;
+            let raw_date = get_raw_date(display_type_id);
+            let dates = [];
+            if (display_type_id === "day") {
+                // array of dates from day
+                dates = [reformat_date(raw_date)];
+                console.log(dates);
+                    get_rating(display_choice, dates, display_type_id)
+            } else if (display_type_id === "week") {
+                // array of dates from week
+                dates = get_days_in_week(raw_date);
+                console.log(dates);
+                    get_rating(display_choice, dates, display_type_id)
+            } else if (display_type_id === "month") {
+                // array of dates from month
+                dates = get_days_in_month(raw_date);
+                console.log(dates);
+                    get_rating(display_choice, dates, display_type_id)
+            } 
+
         }
-        // creating "dates" array
-        let display_type_id = $(":input[name$=display_type]").select2("data")[0].id;
-        let raw_date = get_raw_date(display_type_id);
-        let dates = [];
-        if (display_type_id === "day") {
-            // array of dates from day
-            dates = [reformat_date(raw_date)];
-        } else if (display_type_id === "week") {
-            // array of dates from week
-            // TODO: week widget
-            dates = [];
-        } else if (display_type_id === "month") {
-            // array of dates from month
-            dates = get_days_in_month(raw_date);
-        }
-        get_schedule(student, dates, display_type_id);
-    };
+    }
+   
 });

@@ -116,7 +116,7 @@ def get_students(request):
             db_students = Student.objects.filter(is_active=True, study_group__name__in=requested_groups)
         else:
             db_students = Student.objects.filter(is_active=True)
-        return JsonResponse({"students": [{"guid": student.guid, "name": s.name, "group": s.study_group.name} for s in db_students]})
+        return JsonResponse({"students": [{"guid": s.guid, "name": s.name, "group": s.study_group.name} for s in db_students]})
     return JsonResponse({"message": "you don't have enough right"})
 
 

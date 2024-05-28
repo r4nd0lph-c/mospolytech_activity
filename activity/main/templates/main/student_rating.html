@@ -18,34 +18,39 @@
                             </div>
                         </header>
                         <div class="content">
-                            <form style="align-self: center;">
-                               
-                                {# TODO: type directly in control (not input box) for single-select "student" #}
-                                <form method="post" style="align-self: center;">
-                                    {% csrf_token %}
-                                    <div class="container">
-                                        <h5 class="fw-light mb-2 text-truncate">{% trans "Display" %}</h5>
-                                        <p> {{ rating_display_form.display_choices }} </p>
-                                        <p> {{ rating_display_form.display_type }} </p>
-                                        <p> {{rating_display_form.date_day }} </p>
-                                        <p> {{ rating_display_form.date_week }} </p>
-                                        <p> {{rating_display_form.date_month }} </p>
-                                        <p> {{ rating_display_form.date_year }} </p>
+                            <form style="align-self: center; width: 100%" id="rating-form"> 
+                                {% csrf_token %}
+                                <div class="row mt-4" style="margin-bottom: 40px;">
+                                    <div class="col-sm-6 mb-3">
+                                        <a href="{% url 'index' %}" class="btn btn-light" style="border-color: #babbbc; width: 100%;">Статистика</a>
                                     </div>
-                                    <div id="form-buttons" class="row mt-4">
-                                        <div class="col-sm-6 mb-3">
-                                            <button type="submit" id="btn-search" class="btn btn-primary">
-                                                {% trans "Search" %}
-                                            </button>
-                                        </div>
-                                        <div class="col-sm-6 mb-3">
-                                            <button type="button" class="btn btn-light disabled"
-                                                    style="border-color: #babbbc;">
-                                                {% trans "Export" %}
-                                            </button>
-                                        </div>
+                                    <div class="col-sm-6 mb-3">
+                                        <a href="{% url 'student_rating' %}" class="btn btn-primary" style="width: 100%">Рейтинг</a>
                                     </div>
-                                </form>
+                                </div>
+                                <div class="container" style="margin-bottom: 80px;">
+                                    <h5 class="fw-light mb-2 text-truncate">{% trans "Display" %}</h5>
+                                    <p> {{ rating_display_form.display_choices }} </p>
+                                    <p> {{ rating_display_form.display_type }} </p>
+                                    <p> {{ rating_display_form.date_day }} </p>
+                                    <p> {{ rating_display_form.date_week }} </p>
+                                    <p> {{ rating_display_form.date_month }} </p>
+                                    <p> {{ rating_display_form.date_year }} </p>
+                                </div>
+                                <div id="form-buttons" class="row mt-4">
+                                    <div class="col-sm-6 mb-3">
+                                        <button type="button" id="btn-search" class="btn btn-primary">
+                                            {% trans "Search" %}
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-6 mb-3">
+                                        <button type="button" class="btn btn-light disabled"
+                                                style="border-color: #babbbc;">
+                                            {% trans "Export" %}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                         <footer class="text-center">
                             <a href="#" class="text-decoration-none text-truncate"
@@ -109,10 +114,6 @@
                                 <a href="{% url 'admin:index' %}" class="text-decoration-none">
                                     {% trans "View admin panel" %}
                                 </a><span> / </span>
-                                
-                            
-                                <a href="{% url 'index' %}">Посещения</a>
-                                <span> / </span>
                                 {% endif %}
                             <a href="{% url 'logout' %}" class="text-decoration-none">
                                 {% trans "Log Out" %}
@@ -127,7 +128,7 @@
                 <!-- content START -->
                 <div id="main-content" class="p-4 content">
                     <!-- empty filler START -->
-                    <div id="empty_filler" class="inner">
+                    <div id="empty_filler" class="inner" style = "display:none;">
                         <header>
                             <div class="inner">
                                 <img src="{% static 'main/graphics/empty_filler.svg' %}"
@@ -136,45 +137,72 @@
                             </div>
                         </header>
                         <div>
-                            <p style="text-align: center;">{% trans "Вы ещё не выберите критерии рейтинга" %}</p>
+                            <p style="text-align: center;">{% trans "Выберите критерии рейтинга" %}</p>
                             <br>
                         </div>
                     </div>
                     <!-- empty filler END -->
 
                     <!-- zero schedule START -->
-                    <div id="zero_schedule" class="inner" style="display: none;">
-                        <div style="display: flex;">
+                    <div id="rating_stud" class="p-4 content" style="display: flex;">
+                        <div id="rat" style="display: flex;">
                             <div class="inner-wide" style="padding-left: 0 !important; margin-bottom: 40px;">
-                                <i id="z-btn-prev" class="bi bi-chevron-left"
+                                <i id="btn-stud-prev" class="bi bi-chevron-left"
                                    style="font-size: 32px; cursor: pointer;"></i>
                             </div>
-                            <div>
-                                <header>
-                                    <div class="inner">
-                                        <img src="{% static 'main/graphics/zero_schedule_filler.svg' %}"
-                                             alt="{% trans 'Zero Schedule Filler (svg)' %}"
-                                             style="opacity: 0.5; display: block; margin: auto;"/>
+                            <div id = "rat">
+                                <!-- Выпадающий список для выбора предмета -->
+                                <div>
+                                    <select class="form-select">
+                                        <!-- Опции выбора программы -->
+                                        <option>Все филиалы</option>
+                                    </select>
+                                    <p></p>
+                                    <select class="form-select">
+                                        <!-- Опции выбора программы -->
+                                        <option>Все программы подготовки</option>
+                                    </select>
+                                    <p></p>
+                                    <select class="form-select">
+                                        <!-- Опции выбора года набора -->
+                                        <option>Все годы набора</option>
+                                    </select>
+                                    <p></p>
+                                    <select class="form-select" id="subject-rating">
+                                        <!-- Опции выбора предмета -->
+                                    </select>
+                                    <!-- Контейнер для списка студентов и бара -->
+                                    <div id="students-rating-list" class="my-4">
+                                        <!-- Список студентов и их рейтинг -->
+                                        <table id = "table-students"class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ФИО</th>
+                                                    <th id = "n-group">Группа</th>
+                                                    <th id = "n=prisyt">Пристустовал(мин)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                                
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </header>
+                                </div>
+                                <!-- Ссылка для сброса параметров поиска -->
                                 <div style="text-align: center;">
-                                    <p>{% trans "No schedule was found for specified dates" %}</p>
-                                    <a href="{% url 'index' %}" class="text-decoration-none">
+                                  
+                                    <a href="{% url 'student_rating' %}" class="text-decoration-none">
                                         {% trans "Reset search parameters" %}
                                     </a>
                                 </div>
                             </div>
                             <div class="inner-wide" style="padding-right: 0 !important; margin-bottom: 40px;">
-                                <i id="z-btn-next" class="bi bi-chevron-right"
+                                <i id="btn-stud-next" class="bi bi-chevron-right"
                                    style="font-size: 32px; cursor: pointer;"></i>
                             </div>
                         </div>
                     </div>
-                    <!-- zero schedule END -->
-
-                    <!-- schedule day START -->
-                    
-                    <!-- schedule year END -->
                 </div>
                 <!-- content END -->
             </div>
@@ -185,4 +213,15 @@
 {% endblock %}
 
 
-
+{% block extra_js %}
+    <script>
+        const sidebar = document.getElementById("sidebar");
+        const btn_sidebar_icon = document.getElementById("sidebar-icon");
+        sidebar.addEventListener("shown.bs.collapse", () => {
+            btn_sidebar_icon.className = "bi bi-x-lg bi-lg py-2 p-1";
+        });
+        sidebar.addEventListener("hidden.bs.collapse", () => {
+            btn_sidebar_icon.className = "bi bi-list bi-lg py-2 p-1";
+        });
+    </script>
+{% endblock %}

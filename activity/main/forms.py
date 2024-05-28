@@ -158,7 +158,8 @@ class RatingDisplayForm(forms.Form):
                 "format": "DD.MM.YYYY – DD.MM.YYYY",
                 "defaultDate": datetime.today()
             },
-        ))
+        )
+        )
     date_month = forms.DateField(
         widget=MonthPickerInput(
             attrs={"class": "form-control"},
